@@ -15,7 +15,7 @@ constructor(id: number, title: String, description: String,img_url: String,hidde
     this.title = title;
     this.description = description;
     this.img_url = img_url;
+    this.hidden = true;
     this.material = material;
-    
 }
 }
