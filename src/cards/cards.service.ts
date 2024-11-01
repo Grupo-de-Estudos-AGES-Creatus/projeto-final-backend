@@ -27,14 +27,21 @@ export class CardsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} card`;
+    return this.cards.find(card => card.id === id);
   }
 
-  update(id: number, updateCardDto: UpdateCardDto) {
-    return `This action updates a #${id} card`;
+  update(id: number, updateCardDto: UpdateCardDto): Card {
+    const cardIndex = this.cards.findIndex(card => card.id === id);
+    if (cardIndex <= 0) return undefined;
+
+    const card = this.cards[cardIndex]
+    this.cards[cardIndex] = {...card, ...updateCardDto}
+    return this.cards[cardIndex]
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} card`;
+  remove(id: number): boolean{
+    const initialLength = this.cards.length;
+    this.cards = this.cards.filter(card => card.id != id)
+    return this.cards.length < initialLength
   }
 }
