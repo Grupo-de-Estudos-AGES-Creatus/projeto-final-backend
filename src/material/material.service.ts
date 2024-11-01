@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMaterialDto } from './dto/create-material.dto';
-import { UpdateMaterialDto } from './dto/update-material.dto';
+import {Inject, Injectable} from '@nestjs/common';
+import {CreateMaterialDto} from './dto/create-material.dto';
+import {UpdateMaterialDto} from './dto/update-material.dto';
+import {Material} from "./entities/material.entity";
 
 @Injectable()
 export class MaterialService {
-  create(createMaterialDto: CreateMaterialDto) {
-    return 'This action adds a new material';
-  }
+    constructor(
+        @Inject(Material)
+        private materials: Material[] = []
+    ){}
 
-  findAll() {
-    return `This action returns all material`;
-  }
+    create(createMaterialDto: CreateMaterialDto) {
+        const {card, name, description} = createMaterialDto;
 
-  findOne(id: number) {
-    return `This action returns a #${id} material`;
-  }
 
-  update(id: number, updateMaterialDto: UpdateMaterialDto) {
-    return `This action updates a #${id} material`;
-  }
+        const newMaterial = new Material;
+        newMaterial.name = name;
+        newMaterial.description = description;
+        newMaterial.card = card;
+        // newMaterial.card_id = card.id;  -> Card n implementado ainda
 
-  remove(id: number) {
-    return `This action removes a #${id} material`;
-  }
+        this.materials.push(newMaterial);
+
+        return newMaterial;
+    }
+
+    findAll(){
+        return this.materials;
+    }
+
+    findOne(id: number) {
+        return this.materials.find((material) => material.id === id);
+
+    }
+
+    update(id: number, updateMaterialDto: UpdateMaterialDto) {
+        const {name, description} = updateMaterialDto;
+
+        const toUpdateMaterial = this.findOne(id);
+
+        toUpdateMaterial.name = name;
+        toUpdateMaterial.description = description;
+
+        return toUpdateMaterial;
+    }
+
+    remove(id: number) {
+        const toRemove = this.findOne(id);
+        const indexToRemove = this.materials.indexOf(toRemove);
+
+        if (toRemove !== undefined) {
+            this.materials.splice(indexToRemove, 1);
+        }
+    }
 }
