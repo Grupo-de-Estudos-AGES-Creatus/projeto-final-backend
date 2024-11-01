@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateUserDto = void 0;
 const mapped_types_1 = require("@nestjs/mapped-types");
 const create_user_dto_1 = require("./create-user.dto");
+<<<<<<< HEAD
 const class_validator_1 = require("class-validator");
 class UpdateUserDto extends (0, mapped_types_1.PartialType)(create_user_dto_1.CreateUserDto) {
 }
@@ -31,4 +32,9 @@ __decorate([
     (0, class_validator_1.IsUrl)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "img_url", void 0);
+=======
+class UpdateUserDto extends (0, mapped_types_1.PartialType)(create_user_dto_1.CreateUserDto) {
+}
+exports.UpdateUserDto = UpdateUserDto;
+>>>>>>> 0e418e1b (update ta zoado mas o resto ta certo)
 //# sourceMappingURL=update-user.dto.js.map
