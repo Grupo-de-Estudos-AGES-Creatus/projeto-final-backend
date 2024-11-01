@@ -1,1 +1,5 @@
-export class Event {}
+export class Event {
+    title: string
+    start_date: Date
+    end_date: Date
+}
