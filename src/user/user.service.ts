@@ -8,27 +8,31 @@ const prisma = new PrismaClient()
 @Injectable()
 export class UserService {
   async create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return await prisma.user.create({
+      data: {
+        ...createUserDto,
+        created_at: new Date(),
+      },
+    });
   }
-
   async findAll() {
     return await prisma.user.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await prisma.user.findUnique({
       where: { id },
     });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     return await prisma.user.update({
       where: { id },
       data: updateUserDto,
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return await prisma.user.delete({
       where: { id },
     });

@@ -2,7 +2,7 @@ import { User } from '@prisma/client';
 export declare class AppService {
     getHello(): Promise<User>;
     findUser(): Promise<{
-        id: number;
+        id: string;
         email: string;
         username: string;
         password: string;

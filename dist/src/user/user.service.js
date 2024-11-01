@@ -12,7 +12,12 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 let UserService = class UserService {
     async create(createUserDto) {
-        return 'This action adds a new user';
+        return await prisma.user.create({
+            data: {
+                ...createUserDto,
+                created_at: new Date(),
+            },
+        });
     }
     async findAll() {
         return await prisma.user.findMany();
