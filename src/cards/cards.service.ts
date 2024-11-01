@@ -1,15 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { Card } from '../cards/entities/card.entity';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 
 @Injectable()
 export class CardsService {
-  create(createCardDto: CreateCardDto) {
-    return 'This action adds a new card';
+  private cards: Card[] =  []
+  
+  create(cardData: CreateCardDto) {
+    
+    const newCard = new Card(
+      this.cards.length +1,
+      cardData.title,
+      cardData.description,
+      cardData.img_url,
+      cardData.hidden,
+      cardData.subtitle || '',
+      cardData.material
+    );
+    this.cards.push(newCard);
+    return newCard;
   }
 
   findAll() {
-    return `This action returns all cards`;
+    return this.cards;
   }
 
   findOne(id: number) {
