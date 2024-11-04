@@ -28,7 +28,7 @@ export declare class EventService {
         title: string;
         start_date: Date;
         end_date: Date;
-    }>;
+    } | "start date can't be bigger than end date">;
     remove(id: number): Promise<boolean>;
     removeOld(date: Date): Promise<boolean>;
 }

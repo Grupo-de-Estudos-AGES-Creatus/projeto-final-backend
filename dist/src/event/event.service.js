@@ -40,6 +40,9 @@ let EventService = class EventService {
         if (updateEventDto.end_date) {
             updateData.end_date = new Date(updateEventDto.end_date).toISOString();
         }
+        if (updateData.start_date > updateData.end_date) {
+            return "start date can't be bigger than end date";
+        }
         const upd = await this.prisma.event.update({ data: updateData, where: { id: updateEventDto.id } });
         return upd;
     }

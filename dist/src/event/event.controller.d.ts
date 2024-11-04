@@ -34,7 +34,7 @@ export declare class EventController {
         title: string;
         start_date: Date;
         end_date: Date;
-    }>;
+    } | "start date can't be bigger than end date">;
     remove(id: string): Promise<boolean>;
     removeOldNow(): Promise<boolean>;
     removeOld(date: string): Promise<boolean>;
