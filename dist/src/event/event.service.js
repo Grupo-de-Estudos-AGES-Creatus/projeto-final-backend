@@ -29,8 +29,15 @@ let EventService = class EventService {
         const curTime = date ? date : new Date();
         return await this.prisma.event.findMany({ where: { end_date: { gte: curTime.toISOString() } } });
     }
-    async update(id, updateEventDto) {
-        const upd = await this.prisma.event.update({ data: updateEventDto, where: { id: id } });
+    async update(updateEventDto) {
+        const updateData = { ...updateEventDto };
+        if (updateEventDto.start_date) {
+            updateData.start_date = new Date(updateEventDto.start_date).toISOString();
+        }
+        if (updateEventDto.end_date) {
+            updateData.end_date = new Date(updateEventDto.end_date).toISOString();
+        }
+        const upd = await this.prisma.event.update({ data: updateData, where: { id: updateEventDto.id } });
         return upd;
     }
     async remove(id) {

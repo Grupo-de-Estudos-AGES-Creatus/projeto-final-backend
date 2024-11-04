@@ -63,7 +63,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_event_dto_1.UpdateEventDto]),
+    __metadata("design:paramtypes", [update_event_dto_1.UpdateEventDto]),
     __metadata("design:returntype", void 0)
 ], EventController.prototype, "update", null);
 __decorate([

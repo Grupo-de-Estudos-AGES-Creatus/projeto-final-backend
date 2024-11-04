@@ -23,22 +23,34 @@ export class EventController {
     return this.eventService.findOne(+id);
   }
 
-  @Get('upcoming/:date')
+  @Get('upcoming/now')
+  findUpcomingNow() {
+    return this.eventService.findUpcomingEvents(new Date(Date.now()));
+  }
+
+  @Get('upcoming/date/:date')
   findUpcoming(@Param('date') date: string) {
     return this.eventService.findUpcomingEvents(new Date(date));
   }
 
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
-    return this.eventService.update(+id, updateEventDto);
+
+  @Patch()
+  update(@Body() updateEventDto: UpdateEventDto) {
+    return this.eventService.update(updateEventDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.eventService.remove(+id);
   }
-  @Delete('/upcoming/:date')
+
+  @Delete('/upcoming/now')
+  removeOldNow() {
+    return this.eventService.removeOld(new Date());
+  }
+
+  @Delete('/upcoming/date/:date')
   removeOld(@Param('date') date: string) {
     return this.eventService.removeOld(new Date(date));
   }
