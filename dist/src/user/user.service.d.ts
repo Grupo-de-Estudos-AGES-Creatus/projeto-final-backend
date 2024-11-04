@@ -29,7 +29,7 @@ export declare class UserService {
         img_url: string | null;
         created_at: Date;
     }[]>;
-    findOne(id: string): Promise<{
+    findOne(username: string): Promise<{
         id: string;
         email: string;
         username: string;

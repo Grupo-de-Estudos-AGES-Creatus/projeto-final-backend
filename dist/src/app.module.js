@@ -15,12 +15,13 @@ const event_module_1 = require("./event/event.module");
 const cards_module_1 = require("./cards/cards.module");
 const material_module_1 = require("./material/material.module");
 const content_module_1 = require("./content/content.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UserModule, event_module_1.EventModule, cards_module_1.CardsModule, material_module_1.MaterialModule, content_module_1.ContentModule],
+        imports: [user_module_1.UserModule, event_module_1.EventModule, cards_module_1.CardsModule, material_module_1.MaterialModule, content_module_1.ContentModule, auth_module_1.AuthModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

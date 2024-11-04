@@ -23,9 +23,9 @@ export class UserService {
     return await prisma.user.findMany();
   }
 
-  async findOne(id: string) {
+  async findOne(username: string) {
     return await prisma.user.findUnique({
-      where: { id },
+      where: { username },
     });
   }
   async findAndVerify(email: string, password: string) {
