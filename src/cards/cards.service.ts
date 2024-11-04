@@ -1,47 +1,88 @@
 import { Injectable } from '@nestjs/common';
-import { Card } from '../cards/entities/card.entity';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
+import { PrismaClient } from '@prisma/client';
+import { CreateMaterialDto } from 'src/material/dto/create-material.dto';
+
+const prisma = new PrismaClient();
 
 @Injectable()
 export class CardsService {
-  private cards: Card[] =  []
-  
-  create(cardData: CreateCardDto) {
-    
-    const newCard = new Card(
-      this.cards.length +1,
-      cardData.title,
-      cardData.description,
-      cardData.img_url,
-      cardData.hidden,
-      cardData.subtitle || '',
-      cardData.material
-    );
-    this.cards.push(newCard);
-    return newCard;
+  async create(createCardDto: CreateCardDto) {
+    return await prisma.cards.create({
+      data: {
+        title: createCardDto.title,
+        description: createCardDto.description,
+        img_url: createCardDto.img_url,
+        hidden: createCardDto.hidden,
+        subtitle: createCardDto.subtitle,
+        material: {
+          create: createCardDto.material, // assume que createCardDto.materials é uma lista de materiais
+        },
+      },
+    });
   }
 
-  findAll() {
-    return this.cards;
+  async findAll() {
+    return await prisma.cards.findMany({
+      include: {
+        material: true, // Inclui materiais associados
+      },
+    });
   }
 
-  findOne(id: number) {
-    return this.cards.find(card => card.id === id);
+  async findOne(id: number) {
+    return await prisma.cards.findUnique({
+      where: { id },
+      include: {
+        material: true, // Inclui materiais associados
+      },
+    });
   }
 
-  update(id: number, updateCardDto: UpdateCardDto): Card {
-    const cardIndex = this.cards.findIndex(card => card.id === id);
-    if (cardIndex <= 0) return undefined;
-
-    const card = this.cards[cardIndex]
-    this.cards[cardIndex] = {...card, ...updateCardDto}
-    return this.cards[cardIndex]
+  async update(id: number, updateCardDto: UpdateCardDto) {
+    return await prisma.cards.update({
+      where: { id },
+      data: {
+        title: updateCardDto.title,
+        description: updateCardDto.description,
+        img_url: updateCardDto.img_url,
+        hidden: updateCardDto.hidden,
+        subtitle: updateCardDto.subtitle,
+        material: {
+          // Se você também quer atualizar materiais, você precisa definir como lidar com isso
+          // Aqui, você poderia ter um array de materiais para atualizar ou deletar
+          // Exemplo de atualizar materiais
+          update: updateCardDto.material,
+        },
+      },
+    });
   }
 
-  remove(id: number): boolean{
-    const initialLength = this.cards.length;
-    this.cards = this.cards.filter(card => card.id != id)
-    return this.cards.length < initialLength
+  async remove(id: number) {
+    return await prisma.cards.delete({
+      where: { id },
+    });
+  }
+
+  async findMaterialsForCard(cardId: number) {
+    return await prisma.material.findMany({
+      where: { card_id: cardId },
+    });
+  }
+
+  async addMaterialToCard(cardId: number, materialData: Omit<CreateMaterialDto, 'card_id'>) {
+    return await prisma.material.create({
+      data: {
+        ...materialData,
+        card_id: cardId,
+      },
+    });
+  }
+
+  async removeMaterialFromCard(materialId: number) {
+    return await prisma.material.delete({
+      where: { id: materialId },
+    });
   }
 }
