@@ -21,6 +21,10 @@ export class UserController {
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
+  @Get()
+  findAndVerify(@Body() email: string, password: string) {
+    return this.userService.findAndVerify(email,password);
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

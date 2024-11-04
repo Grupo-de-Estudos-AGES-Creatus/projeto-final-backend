@@ -30,6 +30,9 @@ let UserController = class UserController {
     findOne(id) {
         return this.userService.findOne(id);
     }
+    findAndVerify(email, password) {
+        return this.userService.findAndVerify(email, password);
+    }
     update(id, updateUserDto) {
         return this.userService.update(id, updateUserDto);
     }
@@ -58,6 +61,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "findAndVerify", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
