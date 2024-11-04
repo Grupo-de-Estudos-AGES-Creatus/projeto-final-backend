@@ -4,9 +4,29 @@ import { UpdateMaterialDto } from './dto/update-material.dto';
 export declare class MaterialController {
     private readonly materialService;
     constructor(materialService: MaterialService);
-    create(createMaterialDto: CreateMaterialDto): string;
-    findAll(): string;
-    findOne(id: string): string;
-    update(id: string, updateMaterialDto: UpdateMaterialDto): string;
-    remove(id: string): string;
+    create(createMaterialDto: CreateMaterialDto): Promise<{
+        id: number;
+        name: string;
+        card_id: number;
+        description: string;
+    }>;
+    findAll(): Promise<{
+        id: number;
+        name: string;
+        card_id: number;
+        description: string;
+    }[]>;
+    findOne(id: string): Promise<{
+        id: number;
+        name: string;
+        card_id: number;
+        description: string;
+    }>;
+    update(id: string, updateMaterialDto: UpdateMaterialDto): Promise<{
+        id: number;
+        name: string;
+        card_id: number;
+        description: string;
+    }>;
+    remove(id: string): Promise<void>;
 }

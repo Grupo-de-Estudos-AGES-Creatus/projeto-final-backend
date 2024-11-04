@@ -8,21 +8,53 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MaterialService = void 0;
 const common_1 = require("@nestjs/common");
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 let MaterialService = class MaterialService {
-    create(createMaterialDto) {
-        return 'This action adds a new material';
+    async create(createMaterialDto) {
+        const body = {
+            id: createMaterialDto.id,
+            name: createMaterialDto.name,
+            description: createMaterialDto.description,
+            card: createMaterialDto.card,
+            content: [],
+        };
+        const material = await prisma.material.create({
+            data: body
+        });
+        return material;
     }
-    findAll() {
-        return `This action returns all material`;
+    async findAll() {
+        return prisma.material.findMany();
     }
-    findOne(id) {
-        return `This action returns a #${id} material`;
+    async findOne(id) {
+        return prisma.material.findUnique({
+            where: {
+                id: id
+            }
+        });
     }
-    update(id, updateMaterialDto) {
-        return `This action updates a #${id} material`;
+    async update(id, updateMaterialDto) {
+        const toUpdateMaterial = await this.findOne(id);
+        const body = {
+            name: updateMaterialDto.name,
+            description: updateMaterialDto.description,
+        };
+        await prisma.material.update({
+            where: {
+                id: toUpdateMaterial.id
+            },
+            data: body
+        });
+        return toUpdateMaterial;
     }
-    remove(id) {
-        return `This action removes a #${id} material`;
+    async remove(id) {
+        const toRemove = await this.findOne(id);
+        await prisma.material.delete({
+            where: {
+                id: toRemove.id
+            }
+        });
     }
 };
 exports.MaterialService = MaterialService;
