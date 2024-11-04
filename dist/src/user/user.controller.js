@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const verify_user_dto_1 = require("./dto/verify-user.dto");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -27,11 +28,12 @@ let UserController = class UserController {
     findAll() {
         return this.userService.findAll();
     }
-    findOne(id) {
-        return this.userService.findOne(id);
+    async findOne(id) {
+        return await this.userService.findOne(id);
     }
-    findAndVerify(email, password) {
-        return this.userService.findAndVerify(email, password);
+    async findAndVerify(verifyUserDto) {
+        const result = await this.userService.findAndVerify(verifyUserDto.email, verifyUserDto.password);
+        return result;
     }
     update(id, updateUserDto) {
         return this.userService.update(id, updateUserDto);
@@ -55,18 +57,18 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
+    (0, common_1.Get)('byid/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('verify'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [verify_user_dto_1.VerifyUserDto]),
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "findAndVerify", null);
 __decorate([
     (0, common_1.Patch)(':id'),

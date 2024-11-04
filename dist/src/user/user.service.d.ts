@@ -56,6 +56,8 @@ export declare class UserService {
         n_of_absences: number | null;
         img_url: string | null;
         created_at: Date;
+    } | {
+        error: string;
     }>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
         id: string;

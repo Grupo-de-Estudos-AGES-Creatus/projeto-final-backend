@@ -1,6 +1,7 @@
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { VerifyUserDto } from './dto/verify-user.dto';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
@@ -46,7 +47,7 @@ export declare class UserController {
         img_url: string | null;
         created_at: Date;
     }>;
-    findAndVerify(email: string, password: string): Promise<{
+    findAndVerify(verifyUserDto: VerifyUserDto): Promise<{
         id: string;
         email: string;
         username: string;
@@ -59,6 +60,8 @@ export declare class UserController {
         n_of_absences: number | null;
         img_url: string | null;
         created_at: Date;
+    } | {
+        error: string;
     }>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
         id: string;

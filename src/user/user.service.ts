@@ -33,11 +33,11 @@ export class UserService {
       where: { email },
     });
     if (!user) {
-      return null;
+      return { error: 'User not found' };
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return null;
+      return { error: 'Invalid password' };
     }
     return user;
   }

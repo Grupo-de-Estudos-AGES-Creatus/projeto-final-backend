@@ -2,11 +2,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { verify } from 'crypto';
+import { VerifyUserDto } from './dto/verify-user.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
+  
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
@@ -16,14 +18,14 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+  @Get('byid/:id')
+  async findOne(@Param('id') id: string) {
+    return await this.userService.findOne(id);
   }
-  @Get()
-  findAndVerify(@Body() email: string, password: string) {
-    return this.userService.findAndVerify(email,password);
+  @Get('verify')
+  async findAndVerify(@Body() verifyUserDto: VerifyUserDto) {
+    const result = await this.userService.findAndVerify(verifyUserDto.email, verifyUserDto.password);
+    return result; 
   }
 
   @Patch(':id')
