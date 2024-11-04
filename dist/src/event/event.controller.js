@@ -30,12 +30,32 @@ let EventController = class EventController {
     findOne(id) {
         return this.eventService.findOne(+id);
     }
+<<<<<<< HEAD
     update(id, updateEventDto) {
         return this.eventService.update(+id, updateEventDto);
+=======
+    findUpcomingNow() {
+        return this.eventService.findUpcomingEvents(new Date(Date.now()));
+    }
+    findUpcoming(date) {
+        return this.eventService.findUpcomingEvents(new Date(date));
+    }
+    update(updateEventDto) {
+        return this.eventService.update(updateEventDto);
+>>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f
     }
     remove(id) {
         return this.eventService.remove(+id);
     }
+<<<<<<< HEAD
+=======
+    removeOldNow() {
+        return this.eventService.removeOld(new Date());
+    }
+    removeOld(date) {
+        return this.eventService.removeOld(new Date(date));
+    }
+>>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f
 };
 exports.EventController = EventController;
 __decorate([
@@ -59,9 +79,27 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EventController.prototype, "findOne", null);
 __decorate([
+<<<<<<< HEAD
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+=======
+    (0, common_1.Get)('upcoming/now'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], EventController.prototype, "findUpcomingNow", null);
+__decorate([
+    (0, common_1.Get)('upcoming/date/:date'),
+    __param(0, (0, common_1.Param)('date')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], EventController.prototype, "findUpcoming", null);
+__decorate([
+    (0, common_1.Patch)(),
+    __param(0, (0, common_1.Body)()),
+>>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [update_event_dto_1.UpdateEventDto]),
     __metadata("design:returntype", void 0)
@@ -73,6 +111,22 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EventController.prototype, "remove", null);
+<<<<<<< HEAD
+=======
+__decorate([
+    (0, common_1.Delete)('/upcoming/now'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], EventController.prototype, "removeOldNow", null);
+__decorate([
+    (0, common_1.Delete)('/upcoming/date/:date'),
+    __param(0, (0, common_1.Param)('date')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], EventController.prototype, "removeOld", null);
+>>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f
 exports.EventController = EventController = __decorate([
     (0, common_1.Controller)('event'),
     __metadata("design:paramtypes", [event_service_1.EventService])
