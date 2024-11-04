@@ -1,4 +1,5 @@
 "use strict";
+<<<<<<< HEAD
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +9,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+=======
+>>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateUserDto = void 0;
 const mapped_types_1 = require("@nestjs/mapped-types");
 const create_user_dto_1 = require("./create-user.dto");
+<<<<<<< HEAD
+<<<<<<< HEAD
 const class_validator_1 = require("class-validator");
 class UpdateUserDto extends (0, mapped_types_1.PartialType)(create_user_dto_1.CreateUserDto) {
 }
@@ -31,4 +36,14 @@ __decorate([
     (0, class_validator_1.IsUrl)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "img_url", void 0);
+=======
+class UpdateUserDto extends (0, mapped_types_1.PartialType)(create_user_dto_1.CreateUserDto) {
+}
+exports.UpdateUserDto = UpdateUserDto;
+>>>>>>> 0e418e1b (update ta zoado mas o resto ta certo)
+=======
+class UpdateUserDto extends (0, mapped_types_1.PartialType)(create_user_dto_1.CreateUserDto) {
+}
+exports.UpdateUserDto = UpdateUserDto;
+>>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f
 //# sourceMappingURL=update-user.dto.js.map

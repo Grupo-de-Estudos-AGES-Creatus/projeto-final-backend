@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
+<<<<<<< HEAD
 const client_1 = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const prisma = new client_1.PrismaClient();
@@ -59,6 +60,23 @@ let UserService = class UserService {
         return await prisma.user.delete({
             where: { id },
         });
+=======
+let UserService = class UserService {
+    create(createUserDto) {
+        return 'This action adds a new user';
+    }
+    findAll() {
+        return `This action returns all user`;
+    }
+    findOne(id) {
+        return `This action returns a #${id} user`;
+    }
+    update(id, updateUserDto) {
+        return `This action updates a #${id} user`;
+    }
+    remove(id) {
+        return `This action removes a #${id} user`;
+>>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f
     }
 };
 exports.UserService = UserService;

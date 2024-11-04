@@ -1,6 +1,7 @@
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+<<<<<<< HEAD
 import { VerifyUserDto } from './dto/verify-user.dto';
 export declare class UserController {
     private readonly userService;
@@ -91,4 +92,14 @@ export declare class UserController {
         img_url: string | null;
         created_at: Date;
     }>;
+=======
+export declare class UserController {
+    private readonly userService;
+    constructor(userService: UserService);
+    create(createUserDto: CreateUserDto): string;
+    findAll(): string;
+    findOne(id: string): string;
+    update(id: string, updateUserDto: UpdateUserDto): string;
+    remove(id: string): string;
+>>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f
 }

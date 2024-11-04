@@ -1,1 +1,6 @@
-export class CreateEventDto {}
+export class CreateEventDto {
+    id: number
+    title: string
+    start_date: Date
+    end_date: Date
+}
