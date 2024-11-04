@@ -18,13 +18,6 @@ let EventService = class EventService {
     findOne(id) {
         return `This action returns a #${id} event`;
     }
-<<<<<<< HEAD
-    update(id, updateEventDto) {
-        return `This action updates a #${id} event`;
-    }
-    remove(id) {
-        return `This action removes a #${id} event`;
-=======
     async findUpcomingEvents(date) {
         const curTime = date ? date : new Date();
         return await this.prisma.event.findMany({ where: { end_date: { gte: curTime.toISOString() } } });
@@ -36,6 +29,9 @@ let EventService = class EventService {
         }
         if (updateEventDto.end_date) {
             updateData.end_date = new Date(updateEventDto.end_date).toISOString();
+        }
+        if (updateData.start_date > updateData.end_date) {
+            return "start date can't be bigger than end date";
         }
         const upd = await this.prisma.event.update({ data: updateData, where: { id: updateEventDto.id } });
         return upd;
@@ -52,16 +48,11 @@ let EventService = class EventService {
             return true;
         }
         return false;
->>>>>>> 0e418e1b (update ta zoado mas o resto ta certo)
     }
 };
 exports.EventService = EventService;
 exports.EventService = EventService = __decorate([
-<<<<<<< HEAD
-    (0, common_1.Injectable)()
-=======
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
->>>>>>> 0e418e1b (update ta zoado mas o resto ta certo)
 ], EventService);
 //# sourceMappingURL=event.service.js.map
