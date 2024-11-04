@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { PrismaClient } from '@prisma/client';
-import { CreateMaterialDto } from 'src/material/dto/create-material.dto';
 
 const prisma = new PrismaClient();
 
@@ -65,24 +64,5 @@ export class CardsService {
     });
   }
 
-  async findMaterialsForCard(cardId: number) {
-    return await prisma.material.findMany({
-      where: { card_id: cardId },
-    });
-  }
-
-  async addMaterialToCard(cardId: number, materialData: Omit<CreateMaterialDto, 'card_id'>) {
-    return await prisma.material.create({
-      data: {
-        ...materialData,
-        card_id: cardId,
-      },
-    });
-  }
-
-  async removeMaterialFromCard(materialId: number) {
-    return await prisma.material.delete({
-      where: { id: materialId },
-    });
-  }
+  
 }
