@@ -23,7 +23,7 @@ export declare class EventService {
         start_date: Date;
         end_date: Date;
     }[]>;
-    update(id: number, updateEventDto: UpdateEventDto): Promise<{
+    update(updateEventDto: UpdateEventDto): Promise<{
         id: number;
         title: string;
         start_date: Date;

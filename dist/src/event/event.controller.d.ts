@@ -17,18 +17,25 @@ export declare class EventController {
         end_date: Date;
     }[]>;
     findOne(id: string): string;
+    findUpcomingNow(): Promise<{
+        id: number;
+        title: string;
+        start_date: Date;
+        end_date: Date;
+    }[]>;
     findUpcoming(date: string): Promise<{
         id: number;
         title: string;
         start_date: Date;
         end_date: Date;
     }[]>;
-    update(id: string, updateEventDto: UpdateEventDto): Promise<{
+    update(updateEventDto: UpdateEventDto): Promise<{
         id: number;
         title: string;
         start_date: Date;
         end_date: Date;
     }>;
     remove(id: string): Promise<boolean>;
+    removeOldNow(): Promise<boolean>;
     removeOld(date: string): Promise<boolean>;
 }

@@ -33,8 +33,21 @@ export class EventService {
     return filtered; */
   }
 
-  async update(id: number, updateEventDto: UpdateEventDto) {
-    const upd = await this.prisma.event.update({ data: updateEventDto, where: { id: id } })
+  async update(updateEventDto: UpdateEventDto) {
+    const updateData: any = { ...updateEventDto };
+
+    if (updateEventDto.start_date) {
+      updateData.start_date = new Date(updateEventDto.start_date).toISOString();
+    }
+    if (updateEventDto.end_date) {
+      updateData.end_date = new Date(updateEventDto.end_date).toISOString();
+    }
+
+    if (updateData.start_date > updateData.end_date) {
+      return "start date can't be bigger than end date";
+    }
+
+    const upd = await this.prisma.event.update({ data: updateData, where: { id: updateEventDto.id } })
     return upd;
   }
 
