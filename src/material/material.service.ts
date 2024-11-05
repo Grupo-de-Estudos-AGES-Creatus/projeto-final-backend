@@ -1,26 +1,63 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMaterialDto } from './dto/create-material.dto';
-import { UpdateMaterialDto } from './dto/update-material.dto';
+import {Injectable} from '@nestjs/common';
+import {CreateMaterialDto} from './dto/create-material.dto';
+import {UpdateMaterialDto} from './dto/update-material.dto';
+import {PrismaClient} from "@prisma/client";
+
+
+const prisma = new PrismaClient()
 
 @Injectable()
 export class MaterialService {
-  create(createMaterialDto: CreateMaterialDto) {
-    return 'This action adds a new material';
-  }
+    async create(createMaterialDto: CreateMaterialDto) {
+      const { name, description,card_id , content } = createMaterialDto;
+      const data: any = {
+          name,
+          description,
+          card_id,
+          content: content && content.length > 0 ? {create: content.map((item) => ({...item, })),} : [],};
+      await prisma.material.create({
+        data,
+      });
+    }
 
-  findAll() {
-    return `This action returns all material`;
-  }
+    async findAll() {
+        return prisma.material.findMany()
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} material`;
-  }
+    async findOne(id: number) {
+        return prisma.material.findUnique({
+            where: {
+                id: id
+            }
+        });
 
-  update(id: number, updateMaterialDto: UpdateMaterialDto) {
-    return `This action updates a #${id} material`;
-  }
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} material`;
-  }
+    async update(id: number, updateMaterialDto: UpdateMaterialDto) {
+        const toUpdateMaterial = await this.findOne(id);
+
+        const body = {
+            name: updateMaterialDto.name,
+            description: updateMaterialDto.description,
+        }
+
+        await prisma.material.update({
+            where: {
+                id: toUpdateMaterial.id
+            },
+            data: body
+        })
+
+        return toUpdateMaterial;
+    }
+
+    async remove(id: number) {
+        const toRemove = await this.findOne(id);
+
+        await prisma.material.delete({
+            where: {
+                id: toRemove.id
+            }
+        })
+    }
 }

@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-{"version":3,"file":"user.entity.js","sourceRoot":"","sources":["../../../../src/user/entities/user.entity.ts"],"names":[],"mappings":";;;AAAA,MAAa,IAAI;CAYhB;AAZD,oBAYC"}
-=======
-{"version":3,"file":"user.entity.js","sourceRoot":"","sources":["../../../../src/user/entities/user.entity.ts"],"names":[],"mappings":";;;AAAA,MAAa,IAAI;CAAG;AAApB,oBAAoB"}
->>>>>>> 6a6e30982d29ebf08d2e0689d34a645eba52320f

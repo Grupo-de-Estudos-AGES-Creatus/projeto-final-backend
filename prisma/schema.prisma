@@ -36,7 +36,7 @@ model Event {
 }
 
 model Cards {
-  id          Int        @id
+  id          Int        @id @default(autoincrement())
   title       String
   description String?
   img_url     String?
@@ -46,16 +46,16 @@ model Cards {
 }
 
 model Material {
-  id          Int       @id
+  id          Int       @id @default(autoincrement())
   name        String
   card_id     Int
   description String
-  card        Cards     @relation(fields: [card_id], references: [id])
   content     Content[]
+  card        Cards     @relation(fields: [card_id], references: [id])
 }
 
 model Content {
-  id          Int      @id
+  id          Int      @id @default(autoincrement())
   type        String
   title       String
   url         String?

@@ -8,27 +8,57 @@ export class ContentController {
   constructor(private readonly contentService: ContentService) {}
 
   @Post()
-  create(@Body() createContentDto: CreateContentDto) {
-    return this.contentService.create(createContentDto);
+  async create(@Body() createContentDto: CreateContentDto) {
+    try{
+      const contentService = new ContentService();
+      const content = await contentService.create(createContentDto);
+      return content;
+    }catch(error){
+      throw new Error(error);
+    }
   }
 
   @Get()
-  findAll() {
-    return this.contentService.findAll();
+  async findAll() {
+    try{
+      const contentService = new ContentService();
+      const content = await contentService.findAll();
+      return content;
+    }catch(error){
+      {message: error}
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.contentService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try{
+      const contentService = new ContentService();
+      const content = await contentService.findOne(id);
+      return content;
+    }catch(error){
+      throw new Error(error);
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContentDto: UpdateContentDto) {
-    return this.contentService.update(+id, updateContentDto);
+  async update(@Param('id') id: string, @Body() updateContentDto: UpdateContentDto) {
+    try{
+      const contentService = new ContentService();
+      const content = await contentService.update(id, updateContentDto);
+      return content;
+    }catch(error){
+      throw new Error(error);
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.contentService.remove(+id);
+  async remove(@Param('id') id: string) {
+    try{
+      const contentService = new ContentService();
+      const content = await contentService.remove(id);
+      return content;
+    }catch(error){
+      throw new Error(error);
+    }
   }
 }

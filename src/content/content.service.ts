@@ -1,26 +1,62 @@
 import { Injectable } from '@nestjs/common';
+import { Content, PrismaClient } from '@prisma/client';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
-
+const prisma = new PrismaClient()
 @Injectable()
 export class ContentService {
-  create(createContentDto: CreateContentDto) {
-    return 'This action adds a new content';
+  async create(createContentDto: CreateContentDto) {
+
+    const content = await prisma.content.create(
+      {
+        data: {
+          ...createContentDto
+        } as Content
+      }
+    );
+    return content;
   }
 
-  findAll() {
-    return `This action returns all content`;
+  async findAll() {
+    const content = await prisma.content.findMany();
+
+    if(content.length === 0){
+      throw new Error("No contents registered!");
+    }
+    return content;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} content`;
+  async findOne(id: string) {
+    const content = await prisma.content.findUnique({where: {id: Number(id)}});
+
+    if(!content){
+      throw new Error("This content doesn't exists!");
+    }
+    return content;
   }
 
-  update(id: number, updateContentDto: UpdateContentDto) {
-    return `This action updates a #${id} content`;
+  async update(id: string, updateContentDto: UpdateContentDto) {
+    const content = await prisma.content.update({
+      where: {
+        id: Number(id)
+      },
+      data: {
+        ...updateContentDto,
+      } as Content
+    })
+
+    if(!content){
+      throw new Error("This content doesn't exists!")
+    }
+    return content;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} content`;
+  async remove(id: string) {
+    const content = await prisma.content.delete({where: {id: Number(id)}});
+
+    if(!content){
+      throw new Error("This content doesn't exists!");
+    }
+    return content;
   }
 }
