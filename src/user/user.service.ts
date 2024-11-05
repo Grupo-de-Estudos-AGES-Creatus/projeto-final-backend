@@ -22,10 +22,9 @@ export class UserService {
   async findAll() {
     return await prisma.user.findMany();
   }
-
-  async findOne(id: string) {
+  async findOne(email: string) {
     return await prisma.user.findUnique({
-      where: { id },
+      where: { email },
     });
   }
   async findAndVerify(email: string, password: string) {
@@ -33,11 +32,11 @@ export class UserService {
       where: { email },
     });
     if (!user) {
-      return { error: 'User not found' };
+      return null;
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return { error: 'Invalid password' };
+      return null;
     }
     return user;
   }
