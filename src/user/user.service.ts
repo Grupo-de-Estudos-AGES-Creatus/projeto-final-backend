@@ -40,20 +40,20 @@ export class UserService {
     }
     return user;
   }
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(email: string, updateUserDto: UpdateUserDto) {
     const password=updateUserDto.password;
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(password, saltOrRounds);
     updateUserDto.password=hash;
     return await prisma.user.update({
-      where: { id },
+      where: { email },
       data: updateUserDto,
     });
   }
 
-  async remove(id: string) {
+  async remove(email: string) {
     return await prisma.user.delete({
-      where: { id },
+      where: { email },
     });
   }
 }

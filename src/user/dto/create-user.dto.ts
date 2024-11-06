@@ -9,4 +9,5 @@ export class CreateUserDto {
     semester?: string;
     n_of_absences?: number;
     img_url?: string;
+    resetToken?: string;
 }

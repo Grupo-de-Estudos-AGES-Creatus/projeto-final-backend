@@ -10,4 +10,5 @@ export class User {
     n_of_absences?: number;
     img_url?: string;
     created_at: Date;
+    resetToken?: string;
 }

@@ -14,4 +14,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsOptional()
     @IsUrl()
     img_url?: string;
+
+    @IsOptional()
+    @IsString()
+    resetToken?: string;
 }
