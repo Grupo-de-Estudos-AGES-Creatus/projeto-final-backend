@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 async function main() {
     const user = {
         email: 'pedro@gmail.com',
-        username: 'pedro',
+        name: 'pedro',
         password: '12345',
         role: 'ADMIN',
         matricula: "24106875",
