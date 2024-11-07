@@ -13,8 +13,8 @@ export class AuthService {
         private readonly configService: ConfigService,
         private readonly emailService: EmailService
     ) {
-        const clientID = this.configService.get('gpestudosages@outlook.com');
-        const clientSecret = this.configService.get('grupodeestudos1');
+        const clientID = this.configService.get('gpestudosages@gmail.com');
+        const clientSecret = this.configService.get('qyle fanv okuz cmlm');
         this.oauthClient = new google.auth.OAuth2(clientID, clientSecret);
     }
 

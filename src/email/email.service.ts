@@ -16,12 +16,12 @@ export class EmailService {
         private readonly jwtService: JwtService
     ) {
         this.nodemailerTransport = createTransport({
-            host: 'smtp-mail.outlook.com',
+            host: 'smtp.gmail.com',
             port: 587,
-            secure: true,
+            secure: false,
             auth: {
-                user: configService.get('gpestudosages@outlook.com'),
-                pass: configService.get('grupodeestudos1')
+                user: 'gpestudosages@gmail.com',
+                pass: 'qyle fanv okuz cmlm'
             }
         });
     }
