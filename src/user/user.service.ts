@@ -19,11 +19,8 @@ export class UserService {
       secure: false,
       auth: {
         user: "gpestudosages@gmail.com",
-        pass: "emkf gkwk ztdo aqju"
+        pass: "qyle fanv okuz cmlm"
       },
-      tls: {
-        rejectUnauthorized: false 
-      }
     })
   }
 
