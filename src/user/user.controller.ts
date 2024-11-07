@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req, UnauthorizedException, Put } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { VerifyUserDto } from './dto/verify-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.user.dto';
 @Controller('user')
 export class UserController {
   constructor(
@@ -12,7 +14,7 @@ export class UserController {
     private jwtService: JwtService
   ) { }
   
-
+//Login e logout
   @Post('login')
   async login(
     @Body() verifyUserDto: VerifyUserDto,
@@ -74,5 +76,19 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
+  }
+
+
+
+
+  //Change Password
+  @Put('changePW')
+  async changePassword(@Body() changePasswordDto:ChangePasswordDto, @Req() req){
+    return this.userService.changePassword(req.email,changePasswordDto.oldPassword,changePasswordDto.newPassword);
+  }
+  //Forgot Password
+  @Post('forgotPW')
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto){
+    return this.userService.forgotPassword(forgotPasswordDto.email);
   }
 }
