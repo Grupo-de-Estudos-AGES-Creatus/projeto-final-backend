@@ -11,11 +11,6 @@ export class UserController {
     private readonly userService: UserService,
     private jwtService: JwtService
   ) { }
-
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
   
 
   @Post('login')
@@ -63,27 +58,19 @@ export class UserController {
 
 
 
-
-
+//CRUD basico
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
+  }
   @Get()
   findAll() {
     return this.userService.findAll();
   }
-  /* @Get('byid/:id')
-  async findOne(@Param('id') id: string) {
-    return await this.userService.findOne(id);
-  }
-  @Get('verify')
-  async findAndVerify(@Body() verifyUserDto: VerifyUserDto) {
-    const result = await this.userService.findAndVerify(verifyUserDto.email, verifyUserDto.password);
-    return result;
-  } */
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }
-
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
