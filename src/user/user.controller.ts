@@ -15,26 +15,26 @@ export class UserController {
   ) { }
   
 //Login e logout
-  @Post('login')
-  async login(
-    @Body() verifyUserDto: VerifyUserDto,
-    @Res({ passthrough: true }) response: Response
-  ) {
-    const user = await this.userService.findAndVerify(verifyUserDto.email, verifyUserDto.password);
-    if (!user) {
-      response.status(400).json({
-        message: "error",
-      });
-      return;
-    }
-    let jwt = await this.jwtService.signAsync({ email: user.email });
-    response.cookie('jwt', jwt, { httpOnly: true });
+  // @Post('login')
+  // async login(
+  //   @Body() verifyUserDto: VerifyUserDto,
+  //   @Res({ passthrough: true }) response: Response
+  // ) {
+  //   const user = await this.userService.findAndVerify(verifyUserDto.email, verifyUserDto.password);
+  //   if (!user) {
+  //     response.status(400).json({
+  //       message: "error",
+  //     });
+  //     return;
+  //   }
+  //   let jwt = await this.jwtService.signAsync({ email: user.email });
+  //   response.cookie('jwt', jwt, { httpOnly: true });
 
 
-    return {
-      "message": "success",
-    };
-  }
+  //   return {
+  //     "message": "success",
+  //   };
+  // }
   @Get('user')
   async user(@Req() request: Request) {
     try {
@@ -49,13 +49,13 @@ export class UserController {
       throw new UnauthorizedException();
     }
   }
-  @Post('logout')
-  async logout(@Res({ passthrough: true }) response: Response) {
-    response.clearCookie('jwt');
-    return {
-      message: "success",
-    };
-  }
+  // @Post('logout')
+  // async logout(@Res({ passthrough: true }) response: Response) {
+  //   response.clearCookie('jwt');
+  //   return {
+  //     message: "success",
+  //   };
+  // }
 
 
 
