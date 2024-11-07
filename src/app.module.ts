@@ -6,9 +6,10 @@ import { EventModule } from './event/event.module';
 import { CardsModule } from './cards/cards.module';
 import { MaterialModule } from './material/material.module';
 import { ContentModule } from './content/content.module';
+import { ProjectModule } from './project/project.module';
 
 @Module({
-  imports: [UserModule, EventModule, CardsModule, MaterialModule, ContentModule],
+  imports: [UserModule, EventModule, CardsModule, MaterialModule, ContentModule, ProjectModule],
   controllers: [AppController],
   providers: [AppService],
 })

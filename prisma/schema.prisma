@@ -66,10 +66,9 @@ model Content {
 }
 
 model Project {
-  id      Int    @id @default(autoincrement())
-  name    String
-  type    String
-  api_url String
-  user_id String
-  user    User   @relation(fields: [user_id], references: [id])
+  id        Int      @id @default(autoincrement())
+  link      String   @unique
+  type      String
+  user_id   String
+  user      User     @relation(fields: [user_id], references: [id]) 
 }
