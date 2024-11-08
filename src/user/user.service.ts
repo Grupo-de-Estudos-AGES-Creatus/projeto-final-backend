@@ -103,6 +103,7 @@ export class UserService {
       expiresIn: '10m',
     });
     this.sendPasswordResetEmail(email, resetToken)
+    return { message: "Email enviado com sucesso" }
   }
   //Mandar email
   async sendPasswordResetEmail(to: string, token: string) {
