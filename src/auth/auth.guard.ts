@@ -5,7 +5,7 @@ import {
     Injectable,
     UnauthorizedException,
   } from '@nestjs/common';
-  import { JwtService } from '@nestjs/jwt';
+  import { JsonWebTokenError, JwtService, NotBeforeError,TokenExpiredError } from '@nestjs/jwt';
   import { jwtConstants } from './constants';
   import { Request } from 'express';
   
@@ -22,29 +22,51 @@ import {
         });;
       }
       try {
+        console.log("CHEGOU 1 ")
         const payload = await this.jwtService.verifyAsync(
-          token,
-          {
-            secret: jwtConstants.secret
-          }
+          token
         );
+        console.log("CHEGOU 2 ")
         // 💡 We're assigning the payload to the request object here
         // so that we can access it in our route handlers
         request['user'] = payload;
+        console.log("CHEGOU 3 ")
         const requiredRoles = this.getRequiredRoles(context);
+        console.log("CHEGOU 4 ")
       if (requiredRoles && !requiredRoles.includes(payload.role)) {
         throw new UnauthorizedException({messege:'Você não tem permissão para acessar esta rota'});
       }
-      } catch {
-        throw new UnauthorizedException({messege:'erro no token'});
+      } catch(error) {
+        if (error instanceof TokenExpiredError) {
+          throw new UnauthorizedException('Token expirado');
+        }
+        if (error instanceof JsonWebTokenError) {
+          throw new UnauthorizedException('Token inválido');
+        }
+        if (error instanceof NotBeforeError) {
+          throw new UnauthorizedException('Token não está disponível ainda');
+        }
+
+        throw new UnauthorizedException('Erro desconhecido ao verificar token');
       }
       return true;
     }
   
-    private extractTokenFromHeader(request: Request): string | undefined {
-      const [type, token] = request.headers.authorization?.split(' ') ?? [];
-      return type === 'Bearer' ? token : undefined;
+    private extractTokenFromHeader(request: Request): string | null {
+      const authorizationHeader = request.headers.authorization;
+    
+      if (!authorizationHeader) {
+        throw new UnauthorizedException({
+          message: 'nao ta pegando nenhum request no authorization',
+        });; 
+      }
+      const [type, token] = authorizationHeader.split(' ');
+      if (type === 'Bearer' && token) {
+        return token; 
+      }
+      return null; 
     }
+    
   
     // (chatGPT) Função para obter as roles requeridas na rota, caso existam
     private getRequiredRoles(context: ExecutionContext): string[] {
