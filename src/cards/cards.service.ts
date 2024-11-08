@@ -10,7 +10,6 @@ export class CardsService {
   async create(createCardDto: CreateCardDto) {
     return await prisma.cards.create({
       data: {
-        index: createCardDto.index,
         title: createCardDto.title,
         description: createCardDto.description,
         url: createCardDto.url,
@@ -57,7 +56,6 @@ export class CardsService {
     return await prisma.cards.update({
       where: { id },
       data: {
-        index: updateCardDto.index,
         title: updateCardDto.title,
         description: updateCardDto.description,
         image: updateCardDto.image,

@@ -1,8 +1,7 @@
 import { CreateMaterialDto } from 'src/material/dto/create-material.dto';
 
 export class CreateCardDto {
-    index: number;
-    title?: string;
+    title: string;
     description?: string;
     url: string
     image?: string;

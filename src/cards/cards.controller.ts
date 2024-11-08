@@ -2,11 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
-import {Card} from './entities/card.entity'
+import { Card } from './entities/card.entity'
 
 @Controller('cards')
 export class CardsController {
-  constructor(private readonly cardsService: CardsService) {}
+  constructor(private readonly cardsService: CardsService) { }
 
   @Post()
   create(@Body() createCardDto: CreateCardDto) {
