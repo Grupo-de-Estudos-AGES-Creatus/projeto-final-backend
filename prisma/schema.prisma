@@ -40,11 +40,13 @@ model Event {
 
 model Cards {
   id          Int        @id @default(autoincrement())
-  title       String
+  index       Int
+  title       String?
   subtitle    String?
   description String?
-  img_url     String?
-  hidden      Boolean    @default(true)
+  url         String
+  image       String?
+  isBlocked   Boolean    @default(false)
   material    Material[]
 }
 

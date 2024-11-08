@@ -10,10 +10,12 @@ export class CardsService {
   async create(createCardDto: CreateCardDto) {
     return await prisma.cards.create({
       data: {
+        index: createCardDto.index,
         title: createCardDto.title,
         description: createCardDto.description,
-        img_url: createCardDto.img_url,
-        hidden: createCardDto.hidden,
+        url: createCardDto.url,
+        image: createCardDto.image,
+        isBlocked: createCardDto.isBlocked,
         subtitle: createCardDto.subtitle,
         material: {
           create: createCardDto.material?.map((mat) => ({
@@ -31,7 +33,7 @@ export class CardsService {
       },
     });
   }
-  
+
 
 
   async findAll() {
@@ -55,15 +57,16 @@ export class CardsService {
     return await prisma.cards.update({
       where: { id },
       data: {
+        index: updateCardDto.index,
         title: updateCardDto.title,
         description: updateCardDto.description,
-        img_url: updateCardDto.img_url,
-        hidden: updateCardDto.hidden,
+        image: updateCardDto.image,
+        isBlocked: updateCardDto.isBlocked,
         subtitle: updateCardDto.subtitle,
       },
     });
   }
-  
+
 
   async remove(id: number) {
     return await prisma.cards.delete({
