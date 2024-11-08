@@ -84,7 +84,17 @@ export class UserController {
   //Change Password
   @Put('changePW')
   async changePassword(@Body() changePasswordDto:ChangePasswordDto, @Req() req){
-    return this.userService.changePassword(req.email,changePasswordDto.oldPassword,changePasswordDto.newPassword);
+    try {
+      const cookie = req.cookies.jwt;
+      const data = await this.jwtService.verifyAsync(cookie);//n sei se funciona
+      if(!data){
+        throw new UnauthorizedException();
+      }
+      const user = await this.userService.findOne(data.email);
+      return this.userService.changePassword(user.email,changePasswordDto.oldPassword,changePasswordDto.newPassword);
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
   }
   //Forgot Password
   @Post('forgotPW')

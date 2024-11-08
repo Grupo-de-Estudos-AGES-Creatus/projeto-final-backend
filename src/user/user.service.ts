@@ -99,7 +99,7 @@ export class UserService {
     }
     const payload = { email: user.email }
     const resetToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET,
+      secret: process.env.JWT_CHANGE_PASSWORD_SECRET,
       expiresIn: '10m',
     });
     this.sendPasswordResetEmail(email, resetToken)
