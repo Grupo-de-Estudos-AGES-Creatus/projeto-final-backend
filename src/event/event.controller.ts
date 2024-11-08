@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { findUpcomingDto } from './dto/find-upcoming.dto';
+import { Roles } from 'src/auth/roles.decorator';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) { }
 
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Post()
   create(@Body() createEventDto: CreateEventDto) {
     return this.eventService.create(createEventDto);
@@ -35,21 +39,29 @@ export class EventController {
 
 
 
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Patch()
   update(@Body() updateEventDto: UpdateEventDto) {
     return this.eventService.update(updateEventDto);
   }
 
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.eventService.remove(+id);
   }
 
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Delete('/upcoming/now')
   removeOldNow() {
     return this.eventService.removeOld(new Date());
   }
 
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Delete('/upcoming/date/:date')
   removeOld(@Param('date') date: string) {
     return this.eventService.removeOld(new Date(date));

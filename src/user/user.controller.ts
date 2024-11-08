@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req, UnauthorizedException, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req, UnauthorizedException, Put, UseGuards } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -7,6 +7,8 @@ import { VerifyUserDto } from './dto/verify-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.user.dto';
+import { Roles } from 'src/auth/roles.decorator';
+import { AuthGuard } from 'src/auth/auth.guard';
 @Controller('user')
 export class UserController {
   constructor(
@@ -69,10 +71,15 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
+  
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);

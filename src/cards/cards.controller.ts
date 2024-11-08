@@ -8,7 +8,8 @@ import { Roles } from '../auth/roles.decorator'; // (chatGPT) Importando o decor
 @Controller('cards')
 export class CardsController {
   constructor(private readonly cardsService: CardsService) {}
-
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Post()
   create(@Body() createCardDto: CreateCardDto) {
     return this.cardsService.create(createCardDto);
@@ -25,12 +26,14 @@ export class CardsController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard)  // (chatGPT) Protege a rota com o AuthGuard
+  @UseGuards(AuthGuard)  
   @Roles('ADMIN')
   update(@Param('id') id: string, @Body() updateCardDto: UpdateCardDto) {
     return this.cardsService.update(+id, updateCardDto);
   }
 
+  @UseGuards(AuthGuard)  
+  @Roles('ADMIN')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.cardsService.remove(+id);
