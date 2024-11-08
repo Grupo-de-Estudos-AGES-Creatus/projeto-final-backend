@@ -35,20 +35,20 @@ export class UserController {
   //     "message": "success",
   //   };
   // }
-  @Get('user')
-  async user(@Req() request: Request) {
-    try {
-      const cookie = request.cookies.jwt;
-      const data = await this.jwtService.verifyAsync(cookie);
-      if(!data){
-        throw new UnauthorizedException();
-      }
-      const user = await this.userService.findOne(data.email);
-      return user;
-    } catch (e) {
-      throw new UnauthorizedException();
-    }
-  }
+  // @Get('user')
+  // async user(@Req() request: Request) {
+  //   try {
+  //     const cookie = request.cookies.jwt;
+  //     const data = await this.jwtService.verifyAsync(cookie);
+  //     if(!data){
+  //       throw new UnauthorizedException();
+  //     }
+  //     const user = await this.userService.findOne(data.email);
+  //     return user;
+  //   } catch (e) {
+  //     throw new UnauthorizedException();
+  //   }
+  // }
   // @Post('logout')
   // async logout(@Res({ passthrough: true }) response: Response) {
   //   response.clearCookie('jwt');
