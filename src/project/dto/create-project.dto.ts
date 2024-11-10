@@ -1,5 +1,5 @@
 export class CreateProjectDto {
     link: string;
-    type: string;
-    user_id: string;
+    sprint: number;
+    user_email: string;
 }

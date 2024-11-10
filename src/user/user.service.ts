@@ -9,7 +9,6 @@ const prisma = new PrismaClient()
 @Injectable()
 export class UserService {
   private transporter: nodemailer.Transporter;
-  //Brian Auer
   constructor(
     private readonly jwtService: JwtService
   ) {
@@ -39,7 +38,11 @@ export class UserService {
     });
   }
   async findAll() {
-    return await prisma.user.findMany();
+    return await prisma.user.findMany({
+      include: {
+        projects: true,
+      },
+    });
   }
   async findOne(email: string) {
     return await prisma.user.findUnique({

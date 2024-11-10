@@ -5,7 +5,9 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 
 @Controller('project')
 export class ProjectController {
-  constructor(private readonly projectService: ProjectService) {}
+  constructor( 
+    private readonly projectService: ProjectService
+  ) {}
 
   @Post()
   create(@Body() createProjectDto: CreateProjectDto) {
@@ -17,9 +19,9 @@ export class ProjectController {
     return this.projectService.findAll();
   }
 
-  @Get(':link')
-  findOne(@Param('link') link: string) {
-    return this.projectService.findOne(link);
+  @Get(':sprint')
+  findOne(@Param('sprint') sprint: number) {
+    return this.projectService.findOne(sprint);
   }
 
   @Patch(':id')

@@ -1,7 +1,7 @@
-import {Injectable} from '@nestjs/common';
-import {CreateMaterialDto} from './dto/create-material.dto';
-import {UpdateMaterialDto} from './dto/update-material.dto';
-import {PrismaClient} from "@prisma/client";
+import { Injectable } from '@nestjs/common';
+import { CreateMaterialDto } from './dto/create-material.dto';
+import { UpdateMaterialDto } from './dto/update-material.dto';
+import { PrismaClient } from "@prisma/client";
 
 
 const prisma = new PrismaClient()
@@ -9,15 +9,15 @@ const prisma = new PrismaClient()
 @Injectable()
 export class MaterialService {
     async create(createMaterialDto: CreateMaterialDto) {
-      const { name, description,card_id , content } = createMaterialDto;
-      const data: any = {
-          name,
-          description,
-          card_id,
-          content: content && content.length > 0 ? {create: content.map((item) => ({...item, })),} : [],};
-      await prisma.material.create({
-        data,
-      });
+        const { name, url, card_id } = createMaterialDto;
+        const data: any = {
+            name,
+            url,
+            card_id,
+        };
+        await prisma.material.create({
+            data,
+        });
     }
 
     async findAll() {
@@ -38,7 +38,7 @@ export class MaterialService {
 
         const body = {
             name: updateMaterialDto.name,
-            description: updateMaterialDto.description,
+            url: updateMaterialDto.url,
         }
 
         await prisma.material.update({

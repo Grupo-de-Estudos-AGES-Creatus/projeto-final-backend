@@ -1,5 +1,5 @@
 export class CreateMaterialDto {
     name: string;
-    url?: string;
+    url: string;
     card_id: number;
 }

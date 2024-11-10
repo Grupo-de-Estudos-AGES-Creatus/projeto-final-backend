@@ -57,9 +57,9 @@ model Material {
 }
 
 model Project {
-  id      Int    @id @default(autoincrement())
-  link    String @unique
-  type    String
-  user_id String
-  user    User   @relation(fields: [user_id], references: [id])
+  id         Int    @id @default(autoincrement())
+  link       String @unique
+  sprint     Int
+  user_email String
+  user       User   @relation(fields: [user_email], references: [email])
 }
