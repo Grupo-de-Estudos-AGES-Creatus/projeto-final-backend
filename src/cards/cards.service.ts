@@ -15,18 +15,10 @@ export class CardsService {
         url: createCardDto.url,
         image: createCardDto.image,
         isBlocked: createCardDto.isBlocked,
-        subtitle: createCardDto.subtitle,
         material: {
           create: createCardDto.material?.map((mat) => ({
             name: mat.name,
-            description: mat.description,
-            content: {
-              create: mat.content?.map((item) => ({
-                type: item.type,
-                title: item.title,
-                url: item.url,
-              })) || [],
-            },
+            url: mat.url,
           })) || [],
         },
       },
@@ -60,7 +52,6 @@ export class CardsService {
         description: updateCardDto.description,
         image: updateCardDto.image,
         isBlocked: updateCardDto.isBlocked,
-        subtitle: updateCardDto.subtitle,
       },
     });
   }
