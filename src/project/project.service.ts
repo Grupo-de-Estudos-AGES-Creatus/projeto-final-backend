@@ -60,12 +60,17 @@ export class ProjectService {
     }
   }
 
-  update(id: number, updateProjectDto: UpdateProjectDto) {
-    return `This action updates a #${id} project`;
+  async update(id: number, updateProjectDto: UpdateProjectDto) {
+    return await prisma.project.update({
+      where: { id },
+      data: updateProjectDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} project`;
+  async remove(id: number) {
+    return await prisma.project.delete({
+      where: {id},
+    });
   }
 }
 
