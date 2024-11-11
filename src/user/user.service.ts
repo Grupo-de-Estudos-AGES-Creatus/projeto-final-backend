@@ -14,7 +14,7 @@ export class UserService {
   ) {
     this.transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,              
+      port: 587,
       secure: false,
       auth: {
         user: "gpestudosages@gmail.com",
@@ -110,12 +110,15 @@ export class UserService {
   }
   //Mandar email
   async sendPasswordResetEmail(to: string, token: string) {
-    const resetLink = `http://yourapp.com/reset-password?token=${token}`;
+    const resetLink = `http://localhost:5173/reset-password?token=${token}`;
     const mailOptions = {
       from: 'Auth-backend service',
       to: to,
       subject: 'Password Reset Request',
-      html: `<p>You requested a password reset. Click the link below to reset your password:</p><p><a href="${resetLink}">Reset Password</a></p>`
+      html: `
+      <p>You requested a password reset. Click the link below to reset your password:</p>
+      <p><a href="${resetLink}">Reset Password</a></p>
+      `
     };
     await this.transporter.sendMail(mailOptions);
   }
