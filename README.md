@@ -19,7 +19,7 @@ $ npm install
 ```bash
 
 # docker
-$ docker-compose up
+$ docker-compose up -d
 
 # db
 $ npx prisma generate
