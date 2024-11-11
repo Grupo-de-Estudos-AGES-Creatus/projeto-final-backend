@@ -92,25 +92,30 @@ export class UserController {
 
 
   //Change Password
-  @UseGuards(AuthGuard)
-  @Roles('ADMIN', 'NORMAL')
   @Put('changePW')
   async changePassword(@Body() changePasswordDto:ChangePasswordDto, @Req() req){
     try {
       const cookie = req.cookies.jwt;
-      const data = await this.jwtService.verifyAsync(cookie);//n sei se funciona
+      const data = await this.jwtService.verifyAsync(cookie,
+        {secret: process.env.JWT_SECRET}
+      );
       if(!data){
-        throw new UnauthorizedException();
+        throw new UnauthorizedException("sem data");
       }
       const user = await this.userService.findOne(data.email);
+      if(!user){
+        throw new UnauthorizedException("sem user");
+      }
+      if(user.resetToken!=cookie){
+        throw new UnauthorizedException("sem resetToken");
+      }
       return this.userService.changePassword(user.email,changePasswordDto.oldPassword,changePasswordDto.newPassword);
     } catch (e) {
-      throw new UnauthorizedException();
+      console.log(e);
+      throw new UnauthorizedException("aaaaaaa");
     }
   }
   //Forgot Password
-  @UseGuards(AuthGuard)
-  @Roles('ADMIN', 'NORMAL')
   @Post('forgotPW')
   async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto){
     return this.userService.forgotPassword(forgotPasswordDto.email);

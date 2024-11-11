@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaClient } from '@prisma/client'
@@ -102,7 +102,7 @@ export class UserService {
     }
     const payload = { email: user.email }
     const resetToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_CHANGE_PASSWORD_SECRET,
+      secret: process.env.JWT_SECRET,
       expiresIn: '10m',
     });
     this.sendPasswordResetEmail(email, resetToken)
@@ -110,7 +110,7 @@ export class UserService {
   }
   //Mandar email
   async sendPasswordResetEmail(to: string, token: string) {
-    const resetLink = `http://localhost:5173/reset-password?token=${token}`;
+    const resetLink = `http://localhost:5173/login/changePassword?token=${token}`;
     const mailOptions = {
       from: 'Auth-backend service',
       to: to,
@@ -121,5 +121,6 @@ export class UserService {
       `
     };
     await this.transporter.sendMail(mailOptions);
+    await prisma.user.update({where:{email:to},data:{resetToken:token}})
   }
 }
