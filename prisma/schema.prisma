@@ -19,7 +19,6 @@ model User {
   email         String    @unique
   password      String
   role          String
-  //admin boolean
   matricula     String
   img_url       String?
   course        String?
@@ -62,4 +61,15 @@ model Project {
   sprint     Int
   user_email String
   user       User   @relation(fields: [user_email], references: [email])
+}
+
+model UserForms{
+  id          String     @id @default(cuid())
+  email       String     @unique
+  name        String
+  course      String
+  semester    String
+  matricula   String
+  register_at DateTime @default(now())
+
 }

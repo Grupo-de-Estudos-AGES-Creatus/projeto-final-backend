@@ -6,6 +6,9 @@
   "directories": {
     "test": "test"
   },
+  "prisma": {
+  "seed": "ts-node prisma\\seed.ts"
+},
   "scripts": {
     "start": "npx nest start",
     "start:dev": "nest start --watch",
@@ -38,6 +41,9 @@
     "@types/cookie-parser": "^1.4.7",
     "@types/jest": "^29.5.14",
     "@types/nanoid": "^2.1.0",
-    "@types/nodemailer": "^6.4.16"
+    "@types/node": "^22.9.0",
+    "@types/nodemailer": "^6.4.16",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   }
 }

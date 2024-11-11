@@ -15,9 +15,6 @@ async function main() {
         n_of_absences: 0,
         img_url: "https://avatars.githubusercontent.com/u/1?v=4",
         created_at: new Date(),
-        project: [
-            
-        ]
     }
     const alice = await prisma.user.create({
         data: user
