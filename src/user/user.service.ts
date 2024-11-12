@@ -89,6 +89,7 @@ export class UserService {
     }
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = newHashedPassword;
+    user.resetToken = null;
     return await prisma.user.update({
       where: { email },
       data: user,
