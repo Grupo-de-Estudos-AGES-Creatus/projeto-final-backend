@@ -17,8 +17,8 @@ export class UserService {
       port: 587,
       secure: false,
       auth: {
-        user: "gpestudosages@gmail.com",
-        pass: "qyle fanv okuz cmlm"
+        user: process.env.EMAIL_NAME,
+        pass: process.env.EMAIL_PASSWORD
       },
     })
   }
@@ -102,7 +102,7 @@ export class UserService {
     }
     const payload = { email: user.email }
     const resetToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET,
+      secret: process.env.JWT_CHANGE_PASSWORD_SECRET, 
       expiresIn: '10m',
     });
     this.sendPasswordResetEmail(email, resetToken)

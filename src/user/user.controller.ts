@@ -97,7 +97,7 @@ export class UserController {
     try {
       const cookie = req.cookies.jwt;
       const data = await this.jwtService.verifyAsync(cookie,
-        {secret: process.env.JWT_SECRET}
+        {secret: process.env.JWT_CHANGE_PASSWORD_SECRET} 
       );
       if(!data){
         throw new UnauthorizedException("sem data");
