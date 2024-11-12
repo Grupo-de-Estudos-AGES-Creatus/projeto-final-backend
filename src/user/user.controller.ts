@@ -109,7 +109,7 @@ export class UserController {
       if(user.resetToken!=cookie){
         throw new UnauthorizedException("sem resetToken");
       }
-      return this.userService.changePassword(user.email,changePasswordDto.oldPassword,changePasswordDto.newPassword);
+      return this.userService.changePassword(user.email,changePasswordDto.newPassword);
     } catch (e) {
       console.log(e);
       throw new UnauthorizedException("aaaaaaa");

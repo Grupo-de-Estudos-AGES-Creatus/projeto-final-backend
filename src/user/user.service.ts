@@ -82,10 +82,10 @@ export class UserService {
 
 
   //Mudança de senha
-  async changePassword(email: string, oldPassword: string, newPassword: string) {
-    const user = await this.findAndVerify(email, oldPassword);
+  async changePassword(email: string, newPassword: string) {
+    const user = await this.findOne(email);
     if (!user) {
-      throw new NotFoundException("Login ou/e senha errados");
+      throw new NotFoundException("email não esta no banco");
     }
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = newHashedPassword;
