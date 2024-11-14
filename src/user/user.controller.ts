@@ -63,8 +63,8 @@ export class UserController {
 
 
 //CRUD basico
-  /* @UseGuards(AuthGuard)
-  @Roles('ADMIN') */
+  @UseGuards(AuthGuard)
+  @Roles('ADMIN')
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);

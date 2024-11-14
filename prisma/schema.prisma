@@ -19,7 +19,6 @@ model User {
   email         String    @unique
   password      String
   role          String
-  //admin boolean
   matricula     String
   img_url       String?
   course        String?
@@ -32,14 +31,14 @@ model User {
 }
 
 model Event {
-  id         Int      @id
+  id         Int      @id @default(autoincrement())
   title      String
   start_date DateTime
   end_date   DateTime
 }
 
 model Cards {
-  id          Int        @id @default(autoincrement())
+  id          Int        @id
   title       String
   description String?
   url         String?

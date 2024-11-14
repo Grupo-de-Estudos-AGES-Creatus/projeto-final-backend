@@ -10,6 +10,7 @@ export class CardsService {
   async create(createCardDto: CreateCardDto) {
     return await prisma.cards.create({
       data: {
+        id: createCardDto.id,
         title: createCardDto.title,
         description: createCardDto.description,
         url: createCardDto.url,
