@@ -19,46 +19,32 @@ model User {
   username      String
   password      String
   role          String
-  matricula     String
-  course        String?
-  github        String?
-  semester      String?
-  n_of_absences Int? @default(0)
+  registration  String
   img_url       String?
-  created_at    DateTime @default(now())
 }
 
 model Event {
-  id         Int      @id
-  title      String
-  start_date DateTime
-  end_date   DateTime
+  id          Int      @id
+  title       String
+  description String
+  start_date  DateTime
+  end_date    DateTime
 }
 
-model Cards {
+model Sprint {
   id          Int        @id
   title       String
-  description String?
+  description String
   img_url     String?
-  hidden      Boolean    @default(true)
-  subtitle    String?
+  isLocked    Boolean    @default(true)
   material    Material[]
 }
 
 model Material {
-  id          Int       @id
-  name        String
-  card_id     Int
-  description String
-  card        Cards     @relation(fields: [card_id], references: [id])
-  content     Content[]
+  id        Int       @id
+  title     String
+  text      String
+  sprint_id Int
+  sprint    Sprint    @relation(fields: [sprint_id], references: [id])
 }
 
-model Content {
-  id          Int      @id
-  type        String
-  title       String
-  url         String?
-  material_id Int
-  material    Material @relation(fields: [material_id], references: [id])
-}
