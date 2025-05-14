@@ -3,14 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { EventModule } from './event/event.module';
-import { CardsModule } from './cards/cards.module';
 import { MaterialModule } from './material/material.module';
-import { ContentModule } from './content/content.module';
+import { CalendarController } from './calendar/calendar.controller';
+import { CalendarModule } from './calendar/calendar.module';
+import { PrismaService } from './prisma.service';
 
 @Module({
-  imports: [UserModule, EventModule, CardsModule, MaterialModule, ContentModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [UserModule, EventModule, MaterialModule, CalendarModule],
+  controllers: [AppController, CalendarController],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
-''

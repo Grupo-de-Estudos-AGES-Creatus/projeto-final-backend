@@ -12,7 +12,8 @@ async function main() {
         registration: "23200064",
         semester: "2025/1",
         img_url: "https://avatars.githubusercontent.com/u/1?v=4",
-        created_at: new Date(),
+        createdAt: new Date(),
+        firstAcess: true,
     }
     const alice = await prisma.user.create({
         data: user
