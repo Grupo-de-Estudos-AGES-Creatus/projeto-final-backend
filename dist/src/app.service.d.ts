@@ -7,12 +7,10 @@ export declare class AppService {
         username: string;
         password: string;
         role: string;
-        matricula: string;
-        course: string | null;
-        github: string | null;
-        semester: string | null;
-        n_of_absences: number | null;
+        registration: string;
         img_url: string | null;
-        created_at: Date;
+        semester: string;
+        firstAcess: boolean;
+        createdAt: Date;
     }[]>;
 }
