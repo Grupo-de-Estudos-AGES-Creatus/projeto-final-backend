@@ -21,6 +21,8 @@ model User {
   role          String
   registration  String
   img_url       String?
+  semester      String
+  createdAt     DateTime @default(now())
 }
 
 model Event {
