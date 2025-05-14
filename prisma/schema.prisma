@@ -49,6 +49,7 @@ model Material {
 
 model Projects {
   id        Int     @id
+  link      String
   userId    Int
   user      User    @relation(fields: [userId], references: [id])
   sprintId  Int 
