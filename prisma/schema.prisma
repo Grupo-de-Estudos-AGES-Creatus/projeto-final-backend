@@ -25,8 +25,8 @@ model Event {
   id          Int      @id @default(autoincrement())
   title       String
   description String
-  start_date  DateTime
-  end_date    DateTime
+  startDate   DateTime
+  endDate     DateTime
 }
 
 model Sprint {

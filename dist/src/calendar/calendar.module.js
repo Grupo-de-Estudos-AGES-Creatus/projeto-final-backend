@@ -9,12 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CalendarModule = void 0;
 const common_1 = require("@nestjs/common");
 const calendar_service_1 = require("./calendar.service");
+const calendar_controller_1 = require("./calendar.controller");
+const prisma_service_1 = require("../prisma.service");
 let CalendarModule = class CalendarModule {
 };
 exports.CalendarModule = CalendarModule;
 exports.CalendarModule = CalendarModule = __decorate([
     (0, common_1.Module)({
-        providers: [calendar_service_1.CalendarService]
+        controllers: [calendar_controller_1.CalendarController],
+        providers: [calendar_service_1.CalendarService, prisma_service_1.PrismaService]
     })
 ], CalendarModule);
 //# sourceMappingURL=calendar.module.js.map
