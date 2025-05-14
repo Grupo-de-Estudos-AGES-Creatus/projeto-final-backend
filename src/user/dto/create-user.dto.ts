@@ -1,12 +1,9 @@
 export class CreateUserDto {
-    email: string;
-    username: string;
-    password: string;
-    role: string;
-    matricula: string;
-    course?: string;
-    github?: string;
-    semester?: string;
-    n_of_absences?: number;
-    img_url?: string;
+    email:        string;
+    username:     string;
+    password:     string;
+    role:         string;
+    registration: string;
+    semester?:    string;
+    img_url?:     string;
 }
