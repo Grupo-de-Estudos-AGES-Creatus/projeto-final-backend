@@ -8,13 +8,12 @@ async function main() {
         username: 'pedro',
         password: '12345',
         role: 'ADMIN',
-        matricula: "24106875",
-        course: "CC",
-        github: "github.com/pedro",
-        semester: "242",
-        n_of_absences: 0,
+        registration: "25199999-3",
         img_url: "https://avatars.githubusercontent.com/u/1?v=4",
+        semester: "25/1,",        
         created_at: new Date(),
+
+
     }
     const alice = await prisma.user.create({
         data: user
