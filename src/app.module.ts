@@ -7,10 +7,11 @@ import { MaterialModule } from './material/material.module';
 import { CalendarController } from './calendar/calendar.controller';
 import { CalendarModule } from './calendar/calendar.module';
 import { PrismaService } from './prisma.service';
+import { CalendarService } from './calendar/calendar.service';
 
 @Module({
   imports: [UserModule, EventModule, MaterialModule, CalendarModule],
-  controllers: [AppController, CalendarController],
+  controllers: [AppController],
   providers: [AppService, PrismaService],
 })
 export class AppModule {}
