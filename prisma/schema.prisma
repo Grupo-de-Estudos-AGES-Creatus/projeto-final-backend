@@ -13,52 +13,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String    @id @default(cuid())
-  email         String   @unique
-  username      String
-  password      String
-  role          String
-  matricula     String
-  course        String?
-  github        String?
-  semester      String?
-  n_of_absences Int? @default(0)
-  img_url       String?
-  created_at    DateTime @default(now())
-}
+model User { 
+  id Int @id 
+  email String @unique 
+  username String 
+  password String 
+  role String 
+  registration String 
+  img_url String? 
+  semester String 
+  firstAcess Boolean @default(true) 
+  createdAt DateTime @default(now()) 
+  Projects Projects[] 
+} 
 
-model Event {
-  id         Int      @id
-  title      String
-  start_date DateTime
-  end_date   DateTime
-}
+ 
 
-model Cards {
-  id          Int        @id
-  title       String
-  description String?
-  img_url     String?
-  hidden      Boolean    @default(true)
-  subtitle    String?
-  material    Material[]
-}
+model Event { 
+  id Int @id 
+  title String 
+  description String 
+  start_date DateTime 
+  end_date DateTime 
+} 
 
-model Material {
-  id          Int       @id
-  name        String
-  card_id     Int
-  description String
-  card        Cards     @relation(fields: [card_id], references: [id])
-  content     Content[]
-}
+ 
 
-model Content {
-  id          Int      @id
-  type        String
-  title       String
-  url         String?
-  material_id Int
-  material    Material @relation(fields: [material_id], references: [id])
-}
+model Sprint { 
+  id Int @id 
+  title String 
+  description String 
+  img_url String? 
+  isLocked Boolean @default(true) 
+  material Material[] 
+  projects Projects[] 
+} 
+
+ 
+
+model Material { 
+  id Int @id 
+  title String 
+  text String 
+  sprintId Int 
+  sprint Sprint @relation(fields: [sprintId], references: [id]) 
+} 
+
+ 
+
+model Projects { 
+  id Int @id 
+  link String 
+  userId Int 
+  user User @relation(fields: [userId], references: [id]) 
+  sprintId Int  
+  sprint Sprint @relation(fields: [sprintId], references: [id]) 
+} 
