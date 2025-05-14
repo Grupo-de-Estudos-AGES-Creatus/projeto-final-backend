@@ -1,26 +1,63 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
+
+const prisma = new PrismaClient();
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const password=createUserDto.password;
+    const saltOrRounds = 10;
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    createUserDto.password=hash;
+    return await prisma.user.create({
+      data: {
+        ...createUserDto,
+        created_at: new Date(),
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    return await prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string) {
+    return await prisma.user.findUnique({
+      where: { id },
+    });
+  }
+  async findAndVerify(email: string, password: string) {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+    if (!user) {
+      return { error: 'User not found' };
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return { error: 'Invalid password' };
+    }
+    return user;
+  }
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const password=updateUserDto.password;
+    const saltOrRounds = 10;
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    updateUserDto.password=hash;
+    return await prisma.user.update({
+      where: { id },
+      data: updateUserDto,
+    });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    return await prisma.user.delete({
+      where: { id },
+    });
   }
 }
