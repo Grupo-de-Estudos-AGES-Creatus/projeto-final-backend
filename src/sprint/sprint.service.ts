@@ -23,7 +23,9 @@ export class SprintService {
         }
 
         return await this.prisma.sprint.findUnique({
-            where: { id : id },
+            where: { 
+                id: id 
+            },
         });
     }
 
@@ -32,8 +34,7 @@ export class SprintService {
         return await this.prisma.sprint.create({
             data: {
                 ...createSprintDto,
-                createdAt: new Date(),
-            }as any
+            }
         });
     }
 
@@ -41,7 +42,9 @@ export class SprintService {
         if (!updateSprintDto.descriptionPath && !updateSprintDto.title && !updateSprintDto.isLocked) throw new HttpException("Precisa conter pelo menos uma informação!", HttpStatus.BAD_REQUEST) 
         
             const sprint = await this.prisma.sprint.findUnique({
-                where: {id : id}
+                where: {
+                    id: id
+                }
             }) 
 
         if (!sprint) {
@@ -50,14 +53,18 @@ export class SprintService {
 
         
         return await this.prisma.sprint.update({
-            where: { id : id },
+            where: {
+                id: id
+            },
             data: updateSprintDto,
         });       
     }
 
     async remove(id: number) {
         const sprint = await this.prisma.sprint.findUnique({
-            where: { id : id },
+            where: {
+                id: id
+            },
         });
 
         if (!sprint) {
@@ -65,7 +72,9 @@ export class SprintService {
         }
 
         await this.prisma.sprint.delete({
-            where: { id : id },
+            where: {
+                id: id
+            },
         });
         
         return "Sprint deletada!"
