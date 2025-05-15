@@ -14,6 +14,5 @@ export class CreateSprintDto{
     
     isLocked: boolean;
 
-    @IsInt()
-    projectId: number;
+    
 }

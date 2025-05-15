@@ -16,7 +16,5 @@ export class UpdateSprintDto{
     @IsOptional()
     isLocked?: boolean;
 
-    @IsInt()
-    @IsOptional()
-    projectId?: number;
+    
 }

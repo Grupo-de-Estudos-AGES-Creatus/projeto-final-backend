@@ -9,6 +9,7 @@ const prisma = new PrismaClient()
 @Injectable()
 export class SprintService {
     async create (createSprintDto: CreateSprintDto){
+
         return await prisma.sprint.create({
         data: {
             ...createSprintDto,
@@ -38,16 +39,16 @@ export class SprintService {
 
     async update(id: number, updateSprintDto: UpdateSprintDto) {
         if (!updateSprintDto.descriptionPath && !updateSprintDto.title && !updateSprintDto.isLocked) throw new HttpException("Precisa conter pelo menos uma informação!", HttpStatus.BAD_REQUEST) 
-        const sprintIdExist = await prisma.sprint.update({
-            where: { id : id },
-            data: updateSprintDto,
-        });  
+        
+            const sprint = await prisma.sprint.findUnique({
+                where: {id : id}
+            }) 
 
-        if (!sprintIdExist) {
-            throw new HttpException("Naõ existe sala com este Id ",  HttpStatus.BAD_REQUEST)
+        if (!sprint) {
+            throw new HttpException("Não existe sala com este Id ",  HttpStatus.BAD_REQUEST)
         }
 
-        if (sprintIdExist) {
+        if (sprint) {
             return await prisma.sprint.update({
             where: { id : id },
             data: updateSprintDto,
