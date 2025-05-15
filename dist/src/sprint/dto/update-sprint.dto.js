@@ -25,13 +25,14 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UpdateSprintDto.prototype, "description", void 0);
+], UpdateSprintDto.prototype, "descriptionPath", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], UpdateSprintDto.prototype, "isLocked", void 0);
 __decorate([
     (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], UpdateSprintDto.prototype, "projectId", void 0);
 //# sourceMappingURL=update-sprint.dto.js.map

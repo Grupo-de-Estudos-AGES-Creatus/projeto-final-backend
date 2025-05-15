@@ -11,11 +11,12 @@ export class UpdateSprintDto{
     @IsNotEmpty()
     @IsString()
     @IsOptional()
-    description?: string;
+    descriptionPath?: string;
 
     @IsOptional()
     isLocked?: boolean;
 
     @IsInt()
-    projectId: number;
+    @IsOptional()
+    projectId?: number;
 }

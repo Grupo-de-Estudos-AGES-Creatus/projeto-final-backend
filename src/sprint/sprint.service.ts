@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PrismaClient } from '@prisma/client'
 import { CreateSprintDto } from "./dto/create-sprint.dto";
 import { UpdateSprintDto } from "./dto/update-sprint.dto"
@@ -16,27 +16,62 @@ export class SprintService {
             }as any
         });
     }
+
     async findAll() {
         return await prisma.sprint.findMany();
     }
 
     async findOne(id: number) {
+        const sprint = await prisma.sprint.findUnique({
+            where: { 
+                id : id 
+            },
+        });
+
+        if (!sprint) {
+            throw new HttpException("A sprint não existe",  HttpStatus.NOT_FOUND)
+        }
         return await prisma.sprint.findUnique({
-            where: { id },
+            where: { id : id },
         });
     }
 
-    async update(id: number, updateUserDto: UpdateSprintDto) {
-        return await prisma.user.update({
-            where: { id },
-            data: updateUserDto,
-        });
+    async update(id: number, updateSprintDto: UpdateSprintDto) {
+        if (!updateSprintDto.descriptionPath && !updateSprintDto.title && !updateSprintDto.isLocked) throw new HttpException("Precisa conter pelo menos uma informação!", HttpStatus.BAD_REQUEST) 
+        const sprintIdExist = await prisma.sprint.update({
+            where: { id : id },
+            data: updateSprintDto,
+        });  
+
+        if (!sprintIdExist) {
+            throw new HttpException("Naõ existe sala com este Id ",  HttpStatus.BAD_REQUEST)
+        }
+
+        if (sprintIdExist) {
+            return await prisma.sprint.update({
+            where: { id : id },
+            data: updateSprintDto,
+            });
+        }
+        
     }
 
     async remove(id: number) {
-        return await prisma.user.delete({
-            where: { id },
+        const sprint = await prisma.sprint.findUnique({
+            where: { id : id },
         });
+
+        if (!sprint) {
+            throw new HttpException("A sprint não existe",  HttpStatus.NOT_FOUND)
+        }
+
+        if (sprint) {
+            await prisma.sprint.delete({
+            where: { id : id },
+            });
+            throw new HttpException("Sprint deletada", HttpStatus.NO_CONTENT)
+        }
+        
     }
 
 }

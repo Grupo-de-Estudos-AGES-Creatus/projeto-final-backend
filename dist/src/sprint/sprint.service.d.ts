@@ -4,46 +4,38 @@ export declare class SprintService {
     create(createSprintDto: CreateSprintDto): Promise<{
         id: number;
         img_url: string | null;
+        createdAt: Date;
         title: string;
-        description: string;
+        descriptionPath: string;
+        projectId: number;
         isLocked: boolean;
     }>;
     findAll(): Promise<{
         id: number;
         img_url: string | null;
+        createdAt: Date;
         title: string;
-        description: string;
+        descriptionPath: string;
+        projectId: number;
         isLocked: boolean;
     }[]>;
     findOne(id: number): Promise<{
         id: number;
         img_url: string | null;
+        createdAt: Date;
         title: string;
-        description: string;
+        descriptionPath: string;
+        projectId: number;
         isLocked: boolean;
     }>;
-    update(id: number, updateUserDto: UpdateSprintDto): Promise<{
+    update(id: number, updateSprintDto: UpdateSprintDto): Promise<{
         id: number;
-        email: string;
-        username: string;
-        password: string;
-        role: string;
-        registration: string;
         img_url: string | null;
-        semester: string;
-        firstAcess: boolean;
         createdAt: Date;
+        title: string;
+        descriptionPath: string;
+        projectId: number;
+        isLocked: boolean;
     }>;
-    remove(id: number): Promise<{
-        id: number;
-        email: string;
-        username: string;
-        password: string;
-        role: string;
-        registration: string;
-        img_url: string | null;
-        semester: string;
-        firstAcess: boolean;
-        createdAt: Date;
-    }>;
+    remove(id: number): Promise<void>;
 }

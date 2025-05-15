@@ -23,5 +23,9 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateSprintDto.prototype, "description", void 0);
+], CreateSprintDto.prototype, "descriptionPath", void 0);
+__decorate([
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], CreateSprintDto.prototype, "projectId", void 0);
 //# sourceMappingURL=create-sprint.dto.js.map

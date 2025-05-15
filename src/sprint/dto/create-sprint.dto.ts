@@ -9,10 +9,11 @@ export class CreateSprintDto{
 
     @IsNotEmpty()
     @IsString()
-    description: string;
+    descriptionPath: string;
 
     
     isLocked: boolean;
 
+    @IsInt()
     projectId: number;
 }

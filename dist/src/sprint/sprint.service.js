@@ -23,20 +23,48 @@ let SprintService = class SprintService {
         return await prisma.sprint.findMany();
     }
     async findOne(id) {
+        const sprint = await prisma.sprint.findUnique({
+            where: {
+                id: id
+            },
+        });
+        if (!sprint) {
+            throw new common_1.HttpException("A sprint não existe", common_1.HttpStatus.NOT_FOUND);
+        }
         return await prisma.sprint.findUnique({
-            where: { id },
+            where: { id: id },
         });
     }
-    async update(id, updateUserDto) {
-        return await prisma.user.update({
-            where: { id },
-            data: updateUserDto,
+    async update(id, updateSprintDto) {
+        if (!updateSprintDto.descriptionPath && !updateSprintDto.title && !updateSprintDto.isLocked)
+            throw new common_1.HttpException("Precisa conter pelo menos uma informação!", common_1.HttpStatus.BAD_REQUEST);
+        const sprintIdExist = await prisma.sprint.update({
+            where: { id: id },
+            data: updateSprintDto,
         });
+        if (!sprintIdExist) {
+            throw new common_1.HttpException("Naõ existe sala com este Id ", common_1.HttpStatus.BAD_REQUEST);
+        }
+        if (sprintIdExist) {
+            return await prisma.sprint.update({
+                where: { id: id },
+                data: updateSprintDto,
+            });
+        }
     }
     async remove(id) {
-        return await prisma.user.delete({
-            where: { id },
+        const sprint = await prisma.sprint.findUnique({
+            where: { id: id },
         });
+        if (!sprint) {
+            throw new common_1.HttpException("A sprint não existe", common_1.HttpStatus.NOT_FOUND);
+        }
+        if (sprint) {
+            await prisma.sprint.delete({
+                where: { id: id },
+            });
+            throw new common_1.HttpException("Sprint deletada", common_1.HttpStatus.NO_CONTENT);
+        }
     }
 };
 exports.SprintService = SprintService;

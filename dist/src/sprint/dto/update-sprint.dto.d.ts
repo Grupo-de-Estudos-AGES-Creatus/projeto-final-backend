@@ -1,6 +1,6 @@
 export declare class UpdateSprintDto {
     title?: string;
-    description?: string;
+    descriptionPath?: string;
     isLocked?: boolean;
-    projectId: number;
+    projectId?: number;
 }

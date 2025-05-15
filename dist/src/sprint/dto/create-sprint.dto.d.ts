@@ -1,6 +1,6 @@
 export declare class CreateSprintDto {
     title: string;
-    description: string;
+    descriptionPath: string;
     isLocked: boolean;
     projectId: number;
 }

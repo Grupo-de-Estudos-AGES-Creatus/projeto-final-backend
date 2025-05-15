@@ -32,9 +32,11 @@ model Event {
 model Sprint {
   id          Int        @id @default(autoincrement())
   title       String
-  description String
+  descriptionPath String
+  projectId   Int
   img_url     String?
   isLocked    Boolean    @default(true)
+  createdAt   DateTime
   material    Material[]
   projects    Projects[]
 }

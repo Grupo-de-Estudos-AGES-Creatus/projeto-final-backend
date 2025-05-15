@@ -1,8 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { SprintService } from './sprint.service';
 import { CreateSprintDto } from './dto/create-sprint.dto';
 import { UpdateSprintDto } from './dto/update-sprint.dto';
-//import { UpdateSprintDto } from './dto/update-user.dto';
 
 @Controller('sprint')
 export class SprintController {
@@ -17,18 +16,18 @@ export class SprintController {
     findAll() {
         return this.sprintService.findAll();
     }
-    @Get('/:id')
-    async findOne(@Param('id') id: number) {
+    @Get(':id')
+    async findOne(@Param('id', ParseIntPipe) id: number) {
         return await this.sprintService.findOne(id);
     }
 
     @Patch(':id')
-    update(@Param('id') id: number, @Body() updateSprintDto: UpdateSprintDto) {
+    update(@Param('id', ParseIntPipe) id: number, @Body() updateSprintDto: UpdateSprintDto) {
         return this.sprintService.update(id, updateSprintDto);
     }
 
     @Delete(':id')
-    remove(@Param('id') id: number) {
+    remove(@Param('id', ParseIntPipe) id: number) {
         return this.sprintService.remove(id);
     }
 }
