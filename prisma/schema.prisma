@@ -20,7 +20,7 @@ model User {
   password String 
   role String 
   registration String 
-  img_url String? 
+  imgPath String? 
   semester String
   firstAcess Boolean @default(true) 
   createdAt DateTime @default(now()) 

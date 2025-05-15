@@ -3,21 +3,20 @@ import { PrismaClient, User } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-    const user = {
-        email: 'pedro@gmail.com',
-        username: 'pedro',
-        password: '12345',
+    const user: User = {
+        id: 1,
+        email: 'aaa@gmail.com',
+        username: 'aaa',
+        password: '123',
         role: 'ADMIN',
-        registration: "25199999-3",
-        semester: "25/1,",        
-        img_url: "https://avatars.githubusercontent.com/u/1?v=4",
-        
-
-
+        registration: "23200064",
+        semester: "2025/1",
+        createdAt: new Date(),
+        imgPath: '',
+        firstAcess: true,
     }
     const alice = await prisma.user.create({
         data: user
-    })
-
+    })
 }
-main(); 
+main();

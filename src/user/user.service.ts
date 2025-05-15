@@ -3,6 +3,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaClient, User } from '@prisma/client'
 import * as bcrypt from 'bcrypt';
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+
 const prisma = new PrismaClient()
 
 @Injectable()
@@ -12,14 +14,14 @@ export class UserService {
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(password, saltOrRounds);
     createUserDto.password=hash;
+
     return await prisma.user.create({
       data: {
         ...createUserDto,
-        createdAt: new Date(),
-        firstAces
       },
     });
   }
+
   async findAll() {
     return await prisma.user.findMany();
   }
@@ -29,24 +31,27 @@ export class UserService {
       where: { id },
     });
   }
+
   async findAndVerify(email: string, password: string) {
     const user = await prisma.user.findUnique({
       where: { email },
     });
     if (!user) {
-      return { error: 'User not found' };
+      throw new NotFoundException('User not found');
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return { error: 'Invalid password' };
+      throw new UnauthorizedException('Invalid password');
     }
     return user;
   }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const password=updateUserDto.password;
-    const saltOrRounds = 10;
-    const hash = await bcrypt.hash(password, saltOrRounds);
-    updateUserDto.password=hash;
+    if (updateUserDto.password){
+      const saltOrRounds = 10;
+      const hash = await bcrypt.hash(updateUserDto.password, saltOrRounds);
+      updateUserDto.password = hash;
+    }
     return await prisma.user.update({
       where: { id },
       data: updateUserDto,

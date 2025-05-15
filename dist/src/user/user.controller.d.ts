@@ -6,89 +6,77 @@ export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     create(createUserDto: CreateUserDto): Promise<{
-        id: string;
+        id: number;
         email: string;
         username: string;
         password: string;
         role: string;
-        matricula: string;
-        course: string | null;
-        github: string | null;
-        semester: string | null;
-        n_of_absences: number | null;
-        img_url: string | null;
-        created_at: Date;
+        registration: string;
+        imgPath: string | null;
+        semester: string;
+        firstAcess: boolean;
+        createdAt: Date;
     }>;
     findAll(): Promise<{
-        id: string;
+        id: number;
         email: string;
         username: string;
         password: string;
         role: string;
-        matricula: string;
-        course: string | null;
-        github: string | null;
-        semester: string | null;
-        n_of_absences: number | null;
-        img_url: string | null;
-        created_at: Date;
+        registration: string;
+        imgPath: string | null;
+        semester: string;
+        firstAcess: boolean;
+        createdAt: Date;
     }[]>;
-    findOne(id: string): Promise<{
-        id: string;
+    findOne(id: number): Promise<{
+        id: number;
         email: string;
         username: string;
         password: string;
         role: string;
-        matricula: string;
-        course: string | null;
-        github: string | null;
-        semester: string | null;
-        n_of_absences: number | null;
-        img_url: string | null;
-        created_at: Date;
+        registration: string;
+        imgPath: string | null;
+        semester: string;
+        firstAcess: boolean;
+        createdAt: Date;
     }>;
     findAndVerify(verifyUserDto: VerifyUserDto): Promise<{
-        id: string;
+        id: number;
         email: string;
         username: string;
         password: string;
         role: string;
-        matricula: string;
-        course: string | null;
-        github: string | null;
-        semester: string | null;
-        n_of_absences: number | null;
-        img_url: string | null;
-        created_at: Date;
+        registration: string;
+        imgPath: string | null;
+        semester: string;
+        firstAcess: boolean;
+        createdAt: Date;
     } | {
         error: string;
     }>;
-    update(id: string, updateUserDto: UpdateUserDto): Promise<{
-        id: string;
+    update(id: number, updateUserDto: UpdateUserDto): Promise<{
+        id: number;
         email: string;
         username: string;
         password: string;
         role: string;
-        matricula: string;
-        course: string | null;
-        github: string | null;
-        semester: string | null;
-        n_of_absences: number | null;
-        img_url: string | null;
-        created_at: Date;
+        registration: string;
+        imgPath: string | null;
+        semester: string;
+        firstAcess: boolean;
+        createdAt: Date;
     }>;
-    remove(id: string): Promise<{
-        id: string;
+    remove(id: number): Promise<{
+        id: number;
         email: string;
         username: string;
         password: string;
         role: string;
-        matricula: string;
-        course: string | null;
-        github: string | null;
-        semester: string | null;
-        n_of_absences: number | null;
-        img_url: string | null;
-        created_at: Date;
+        registration: string;
+        imgPath: string | null;
+        semester: string;
+        firstAcess: boolean;
+        createdAt: Date;
     }>;
 }

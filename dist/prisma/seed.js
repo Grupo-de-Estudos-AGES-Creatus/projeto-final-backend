@@ -4,17 +4,16 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 async function main() {
     const user = {
-        email: 'pedro@gmail.com',
-        username: 'pedro',
-        password: '12345',
+        id: 1,
+        email: 'aaa@gmail.com',
+        username: 'aaa',
+        password: '123',
         role: 'ADMIN',
-        matricula: "24106875",
-        course: "CC",
-        github: "github.com/pedro",
-        semester: "242",
-        n_of_absences: 0,
-        img_url: "https://avatars.githubusercontent.com/u/1?v=4",
-        created_at: new Date(),
+        registration: "23200064",
+        semester: "2025/1",
+        createdAt: new Date(),
+        imgPath: '',
+        firstAcess: true,
     };
     const alice = await prisma.user.create({
         data: user

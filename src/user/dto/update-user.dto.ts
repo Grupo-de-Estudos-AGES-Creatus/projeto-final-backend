@@ -5,7 +5,7 @@ import { IsOptional, IsString, IsInt, IsUrl } from 'class-validator';
 export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsOptional()
     @IsString()
-    name?: string;
+    username?: string;
     
     @IsOptional()
     @IsString()
@@ -29,5 +29,5 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @IsOptional()
     @IsUrl()
-    img_url?: string;
+    imgPath?: string;
 }

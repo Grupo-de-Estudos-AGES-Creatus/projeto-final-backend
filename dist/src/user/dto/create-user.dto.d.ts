@@ -3,10 +3,7 @@ export declare class CreateUserDto {
     username: string;
     password: string;
     role: string;
-    matricula: string;
-    course?: string;
-    github?: string;
-    semester?: string;
-    n_of_absences?: number;
-    img_url?: string;
+    registration: string;
+    semester: string;
+    imgPath?: string;
 }

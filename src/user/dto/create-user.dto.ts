@@ -22,5 +22,5 @@ export class CreateUserDto {
     semester:    string;
     @IsString()
     @IsOptional()
-    img_url?:     string;
+    imgPath?:     string;
 }
