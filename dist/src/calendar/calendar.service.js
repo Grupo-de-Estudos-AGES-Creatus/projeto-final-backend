@@ -36,8 +36,37 @@ let CalendarService = class CalendarService {
     async update(id, event) {
         if (!event.title && !event.description && !event.startDate && !event.endDate)
             throw new common_1.HttpException("Precisa conter pelo menos uma informção!", common_1.HttpStatus.BAD_REQUEST);
+        const find = await this.prisma.event.findUnique({
+            where: {
+                id: id
+            }
+        });
+        if (!find)
+            throw new common_1.HttpException("Não existe um evento com esse id!", common_1.HttpStatus.NOT_FOUND);
+        const update = await this.prisma.event.update({
+            where: {
+                id: id
+            },
+            data: {
+                ...event
+            }
+        });
+        return update;
     }
     async delete(id) {
+        const find = await this.prisma.event.findUnique({
+            where: {
+                id: id
+            }
+        });
+        if (!find)
+            throw new common_1.HttpException("Não existe um evento com esse id!", common_1.HttpStatus.NOT_FOUND);
+        const remove = await this.prisma.event.delete({
+            where: {
+                id: id
+            }
+        });
+        return `Evento deletado!`;
     }
 };
 exports.CalendarService = CalendarService;

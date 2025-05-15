@@ -24,6 +24,12 @@ export declare class CalendarController {
         startDate: Date;
         endDate: Date;
     }>;
-    update(id: number, event: UpdateEvent): Promise<void>;
-    delete(id: number): Promise<void>;
+    update(id: number, event: UpdateEvent): Promise<{
+        id: number;
+        title: string;
+        description: string;
+        startDate: Date;
+        endDate: Date;
+    }>;
+    delete(id: number): Promise<string>;
 }
