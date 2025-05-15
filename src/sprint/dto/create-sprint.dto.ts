@@ -13,4 +13,6 @@ export class CreateSprintDto{
 
     
     isLocked: boolean;
+
+    projectId: number;
 }

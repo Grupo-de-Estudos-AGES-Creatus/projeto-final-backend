@@ -1,16 +1,21 @@
-import { IsOptional, IsString, IsInt, IsUrl, isString, IsNotEmpty } from 'class-validator';
+import { IsOptional, IsString, IsInt, IsNotEmpty } from 'class-validator';
 
 
-export class CreateSprintDto{
+export class UpdateSprintDto{
 
     @IsNotEmpty()
     @IsString()
+    @IsOptional()
     title?: string;
 
     @IsNotEmpty()
     @IsString()
+    @IsOptional()
     description?: string;
 
-    
+    @IsOptional()
     isLocked?: boolean;
+
+    @IsInt()
+    projectId: number;
 }

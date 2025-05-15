@@ -1,5 +1,5 @@
 import { PrismaService } from 'src/prisma.service';
-import { CreateEvent, UpdateEvent } from './dto/calendar.dto';
+import { UpdateEvent } from './dto/calendar.dto';
 export declare class CalendarService {
     private prisma;
     constructor(prisma: PrismaService);
@@ -11,13 +11,6 @@ export declare class CalendarService {
         endDate: Date;
     }[]>;
     getOne(id: number): Promise<{
-        id: number;
-        title: string;
-        description: string;
-        startDate: Date;
-        endDate: Date;
-    }>;
-    create(event: CreateEvent): Promise<{
         id: number;
         title: string;
         description: string;

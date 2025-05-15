@@ -26,16 +26,6 @@ let CalendarService = class CalendarService {
             }
         });
     }
-    async create(event) {
-        return this.prisma.event.create({
-            data: {
-                title: event.title,
-                description: event.description,
-                startDate: event.startDate,
-                endDate: event.endDate,
-            }
-        });
-    }
     async update(id, event) {
         if (!event.title && !event.description && !event.startDate && !event.endDate)
             throw new common_1.HttpException("Precisa conter pelo menos uma informção!", common_1.HttpStatus.BAD_REQUEST);

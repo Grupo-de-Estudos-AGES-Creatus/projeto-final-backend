@@ -26,9 +26,6 @@ let CalendarController = class CalendarController {
     async getOne(id) {
         return this.calendarService.getOne(id);
     }
-    async create(event) {
-        return this.calendarService.create(event);
-    }
     async update(id, event) {
         return this.calendarService.update(id, event);
     }
@@ -50,13 +47,6 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], CalendarController.prototype, "getOne", null);
-__decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [calendar_dto_1.CreateEvent]),
-    __metadata("design:returntype", Promise)
-], CalendarController.prototype, "create", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),

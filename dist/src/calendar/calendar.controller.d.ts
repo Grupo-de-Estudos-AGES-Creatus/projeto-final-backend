@@ -1,5 +1,5 @@
 import { CalendarService } from './calendar.service';
-import { CreateEvent, UpdateEvent } from './dto/calendar.dto';
+import { UpdateEvent } from './dto/calendar.dto';
 export declare class CalendarController {
     private calendarService;
     constructor(calendarService: CalendarService);
@@ -11,13 +11,6 @@ export declare class CalendarController {
         endDate: Date;
     }[]>;
     getOne(id: number): Promise<{
-        id: number;
-        title: string;
-        description: string;
-        startDate: Date;
-        endDate: Date;
-    }>;
-    create(event: CreateEvent): Promise<{
         id: number;
         title: string;
         description: string;

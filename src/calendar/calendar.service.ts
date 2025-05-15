@@ -19,13 +19,14 @@ export class CalendarService {
         })
     }
 
-    async create(event: CreateEvent) {
-        return this.prisma.event.create({ 
-            data: {
-                ...event
-            }
-        })
-    }
+    // async create(event: CreateEvent) {
+    //     return this.prisma.event.create({ 
+    //         data: {
+    //             ...event,
+                
+    //         }
+    //     })
+    // }
 
     async update(id: number, event: UpdateEvent) {
         if (!event.title && !event.description && !event.startDate && !event.endDate) throw new HttpException("Precisa conter pelo menos uma informção!", HttpStatus.BAD_REQUEST)

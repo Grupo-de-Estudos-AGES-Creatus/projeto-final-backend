@@ -16,10 +16,10 @@ export class CalendarController {
         return this.calendarService.getOne(id);
     }
     
-    @Post()
-    async create(@Body() event: CreateEvent) {
-        return this.calendarService.create(event);
-    }
+    // @Post()
+    // async create(@Body() event: CreateEvent) {
+    //     return this.calendarService.create(event);
+    // }
 
     @Patch(':id')
     async update(@Param('id', ParseIntPipe) id: number, @Body() event: UpdateEvent) {
