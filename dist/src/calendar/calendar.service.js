@@ -29,10 +29,7 @@ let CalendarService = class CalendarService {
     async create(event) {
         return this.prisma.event.create({
             data: {
-                title: event.title,
-                description: event.description,
-                startDate: event.startDate,
-                endDate: event.endDate,
+                ...event
             }
         });
     }

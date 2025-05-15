@@ -8,7 +8,7 @@ export declare class AppService {
         password: string;
         role: string;
         registration: string;
-        img_url: string | null;
+        imgPath: string | null;
         semester: string;
         firstAcess: boolean;
         createdAt: Date;

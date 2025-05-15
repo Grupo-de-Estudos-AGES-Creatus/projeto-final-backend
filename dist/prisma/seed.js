@@ -11,8 +11,8 @@ async function main() {
         role: 'ADMIN',
         registration: "23200064",
         semester: "2025/1",
-        img_url: "https://avatars.githubusercontent.com/u/1?v=4",
         createdAt: new Date(),
+        imgPath: '',
         firstAcess: true,
     };
     const alice = await prisma.user.create({
