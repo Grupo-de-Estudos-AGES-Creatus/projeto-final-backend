@@ -1,6 +1,8 @@
 import { Optional } from '@nestjs/common'
 import { IsInt, IsString } from 'class-validator'
 
+
+// Filtro para criar um material
 export class CreateMaterial {
 
     @IsInt()
@@ -13,6 +15,7 @@ export class CreateMaterial {
     title: string
 }
 
+// Filtro para atualizar um material
 export class UpdateMaterial {
 
     @Optional()

@@ -6,28 +6,33 @@ import { CreateMaterial, UpdateMaterial } from './dto/material.dto';
 export class MaterialController {
     constructor(private materialService: MaterialService) {}
         
-        @Get()
-        async getAll() {
-            return this.materialService.getAll();
-        }
+    // Pega todos os materiais
+    @Get()
+    async getAll() {
+        return this.materialService.getAll();
+    }
     
-        @Get(':id')
-        async getOne(@Param('id', ParseIntPipe) id: number) {
-            return this.materialService.getOne(id);
-        }
-        
-        @Post()
-        async create(@Body() material: CreateMaterial) {
-            return this.materialService.create(material);
-        }
+    // Pega um material
+    @Get(':id')
+    async getOne(@Param('id', ParseIntPipe) id: number) {
+        return this.materialService.getOne(id);
+    }
     
-        @Patch(':id')
-        async update(@Param('id', ParseIntPipe) id: number, @Body() material: UpdateMaterial) {
-            return this.materialService.update(id, material);
-        }
-    
-        @Delete(':id')
-        async delete(@Param('id', ParseIntPipe) id: number) {
-            return this.materialService.delete(id);
-        }
+    // Cria um material
+    @Post()
+    async create(@Body() material: CreateMaterial) {
+        return this.materialService.create(material);
+    }
+
+    // Atualiza um material
+    @Patch(':id')
+    async update(@Param('id', ParseIntPipe) id: number, @Body() material: UpdateMaterial) {
+        return this.materialService.update(id, material);
+    }
+
+    // Deleta um material
+    @Delete(':id')
+    async delete(@Param('id', ParseIntPipe) id: number) {
+        return this.materialService.delete(id);
+    }
 }

@@ -1,6 +1,7 @@
 import { Optional } from '@nestjs/common'
 import { IsDate, IsString } from 'class-validator'
 
+// Filtro para criar um evento no calendário
 export class CreateEvent {
     @IsString()
     title: string
@@ -15,6 +16,7 @@ export class CreateEvent {
     endDate: Date
 }
 
+// Filtro para editar um evento no calendário
 export class UpdateEvent {
     @IsString()
     @Optional()

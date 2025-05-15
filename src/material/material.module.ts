@@ -7,4 +7,5 @@ import { PrismaService } from 'src/prisma.service';
   controllers: [MaterialController],
   providers: [MaterialService, PrismaService]
 })
+
 export class MaterialModule {}
