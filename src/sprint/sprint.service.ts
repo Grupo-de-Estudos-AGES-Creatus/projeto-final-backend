@@ -1,16 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { PrismaClient } from '@prisma/client'
 import { CreateSprintDto } from "./dto/create-sprint.dto";
 import { UpdateSprintDto } from "./dto/update-sprint.dto"
-const prisma = new PrismaClient()
-
-
+import { PrismaService } from "src/prisma.service";
 
 @Injectable()
 export class SprintService {
+    constructor(private prisma: PrismaService) {}
+
     async create (createSprintDto: CreateSprintDto){
 
-        return await prisma.sprint.create({
+        return await this.prisma.sprint.create({
             data: {
                 ...createSprintDto,
                 createdAt: new Date(),
@@ -19,11 +18,11 @@ export class SprintService {
     }
 
     async findAll() {
-        return await prisma.sprint.findMany();
+        return await this.prisma.sprint.findMany();
     }
 
     async findOne(id: number) {
-        const sprint = await prisma.sprint.findUnique({
+        const sprint = await this.prisma.sprint.findUnique({
             where: { 
                 id : id 
             },
@@ -33,7 +32,7 @@ export class SprintService {
             throw new HttpException("A sprint não existe",  HttpStatus.NOT_FOUND)
         }
 
-        return await prisma.sprint.findUnique({
+        return await this.prisma.sprint.findUnique({
             where: { id : id },
         });
     }
@@ -41,7 +40,7 @@ export class SprintService {
     async update(id: number, updateSprintDto: UpdateSprintDto) {
         if (!updateSprintDto.descriptionPath && !updateSprintDto.title && !updateSprintDto.isLocked) throw new HttpException("Precisa conter pelo menos uma informação!", HttpStatus.BAD_REQUEST) 
         
-            const sprint = await prisma.sprint.findUnique({
+            const sprint = await this.prisma.sprint.findUnique({
                 where: {id : id}
             }) 
 
@@ -50,14 +49,14 @@ export class SprintService {
         }
 
         
-        return await prisma.sprint.update({
+        return await this.prisma.sprint.update({
             where: { id : id },
             data: updateSprintDto,
         });       
     }
 
     async remove(id: number) {
-        const sprint = await prisma.sprint.findUnique({
+        const sprint = await this.prisma.sprint.findUnique({
             where: { id : id },
         });
 
@@ -65,7 +64,7 @@ export class SprintService {
             throw new HttpException("A sprint não existe",  HttpStatus.NOT_FOUND)
         }
 
-        await prisma.sprint.delete({
+        await this.prisma.sprint.delete({
             where: { id : id },
         });
         
