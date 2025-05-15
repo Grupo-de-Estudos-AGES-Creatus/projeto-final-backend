@@ -12,10 +12,16 @@ export class MaterialController {
         return this.materialService.getAll();
     }
     
-    // Pega um material
+    // Pega um material pelo id
     @Get(':id')
     async getOne(@Param('id', ParseIntPipe) id: number) {
         return this.materialService.getOne(id);
+    }
+
+    // Pega os materiais de uma sprint usando o id da sprint
+    @Get('/sprint/:id')
+    async getOneBySprint(@Param('id', ParseIntPipe) sprintId: number) {
+        return this.materialService.getOneBySprint(sprintId);
     }
     
     // Cria um material

@@ -31,6 +31,26 @@ export class MaterialService {
         })
     }
 
+    // Retorna os materiais da sprint pelo o id da sprint
+    async getOneBySprint(sprintId: number) {
+        // Verifica se a sprint existe
+        const findSprint = await this.prisma.sprint.findUnique({
+            where: {
+                id: sprintId
+            }
+        })
+
+        // Se a sprint não existir retorna um erro
+        if (!findSprint) throw new HttpException("Não existe uma sprint com esse id!", HttpStatus.NOT_FOUND)
+
+        // Retorna os materiais da sprint
+        return this.prisma.material.findMany({
+            where: {
+                sprintId: sprintId
+            }
+        })
+    }
+
     // Cria um material
     async create(material: CreateMaterial) {
         return this.prisma.material.create({ 

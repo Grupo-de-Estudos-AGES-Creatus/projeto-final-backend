@@ -17,6 +17,12 @@ export class ProjectController {
     async getOne(@Param('id', ParseIntPipe) id: number) {
         return this.projectService.getOne(id);
     }
+
+    // Pega os projetos de um usuário usando o id do usuário
+    @Get('/user/:id') 
+    async getOneByUser(@Param('id', ParseIntPipe) userId: number) {
+        return this.projectService.getOneByUser(userId);
+    }
     
     // Cria um projeto
     @Post()

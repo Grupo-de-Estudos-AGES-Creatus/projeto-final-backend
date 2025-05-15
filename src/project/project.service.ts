@@ -31,6 +31,26 @@ export class ProjectService {
         })
     }
 
+    // Retorna os projetos de um usuário pelo id do usuário
+    async getOneByUser(userId: number) {
+        // Verifica se o usuário existe
+        const findUser = await this.prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+
+        // Se o usuário não existir retorna um erro
+        if (!findUser) throw new HttpException("Não existe um usuário com esse id!", HttpStatus.NOT_FOUND)
+
+        // Retorna os projetos do usuário
+        return this.prisma.projects.findMany({
+            where: {
+                userId: userId
+            }
+        })
+    }
+
     // Cria um projeto
     async create(project: CreateProject) {
         return this.prisma.projects.create({ 
