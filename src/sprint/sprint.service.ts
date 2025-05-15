@@ -48,7 +48,7 @@ export class SprintService {
             }) 
 
         if (!sprint) {
-            throw new HttpException("Não existe uma sprint com esse id ",  HttpStatus.NOT_FOUND)
+            throw new HttpException("Não existe uma sprint com esse id",  HttpStatus.NOT_FOUND)
         }
 
         
@@ -56,7 +56,9 @@ export class SprintService {
             where: {
                 id: id
             },
-            data: updateSprintDto,
+            data: {
+                ...updateSprintDto,
+            }
         });       
     }
 
