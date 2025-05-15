@@ -8,9 +8,10 @@ import { CalendarController } from './calendar/calendar.controller';
 import { CalendarModule } from './calendar/calendar.module';
 import { PrismaService } from './prisma.service';
 import { CalendarService } from './calendar/calendar.service';
+import { ProjectModule } from './project/project.module';
 
 @Module({
-  imports: [UserModule, EventModule, MaterialModule, CalendarModule],
+  imports: [UserModule, EventModule, MaterialModule, CalendarModule, ProjectModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
