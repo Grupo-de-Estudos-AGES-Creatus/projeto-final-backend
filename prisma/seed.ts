@@ -1,6 +1,6 @@
-import { PrismaClient, User } from '@prisma/client'
+// import { PrismaClient, User } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
 
 async function main() {
     const user: User = {
