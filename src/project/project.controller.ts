@@ -22,8 +22,8 @@ export class ProjectController {
     }
 
     @Patch(':id')
-    async update(@Param('id', ParseIntPipe) id: number, @Body() event: UpdateProject) {
-        return this.projectService.update(id, event);
+    async update(@Param('id', ParseIntPipe) id: number, @Body() project: UpdateProject) {
+        return this.projectService.update(id, project);
     }
 
     @Delete(':id')

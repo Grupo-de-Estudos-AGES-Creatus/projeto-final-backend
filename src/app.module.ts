@@ -9,6 +9,7 @@ import { CalendarModule } from './calendar/calendar.module';
 import { PrismaService } from './prisma.service';
 import { CalendarService } from './calendar/calendar.service';
 import { ProjectModule } from './project/project.module';
+import { MaterialModule } from './material/material.module';
 
 @Module({
   imports: [UserModule, EventModule, MaterialModule, CalendarModule, ProjectModule],
