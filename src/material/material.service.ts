@@ -1,26 +1,80 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMaterialDto } from './dto/create-material.dto';
-import { UpdateMaterialDto } from './dto/update-material.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
+import { CreateMaterial, UpdateMaterial } from './dto/material.dto';
 
 @Injectable()
 export class MaterialService {
-  create(createMaterialDto: CreateMaterialDto) {
-    return 'This action adds a new material';
-  }
+    constructor(private prisma: PrismaService) {}
+    
 
-  findAll() {
-    return `This action returns all material`;
-  }
+    async getAll() {
+        return this.prisma.material.findMany();
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} material`;
-  }
+    async getOne(id: number) {
+        const find = await this.prisma.material.findUnique({
+            where: {
+                id: id
+            }
+        })
 
-  update(id: number, updateMaterialDto: UpdateMaterialDto) {
-    return `This action updates a #${id} material`;
-  }
+        if (!find) throw new HttpException("Não existe um material com esse id!", HttpStatus.NOT_FOUND)
 
-  remove(id: number) {
-    return `This action removes a #${id} material`;
-  }
+        return this.prisma.material.findUnique({
+            where: {
+                id: id
+            }
+        })
+    }
+
+    async create(material: CreateMaterial) {
+        return this.prisma.material.create({ 
+            data: {
+                ...material
+            }    
+        })
+    }
+
+    async update(id: number, material: UpdateMaterial) {
+        
+        const find = await this.prisma.material.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!find) throw new HttpException("Não existe um material com esse id!", HttpStatus.NOT_FOUND)
+
+        const update = await this.prisma.material.update({
+            where: {
+                id: id
+            },
+            data: {
+                ...material
+            }
+        })
+        
+        return update;
+    }
+
+    async delete(id: number) {
+
+        const find = await this.prisma.material.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!find) throw new HttpException("Não existe um material com esse id!", HttpStatus.NOT_FOUND)
+
+        const remove = await this.prisma.material.delete({
+            where: {
+                id: id
+            }
+        })
+
+        return `Material deletado!`
+    }
+
+
 }
