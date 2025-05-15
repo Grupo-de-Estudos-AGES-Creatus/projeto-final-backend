@@ -21,7 +21,7 @@ model User {
   role String 
   registration String 
   img_url String? 
-  semester String 
+  semester String
   firstAcess Boolean @default(true) 
   createdAt DateTime @default(now()) 
   Projects Projects[] 

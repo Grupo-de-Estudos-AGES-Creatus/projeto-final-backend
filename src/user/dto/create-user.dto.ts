@@ -18,8 +18,8 @@ export class CreateUserDto {
     @IsNotEmpty()
     registration: string;
     @IsString()
-    @IsOptional()
-    semester?:    string;
+    @IsNotEmpty()
+    semester:    string;
     @IsString()
     @IsOptional()
     img_url?:     string;

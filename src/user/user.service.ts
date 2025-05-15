@@ -15,7 +15,8 @@ export class UserService {
     return await prisma.user.create({
       data: {
         ...createUserDto,
-        created_at: new Date(),
+        createdAt: new Date(),
+        firstAces
       },
     });
   }
@@ -23,7 +24,7 @@ export class UserService {
     return await prisma.user.findMany();
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     return await prisma.user.findUnique({
       where: { id },
     });
@@ -41,7 +42,7 @@ export class UserService {
     }
     return user;
   }
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     const password=updateUserDto.password;
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(password, saltOrRounds);
@@ -52,7 +53,7 @@ export class UserService {
     });
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     return await prisma.user.delete({
       where: { id },
     });

@@ -9,9 +9,9 @@ async function main() {
         password: '12345',
         role: 'ADMIN',
         registration: "25199999-3",
-        img_url: "https://avatars.githubusercontent.com/u/1?v=4",
         semester: "25/1,",        
-        created_at: new Date(),
+        img_url: "https://avatars.githubusercontent.com/u/1?v=4",
+        
 
 
     }
@@ -20,4 +20,4 @@ async function main() {
     })
 
 }
-main();
+main(); 
