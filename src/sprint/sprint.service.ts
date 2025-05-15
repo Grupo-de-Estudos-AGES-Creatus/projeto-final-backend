@@ -7,16 +7,6 @@ import { PrismaService } from "src/prisma.service";
 export class SprintService {
     constructor(private prisma: PrismaService) {}
 
-    async create (createSprintDto: CreateSprintDto){
-
-        return await this.prisma.sprint.create({
-            data: {
-                ...createSprintDto,
-                createdAt: new Date(),
-            }as any
-        });
-    }
-
     async findAll() {
         return await this.prisma.sprint.findMany();
     }
@@ -29,11 +19,21 @@ export class SprintService {
         });
 
         if (!sprint) {
-            throw new HttpException("A sprint não existe",  HttpStatus.NOT_FOUND)
+            throw new HttpException("Não existe uma sprint com esse id",  HttpStatus.NOT_FOUND)
         }
 
         return await this.prisma.sprint.findUnique({
             where: { id : id },
+        });
+    }
+
+    async create (createSprintDto: CreateSprintDto){
+
+        return await this.prisma.sprint.create({
+            data: {
+                ...createSprintDto,
+                createdAt: new Date(),
+            }as any
         });
     }
 
@@ -45,7 +45,7 @@ export class SprintService {
             }) 
 
         if (!sprint) {
-            throw new HttpException("Não existe sala com este Id ",  HttpStatus.BAD_REQUEST)
+            throw new HttpException("Não existe uma sprint com esse id ",  HttpStatus.NOT_FOUND)
         }
 
         
@@ -61,14 +61,14 @@ export class SprintService {
         });
 
         if (!sprint) {
-            throw new HttpException("A sprint não existe",  HttpStatus.NOT_FOUND)
+            throw new HttpException("Não existe uma sprint com esse id",  HttpStatus.NOT_FOUND)
         }
 
         await this.prisma.sprint.delete({
             where: { id : id },
         });
         
-        return "Sprint deletada"
+        return "Sprint deletada!"
     }
 
 }
