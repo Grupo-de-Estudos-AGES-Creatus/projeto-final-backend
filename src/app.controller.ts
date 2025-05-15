@@ -9,8 +9,4 @@ const prisma = new PrismaClient();
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  async getHello(): Promise<User> {
-    return await this.appService.getHello();
-  }
 }
