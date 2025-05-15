@@ -36,6 +36,7 @@ export class MaterialService {
     }
 
     async update(id: number, material: UpdateMaterial) {
+        if (!material.text && !material.title) throw new HttpException("Precisa conter pelo menos uma informção!", HttpStatus.BAD_REQUEST); 
         
         const find = await this.prisma.material.findUnique({
             where: {

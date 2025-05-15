@@ -11,9 +11,9 @@ export class SprintService {
     async create (createSprintDto: CreateSprintDto){
 
         return await prisma.sprint.create({
-        data: {
-            ...createSprintDto,
-            createdAt: new Date(),
+            data: {
+                ...createSprintDto,
+                createdAt: new Date(),
             }as any
         });
     }
@@ -32,6 +32,7 @@ export class SprintService {
         if (!sprint) {
             throw new HttpException("A sprint não existe",  HttpStatus.NOT_FOUND)
         }
+
         return await prisma.sprint.findUnique({
             where: { id : id },
         });
@@ -48,13 +49,11 @@ export class SprintService {
             throw new HttpException("Não existe sala com este Id ",  HttpStatus.BAD_REQUEST)
         }
 
-        if (sprint) {
-            return await prisma.sprint.update({
+        
+        return await prisma.sprint.update({
             where: { id : id },
             data: updateSprintDto,
-            });
-        }
-        
+        });       
     }
 
     async remove(id: number) {
@@ -66,13 +65,11 @@ export class SprintService {
             throw new HttpException("A sprint não existe",  HttpStatus.NOT_FOUND)
         }
 
-        if (sprint) {
-            await prisma.sprint.delete({
+        await prisma.sprint.delete({
             where: { id : id },
-            });
-            throw new HttpException("Sprint deletada", HttpStatus.NO_CONTENT)
-        }
+        });
         
+        return "Sprint deletada"
     }
 
 }
