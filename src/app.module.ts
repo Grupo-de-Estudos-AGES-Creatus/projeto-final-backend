@@ -7,9 +7,11 @@ import { CalendarModule } from './calendar/calendar.module';
 import { PrismaService } from './prisma.service';
 import { ProjectModule } from './project/project.module';
 import { SprintModule } from './sprint/sprint.module';
+
 @Module({
   imports: [UserModule, MaterialModule, ProjectModule, CalendarModule, SprintModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
+
 export class AppModule {}
