@@ -12,6 +12,14 @@ export class CalendarService {
     }
 
     async getOne(id: number) {
+        const find = await this.prisma.event.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!find) throw new HttpException("Não existe um evento com esse id!", HttpStatus.NOT_FOUND)
+
         return this.prisma.event.findUnique({
             where: {
                 id: id
