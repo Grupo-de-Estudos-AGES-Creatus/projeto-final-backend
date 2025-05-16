@@ -13,6 +13,7 @@ async function main() {
         semester: "2025/1",
         createdAt: new Date(),
         imgPath: '',
+        githubLink: '',
         firstAcess: true,
     }
     const alice = await prisma.user.create({
