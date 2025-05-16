@@ -18,14 +18,9 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
-  @Get('byid/:id')
+  @Get(':id')
   async findOne(@Param('id', ParseIntPipe ) id: number) {
     return await this.userService.findOne(id);
-  }
-  @Get('verify')
-  async findAndVerify(@Body() verifyUserDto: VerifyUserDto) {
-    const result = await this.userService.findAndVerify(verifyUserDto.email, verifyUserDto.password);
-    return result; 
   }
 
   @Patch(':id')

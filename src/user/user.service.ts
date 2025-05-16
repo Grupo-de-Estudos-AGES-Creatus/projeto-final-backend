@@ -42,20 +42,6 @@ export class UserService {
 
     return user;
   }
-  //verifica se o email está no db e se a senha condiz
-  async findAndVerify(email: string, password: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { email },
-    });
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid password');
-    }
-    return user;
-  }
 
   //atualiza qualquer atributo do usuário. 
   //caso a senha seja fornecida no DTO, ela será criptografada antes de ser salva no banco de dados.
