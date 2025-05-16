@@ -40,7 +40,7 @@ export class SprintService {
     // Atualiza uma sprint
     async update(id: number, updateSprintDto: UpdateSprintDto) {
         // Verifica se pelo menos uma informação foi passada, se não for retorna um erro
-        if (!updateSprintDto.descriptionPath && !updateSprintDto.title && !updateSprintDto.isLocked) throw new HttpException("Precisa conter pelo menos uma informação!", HttpStatus.BAD_REQUEST) 
+        if (!updateSprintDto.title && !updateSprintDto.isLocked) throw new HttpException("Precisa conter pelo menos uma informação!", HttpStatus.BAD_REQUEST) 
         
         // Verifica se existe
         const sprint = await this.prisma.sprint.findUnique({
