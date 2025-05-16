@@ -48,8 +48,6 @@ export declare class UserService {
         semester: string;
         firstAcess: boolean;
         createdAt: Date;
-    } | {
-        error: string;
     }>;
     update(id: number, updateUserDto: UpdateUserDto): Promise<{
         id: number;

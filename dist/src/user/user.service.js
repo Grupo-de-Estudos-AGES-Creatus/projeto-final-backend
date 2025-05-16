@@ -41,7 +41,7 @@ let UserService = class UserService {
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return { error: 'Invalid password' };
+            throw new common_2.UnauthorizedException('Invalid password');
         }
         return user;
     }
