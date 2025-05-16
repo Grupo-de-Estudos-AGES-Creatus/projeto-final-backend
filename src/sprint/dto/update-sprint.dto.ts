@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsInt, IsNotEmpty } from 'class-validator';
+import { IsOptional, IsString, IsNotEmpty, IsBoolean } from 'class-validator';
 
 
 export class UpdateSprintDto{
@@ -14,7 +14,7 @@ export class UpdateSprintDto{
     descriptionPath?: string;
 
     @IsOptional()
+    @IsBoolean()
     isLocked?: boolean;
 
-    
 }

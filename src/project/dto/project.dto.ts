@@ -1,4 +1,4 @@
-import { IsInt, IsString } from 'class-validator'
+import { IsInt, IsNotEmpty, IsString } from 'class-validator'
 
 
 // Filtro para criar um projeto
@@ -9,6 +9,7 @@ export class CreateProject {
     @IsInt()
     sprintId: number
 
+    @IsNotEmpty()
     @IsString()
     link: string
 }
