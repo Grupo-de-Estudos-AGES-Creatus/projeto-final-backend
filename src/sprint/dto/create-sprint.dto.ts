@@ -7,10 +7,6 @@ export class CreateSprintDto{
     @IsString()
     title: string;
 
-    @IsNotEmpty()
-    @IsString()
-    descriptionPath: string;
-
     @IsBoolean()
     isLocked: boolean;
     

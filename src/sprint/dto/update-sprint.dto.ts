@@ -8,11 +8,6 @@ export class UpdateSprintDto{
     @IsOptional()
     title?: string;
 
-    @IsNotEmpty()
-    @IsString()
-    @IsOptional()
-    descriptionPath?: string;
-
     @IsOptional()
     @IsBoolean()
     isLocked?: boolean;

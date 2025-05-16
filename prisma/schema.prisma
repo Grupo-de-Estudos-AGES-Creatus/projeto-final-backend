@@ -36,7 +36,7 @@ model Event {
 model Sprint {
   id              Int        @id @default(autoincrement())
   title           String
-  descriptionPath String
+  descriptionPath String?
   imgPath         String?
   isLocked        Boolean    @default(true)
   material        Material[]
