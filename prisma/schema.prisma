@@ -7,28 +7,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Database de usuários
 model User {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique
+  id            Int         @id @default(autoincrement())
+  email         String      @unique
   username      String
   password      String
   role          String
   registration  String
-  imgPath       String?
   semester      String
-  firstAcess    Boolean  @default(true)
-  createdAt     DateTime @default(now())
+  imgPath       String?
+  githubLink    String?
+  firstAcess    Boolean     @default(true)
+  createdAt     DateTime    @default(now())
   Projects      Projects[]
 }
 
+// Database de eventos do calendário
 model Event {
-  id            Int      @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   title         String
   description   String
   startDate     DateTime
   endDate       DateTime
 }
 
+// Database das sprints
 model Sprint {
   id              Int        @id @default(autoincrement())
   title           String
@@ -39,6 +43,7 @@ model Sprint {
   projects        Projects[]
 }
 
+// Database dos materiais(dos usuários) das sprints
 model Material {
   id        Int       @id @default(autoincrement())
   title     String
@@ -47,6 +52,7 @@ model Material {
   sprint    Sprint    @relation(fields: [sprintId], references: [id])
 }
 
+// Database dos projetos
 model Projects {
   id        Int     @id @default(autoincrement())
   link      String

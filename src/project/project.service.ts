@@ -8,27 +8,23 @@ export class ProjectService {
     
     // Retorna todos os projetos
     async getAll() {
-        return this.prisma.projects.findMany();
+        return await this.prisma.projects.findMany();
     }
 
     // Retorna um projeto pelo id
     async getOne(id: number) {
         // Verifica se existe
-        const find = await this.prisma.projects.findUnique({
+        const project = await this.prisma.projects.findUnique({
             where: {
                 id: id
             }
         })
 
         // Se não existir retorna um erro
-        if (!find) throw new HttpException("Não existe um projeto com esse id!", HttpStatus.NOT_FOUND)
+        if (!project) throw new HttpException("Não existe um projeto com esse id!", HttpStatus.NOT_FOUND)
 
         // Retorna o projeto
-        return this.prisma.projects.findUnique({
-            where: {
-                id: id
-            }
-        })
+        return project;
     }
 
     // Retorna os projetos de um usuário pelo id do usuário
@@ -44,7 +40,7 @@ export class ProjectService {
         if (!findUser) throw new HttpException("Não existe um usuário com esse id!", HttpStatus.NOT_FOUND)
 
         // Retorna os projetos do usuário
-        return this.prisma.projects.findMany({
+        return await this.prisma.projects.findMany({
             where: {
                 userId: userId
             }
@@ -53,7 +49,7 @@ export class ProjectService {
 
     // Cria um projeto
     async create(project: CreateProject) {
-        return this.prisma.projects.create({ 
+        return await this.prisma.projects.create({ 
             data: {
                 ...project
             }    
@@ -99,7 +95,7 @@ export class ProjectService {
         if (!find) throw new HttpException("Não existe um projeto com esse id!", HttpStatus.NOT_FOUND)
 
         // Deleta o projeto
-        const remove = await this.prisma.projects.delete({
+        await this.prisma.projects.delete({
             where: {
                 id: id
             }

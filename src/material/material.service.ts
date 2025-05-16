@@ -8,27 +8,23 @@ export class MaterialService {
     
     // Retorna todos os materiais
     async getAll() {
-        return this.prisma.material.findMany();
+        return await this.prisma.material.findMany();
     }
 
     // Retorna um material pelo id
     async getOne(id: number) {
         // Verifica se existe
-        const find = await this.prisma.material.findUnique({
+        const material = await this.prisma.material.findUnique({
             where: {
                 id: id
             }
         })
 
         // Se não existir retorna um erro
-        if (!find) throw new HttpException("Não existe um material com esse id!", HttpStatus.NOT_FOUND)
+        if (!material) throw new HttpException("Não existe um material com esse id!", HttpStatus.NOT_FOUND)
 
         // Retorna o material
-        return this.prisma.material.findUnique({
-            where: {
-                id: id
-            }
-        })
+        return material;
     }
 
     // Retorna os materiais da sprint pelo o id da sprint
@@ -44,7 +40,7 @@ export class MaterialService {
         if (!findSprint) throw new HttpException("Não existe uma sprint com esse id!", HttpStatus.NOT_FOUND)
 
         // Retorna os materiais da sprint
-        return this.prisma.material.findMany({
+        return await this.prisma.material.findMany({
             where: {
                 sprintId: sprintId
             }
@@ -53,7 +49,7 @@ export class MaterialService {
 
     // Cria um material
     async create(material: CreateMaterial) {
-        return this.prisma.material.create({ 
+        return await this.prisma.material.create({ 
             data: {
                 ...material
             }    
@@ -62,7 +58,7 @@ export class MaterialService {
 
     // Atualiza um material
     async update(id: number, material: UpdateMaterial) {
-        // Verifica se pelo menos uma informação foi passada, se não for manda um erro
+        // Verifica se pelo menos uma informação foi passada, se não for retorna um erro
         if (!material.text && !material.title) throw new HttpException("Precisa conter pelo menos uma informção!", HttpStatus.BAD_REQUEST); 
         
         // Verifica se existe
@@ -103,7 +99,7 @@ export class MaterialService {
         if (!find) throw new HttpException("Não existe um material com esse id!", HttpStatus.NOT_FOUND)
 
         // Deleta o material
-        const remove = await this.prisma.material.delete({
+        await this.prisma.material.delete({
             where: {
                 id: id
             }
