@@ -1,34 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { MaterialService } from './material.service';
-import { CreateMaterialDto } from './dto/create-material.dto';
-import { UpdateMaterialDto } from './dto/update-material.dto';
+import { CreateMaterial, UpdateMaterial } from './dto/material.dto';
 
 @Controller('material')
 export class MaterialController {
-  constructor(private readonly materialService: MaterialService) {}
+    constructor(private materialService: MaterialService) {}
+        
+    // Pega todos os materiais
+    @Get()
+    async getAll() {
+        return this.materialService.getAll();
+    }
+    
+    // Pega um material pelo id
+    @Get(':id')
+    async getOne(@Param('id', ParseIntPipe) id: number) {
+        return this.materialService.getOne(id);
+    }
 
-  @Post()
-  create(@Body() createMaterialDto: CreateMaterialDto) {
-    return this.materialService.create(createMaterialDto);
-  }
+    // Pega os materiais de uma sprint usando o id da sprint
+    @Get('/sprint/:id')
+    async getOneBySprint(@Param('id', ParseIntPipe) sprintId: number) {
+        return this.materialService.getOneBySprint(sprintId);
+    }
+    
+    // Cria um material
+    @Post()
+    async create(@Body() material: CreateMaterial) {
+        return this.materialService.create(material);
+    }
 
-  @Get()
-  findAll() {
-    return this.materialService.findAll();
-  }
+    // Atualiza um material
+    @Patch(':id')
+    async update(@Param('id', ParseIntPipe) id: number, @Body() material: UpdateMaterial) {
+        return this.materialService.update(id, material);
+    }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.materialService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMaterialDto: UpdateMaterialDto) {
-    return this.materialService.update(+id, updateMaterialDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.materialService.remove(+id);
-  }
+    // Deleta um material
+    @Delete(':id')
+    async delete(@Param('id', ParseIntPipe) id: number) {
+        return this.materialService.delete(id);
+    }
 }

@@ -4,10 +4,10 @@ const prisma = new PrismaClient()
 
 async function main() {
     const user: User = {
-        id: 1,
-        email: 'aaa@gmail.com',
-        username: 'aaa',
-        password: '123',
+        id: 0,
+        email: 'leo@gmail.com',
+        username: 'Leo',
+        password: 'coco123',
         role: 'ADMIN',
         registration: "23200064",
         semester: "2025/1",
