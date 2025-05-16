@@ -18,6 +18,7 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
+  
   @Get('byid/:id')
   async findOne(@Param('id', ParseIntPipe ) id: number) {
     return await this.userService.findOne(id);
