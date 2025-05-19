@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { CalendarService } from './calendar.service';
-import { CreateEvent, UpdateEvent } from './dto/calendar.dto';
+import { CreateCalendarEventDto } from './dto/create-calendarEvent.dto';
+import { UpdateCalendarEventDto } from './dto/update-calendarEvent.dto'
 
 @Controller('calendar')
 export class CalendarController {
@@ -12,25 +13,25 @@ export class CalendarController {
         return this.calendarService.getAll();
     }
 
-    // Pega um evento pelo id
+    // Pega um evento do claendário pelo id
     @Get(':id')
     async getOne(@Param('id', ParseIntPipe) id: number) {
         return this.calendarService.getOne(id);
     }
     
-    // Criar um evento 
+    // Criar um evento do calendário
     @Post()
-    async create(@Body() event: CreateEvent) {
-        return this.calendarService.create(event);
+    async create(@Body() calendarEvent: CreateCalendarEventDto) {
+        return this.calendarService.create(calendarEvent);
     }
 
-    // Atualizar um evento
+    // Atualizar um evento do calendário
     @Patch(':id')
-    async update(@Param('id', ParseIntPipe) id: number, @Body() event: UpdateEvent) {
-        return this.calendarService.update(id, event);
+    async update(@Param('id', ParseIntPipe) id: number, @Body() calendarEvent: UpdateCalendarEventDto) {
+        return this.calendarService.update(id, calendarEvent);
     }
 
-    // Deletar um evento
+    // Deletar um evento do calendário
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number) {
         return this.calendarService.delete(id);

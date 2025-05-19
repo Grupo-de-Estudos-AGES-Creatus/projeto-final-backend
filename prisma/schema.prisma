@@ -21,10 +21,11 @@ model User {
   firstAcess    Boolean     @default(true)
   createdAt     DateTime    @default(now())
   repository    Repository[]
+  material      Material[]
 }
 
 // Database de eventos do calendário
-model Event {
+model CalendarEvents {
   id            Int         @id @default(autoincrement())
   title         String
   description   String
@@ -51,6 +52,8 @@ model Material {
   id        Int       @id @default(autoincrement())
   title     String
   text      String
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
   sprintId  Int
   sprint    Sprint    @relation(fields: [sprintId], references: [id])
 }

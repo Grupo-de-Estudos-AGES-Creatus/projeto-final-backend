@@ -1,6 +1,5 @@
 import { IsInt, IsNotEmpty, IsString } from 'class-validator'
 
-
 // Filtro para criar um projeto
 export class CreateRepository {
     @IsInt()
@@ -10,12 +9,6 @@ export class CreateRepository {
     sprintId: number
 
     @IsNotEmpty()
-    @IsString()
-    link: string
-}
-
-// Filtro para atualizar um projeto
-export class UpdateRepository {
     @IsString()
     link: string
 }

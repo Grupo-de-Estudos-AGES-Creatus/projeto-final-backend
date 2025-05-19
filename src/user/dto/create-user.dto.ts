@@ -1,32 +1,34 @@
 import { IsOptional, IsString, IsNotEmpty } from 'class-validator';
 
+// Filtro para criar um usuário
 export class CreateUserDto {
-    @IsString()
+
     @IsNotEmpty()
+    @IsString()
     email: string;
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     username: string;
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     password: string;
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     role: string;
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     registration: string;
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     semester: string;
 
-    @IsString()
-    @IsNotEmpty()
     @IsOptional()
+    @IsNotEmpty()
+    @IsString()
     githubLink: string
-}
+}  

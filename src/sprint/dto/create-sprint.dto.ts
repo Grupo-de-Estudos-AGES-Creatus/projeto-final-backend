@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsBoolean } from 'class-validator';
 
-
+// Filtro para criar uma sprint
 export class CreateSprintDto{
 
     @IsNotEmpty()
@@ -13,12 +13,12 @@ export class CreateSprintDto{
     @IsString()
     description: string
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     semester: string
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     linkGithub: string
     
-}
+} 

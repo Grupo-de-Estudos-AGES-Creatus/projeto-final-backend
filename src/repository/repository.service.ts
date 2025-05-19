@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateRepository, UpdateRepository } from './dto/repository.dto';
+import { CreateRepository } from './dto/create-repository.dto';
+import { UpdateRepository } from './dto/update-repository.dto'
 
 @Injectable()
 export class RepositoryService {

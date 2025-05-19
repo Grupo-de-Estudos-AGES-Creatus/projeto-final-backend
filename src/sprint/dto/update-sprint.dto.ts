@@ -1,29 +1,29 @@
 import { IsOptional, IsString, IsNotEmpty, IsBoolean } from 'class-validator';
 
-
+// Filtro para atualizar uma sprint
 export class UpdateSprintDto{
 
+    @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @IsOptional()
     title: string;
 
     @IsOptional()
     @IsBoolean()
     isLocked: boolean;
 
-    @IsString()
     @IsOptional()
+    @IsString()
     description: string
 
-    @IsString()
-    @IsNotEmpty()
     @IsOptional()
+    @IsNotEmpty()
+    @IsString()
     semester: string
 
-    @IsString()
-    @IsNotEmpty()
     @IsOptional()
+    @IsNotEmpty()
+    @IsString()
     linkGithub: string
 
-}
+} 

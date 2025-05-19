@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateMaterial, UpdateMaterial } from './dto/material.dto';
+import { CreateMaterial } from './dto/create-material.dto';
+import { UpdateMaterial } from './dto/update-material.dto';
 
 @Injectable()
 export class MaterialService {

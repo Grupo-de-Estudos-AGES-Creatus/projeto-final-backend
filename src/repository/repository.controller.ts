@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { RepositoryService } from './repository.service';
-import { CreateRepository, UpdateRepository } from './dto/repository.dto';
+import { CreateRepository } from './dto/create-repository.dto';
+import { UpdateRepository } from './dto/update-repository.dto';
 
 @Controller('repository')
 export class RepositoryController {
