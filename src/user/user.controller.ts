@@ -19,6 +19,9 @@ export class UserController {
 
   // Alterar
   @Get('semester/:semester')
+  async findBySemester(@Param('semester') semester: string) {
+    return await this.userService.findBySemester(semester)
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -29,9 +32,6 @@ export class UserController {
   update(@Param('id', ParseIntPipe ) id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }
-
-  // Alterar
-  @Patch('self/:id')
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe ) id: number) {

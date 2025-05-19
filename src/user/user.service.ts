@@ -43,6 +43,20 @@ export class UserService {
     return user;
   }
 
+  async findBySemester(semester: string) {
+    const users = await this.prisma.user.findMany({
+      where: {
+        semester: semester
+      }
+    })
+
+    if (!users) throw new HttpException("Não existe usuários associados ao semestre",  HttpStatus.NOT_FOUND);
+
+    return users;
+
+
+  }
+
   //atualiza qualquer atributo do usuário. 
   //caso a senha seja fornecida no DTO, ela será criptografada antes de ser salva no banco de dados.
   async update(id: number, updateUserDto: UpdateUserDto) {
