@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateProject, UpdateProject } from './dto/project.dto';
 
+
 @Injectable()
 export class ProjectService {
     constructor(private prisma: PrismaService) {}
@@ -52,7 +53,7 @@ export class ProjectService {
         return await this.prisma.projects.create({ 
             data: {
                 ...project
-            }    
+            }as any
         })
     }
 

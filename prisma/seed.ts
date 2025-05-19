@@ -11,6 +11,7 @@ async function main() {
         role: 'ADMIN',
         registration: "23200064",
         semester: "2025/1",
+        githubLink: "https://link/asd",
         createdAt: new Date(),
         imgPath: '',
         firstAcess: true,

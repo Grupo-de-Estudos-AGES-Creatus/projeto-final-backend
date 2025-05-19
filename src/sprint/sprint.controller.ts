@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseInterceptors, UploadedFile, FileTypeValidator, ParseFilePipe, MaxFileSizeValidator, ParseFilePipeBuilder, HttpStatus } from '@nestjs/common';
 import { SprintService } from './sprint.service';
 import { CreateSprintDto } from './dto/create-sprint.dto';
 import { UpdateSprintDto } from './dto/update-sprint.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('sprint')
 export class SprintController {
@@ -36,4 +37,7 @@ export class SprintController {
     remove(@Param('id', ParseIntPipe) id: number) {
         return this.sprintService.remove(id);
     }
+
+    
+
 }
