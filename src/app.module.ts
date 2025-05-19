@@ -5,11 +5,11 @@ import { UserModule } from './user/user.module';
 import { MaterialModule } from './material/material.module';
 import { CalendarModule } from './calendar/calendar.module';
 import { PrismaService } from './prisma.service';
-import { ProjectModule } from './project/project.module';
+import { RepositoryModule } from './repository/repository.module';
 import { SprintModule } from './sprint/sprint.module';
 
 @Module({
-  imports: [UserModule, MaterialModule, ProjectModule, CalendarModule, SprintModule],
+  imports: [UserModule, MaterialModule, RepositoryModule, CalendarModule, SprintModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

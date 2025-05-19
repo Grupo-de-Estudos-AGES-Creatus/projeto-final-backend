@@ -6,10 +6,24 @@ export class UpdateSprintDto{
     @IsNotEmpty()
     @IsString()
     @IsOptional()
-    title?: string;
+    title: string;
 
     @IsOptional()
     @IsBoolean()
-    isLocked?: boolean;
+    isLocked: boolean;
+
+    @IsString()
+    @IsOptional()
+    description: string
+
+    @IsString()
+    @IsNotEmpty()
+    @IsOptional()
+    semester: string
+
+    @IsString()
+    @IsNotEmpty()
+    @IsOptional()
+    linkGithub: string
 
 }

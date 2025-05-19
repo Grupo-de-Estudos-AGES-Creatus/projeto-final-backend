@@ -1,26 +1,32 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { IsOptional, IsString, IsInt, IsUrl, isString, IsNotEmpty } from 'class-validator';
+import { IsOptional, IsString, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
     @IsString()
     @IsNotEmpty()
-    email:        string;
+    email: string;
+
     @IsString()
     @IsNotEmpty()
-    username:     string;
+    username: string;
+
     @IsString()
     @IsNotEmpty()
-    password:     string;
+    password: string;
+
     @IsString()
     @IsNotEmpty()
-    role:         string;
+    role: string;
+
     @IsString()
     @IsNotEmpty()
     registration: string;
+
     @IsString()
     @IsNotEmpty()
-    semester:    string;
+    semester: string;
+
     @IsString()
+    @IsNotEmpty()
     @IsOptional()
-    imgPath?:     string;
+    githubLink: string
 }

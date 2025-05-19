@@ -6,12 +6,6 @@ import { UpdateSprintDto } from './dto/update-sprint.dto';
 @Controller('sprint')
 export class SprintController {
     constructor(private readonly sprintService: SprintService) {}
-    
-    // Cria uma sprint
-    @Post()
-    create(@Body() createUserDto: CreateSprintDto) {
-        return this.sprintService.create(createUserDto);
-    }
 
     // Pega todas as sprints
     @Get()
@@ -23,6 +17,12 @@ export class SprintController {
     @Get(':id')
     async findOne(@Param('id', ParseIntPipe) id: number) {
         return await this.sprintService.findOne(id);
+    }
+
+    // Cria uma sprint
+    @Post()
+    create(@Body() createUserDto: CreateSprintDto) {
+        return this.sprintService.create(createUserDto);
     }
 
     // Atualiza uma sprint

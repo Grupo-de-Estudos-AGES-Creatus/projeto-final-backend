@@ -9,5 +9,16 @@ export class CreateSprintDto{
 
     @IsBoolean()
     isLocked: boolean;
+
+    @IsString()
+    description: string
+
+    @IsString()
+    @IsNotEmpty()
+    semester: string
+
+    @IsString()
+    @IsNotEmpty()
+    linkGithub: string
     
 }

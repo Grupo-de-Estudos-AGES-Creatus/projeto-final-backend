@@ -2,7 +2,7 @@ import { IsInt, IsNotEmpty, IsString } from 'class-validator'
 
 
 // Filtro para criar um projeto
-export class CreateProject {
+export class CreateRepository {
     @IsInt()
     userId: number
 
@@ -15,7 +15,7 @@ export class CreateProject {
 }
 
 // Filtro para atualizar um projeto
-export class UpdateProject {
+export class UpdateRepository {
     @IsString()
     link: string
 }
