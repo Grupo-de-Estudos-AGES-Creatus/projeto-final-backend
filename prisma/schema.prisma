@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Database de usuários
+model User {
+  id            Int         @id @default(autoincrement())
+  email         String      @unique
+  username      String
+  password      String
+  role          String
+  registration  String
+  semester      String
+  imgPath       String?
+  githubLink    String?
+  firstAcess    Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  repository    Repository[]
+  material      Material[]
+}
+
+// Database de eventos do calendário
+model CalendarEvents {
+  id            Int         @id @default(autoincrement())
+  title         String
+  description   String
+  startDate     DateTime
+  endDate       DateTime
+}
+
+// Database das sprints
+model Sprint {
+  id              Int        @id @default(autoincrement())
+  title           String
+  description     String
+  semester        String
+  linkGithub      String
+  descriptionPath String?
+  imgPath         String?
+  isLocked        Boolean    @default(true)
+  material        Material[]
+  repository      Repository[]
+}
+
+// Database dos materiais(dos usuários) das sprints
+model Material {
+  id        Int       @id @default(autoincrement())
+  title     String
+  text      String
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  sprintId  Int
+  sprint    Sprint    @relation(fields: [sprintId], references: [id])
+}
+
+// Database dos projetos
+model Repository {
+  id        Int     @id @default(autoincrement())
+  link      String
+  userId    Int
+  user      User    @relation(fields: [userId], references: [id])
+  sprintId  Int 
+  sprint    Sprint  @relation(fields: [sprintId], references: [id])
+}
