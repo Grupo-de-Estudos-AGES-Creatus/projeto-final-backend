@@ -10,36 +10,36 @@ export class MaterialController {
     // Pega todos os materiais
     @Get()
     async getAll() {
-        return this.materialService.getAll();
+        return await this.materialService.getAll();
     }
     
     // Pega um material pelo id
     @Get(':id')
     async getOne(@Param('id', ParseIntPipe) id: number) {
-        return this.materialService.getOne(id);
+        return await this.materialService.getOne(id);
     }
 
     // Pega os materiais de uma sprint usando o id da sprint
     @Get('/sprint/:id')
     async getOneBySprint(@Param('id', ParseIntPipe) sprintId: number) {
-        return this.materialService.getOneBySprint(sprintId);
+        return await this.materialService.getOneBySprint(sprintId);
     }
     
     // Cria um material
     @Post()
     async create(@Body() material: CreateMaterial) {
-        return this.materialService.create(material);
+        return await this.materialService.create(material);
     }
 
     // Atualiza um material
     @Patch(':id')
     async update(@Param('id', ParseIntPipe) id: number, @Body() material: UpdateMaterial) {
-        return this.materialService.update(id, material);
+        return await this.materialService.update(id, material);
     }
 
     // Deleta um material
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number) {
-        return this.materialService.delete(id);
+        return await this.materialService.delete(id);
     }
 }

@@ -9,8 +9,8 @@ export class SprintController {
 
     // Pega todas as sprints
     @Get()
-    findAll() {
-        return this.sprintService.findAll();
+    async findAll() {
+        return await this.sprintService.findAll();
     }
 
     // Pega uma sprint pelo id
@@ -21,19 +21,19 @@ export class SprintController {
 
     // Cria uma sprint
     @Post()
-    create(@Body() createUserDto: CreateSprintDto) {
-        return this.sprintService.create(createUserDto);
+    async create(@Body() createUserDto: CreateSprintDto) {
+        return await this.sprintService.create(createUserDto);
     }
 
     // Atualiza uma sprint
     @Patch(':id')
-    update(@Param('id', ParseIntPipe) id: number, @Body() updateSprintDto: UpdateSprintDto) {
-        return this.sprintService.update(id, updateSprintDto);
+    async update(@Param('id', ParseIntPipe) id: number, @Body() updateSprintDto: UpdateSprintDto) {
+        return await this.sprintService.update(id, updateSprintDto);
     }
 
     // Deleta uma sprint
     @Delete(':id')
-    remove(@Param('id', ParseIntPipe) id: number) {
-        return this.sprintService.remove(id);
+    async remove(@Param('id', ParseIntPipe) id: number) {
+        return await this.sprintService.remove(id);
     }
 }

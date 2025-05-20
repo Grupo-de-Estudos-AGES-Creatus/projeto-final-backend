@@ -9,8 +9,8 @@ export class UserController {
 
   // Pega todos os usuários
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  async findAll() {
+    return await this.userService.findAll();
   }
 
   // Pega um usuário pelo id
@@ -27,20 +27,20 @@ export class UserController {
 
   // Cria um usuário
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.userService.create(createUserDto);
   }
 
   // Atualiza um usuário
   @Patch(':id')
-  update(@Param('id', ParseIntPipe ) id: number, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  async update(@Param('id', ParseIntPipe ) id: number, @Body() updateUserDto: UpdateUserDto) {
+    return await this.userService.update(id, updateUserDto);
   }
 
   // Deleta um usuário
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe ) id: number) {
-    return this.userService.remove(id);
+  async remove(@Param('id', ParseIntPipe ) id: number) {
+    return await this.userService.remove(id);
   }
 }
 
