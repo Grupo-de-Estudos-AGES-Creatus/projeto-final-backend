@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { UpdateUserImgDto } from './dto/img-user.dto';
 
 @Injectable()
 export class UserService {
@@ -71,14 +72,21 @@ export class UserService {
     });
   }
 
-  async updateImg(id: number, imgLink : string)
+  async updateImg(id: number, updateUserImgDto : UpdateUserImgDto)
   {
-     return await this.prisma.user.update({
-        where: { id },
-        imgPath : imgLink,
-     });
+     const user = await this.prisma.user.findUnique({
+      where: { id }
+     })
+
+     if(!user) 
+     {
+        return "User not found";
+     }
+
+     user.imgPath = updateUserImgDto.imgPath;
+     return "Image updated sucessfully";
   }
-  
+
  //remove um usuario do db
   async remove(id: number) {
     const user = await this.prisma.user.delete({
