@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { CalendarService } from './calendar.service';
 import { CreateEvent, UpdateEvent } from './dto/calendar.dto';
+import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('calendar')
 export class CalendarController {
@@ -19,6 +20,11 @@ export class CalendarController {
     }
     
     // Criar um evento 
+    @Post()
+    @ApiOperation({ summary: 'Create a new event' })
+    @ApiResponse({ status: 201, description: 'Event created successfully.' })
+    @ApiResponse({ status: 400, description: 'Bad request.' })
+    @ApiBody({ type: CreateEvent })
     @Post()
     async create(@Body() event: CreateEvent) {
         return this.calendarService.create(event);

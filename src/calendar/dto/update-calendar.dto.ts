@@ -1,15 +1,16 @@
-import { Optional } from '@nestjs/common'
-import { IsDate, IsNotEmpty, IsString } from 'class-validator'
-import { ApiProperty } from "@nestjs/swagger";
+import { Optional } from "@nestjs/common"
+import { ApiProperty } from "@nestjs/swagger"
+import { IsDate, IsNotEmpty, IsString } from "class-validator"
 
-// Filtro para criar um evento no calendário
-export class CreateEvent {
+export class UpdateEvent {
+
     @ApiProperty({
-            description: "Event title",
-            example: "International Rock n Roll day"
+        description: "Event title",
+        example: "International Rock n Roll day"
     })
     @IsNotEmpty()
     @IsString()
+    @Optional()
     title: string
 
     @ApiProperty({
@@ -18,6 +19,7 @@ export class CreateEvent {
     })
     @IsNotEmpty()
     @IsString()
+    @Optional()
     description: string
 
     @ApiProperty({
@@ -25,6 +27,7 @@ export class CreateEvent {
         example: "July 13"
     })
     @IsDate()
+    @Optional()
     startDate: Date
     
     @ApiProperty({
@@ -32,5 +35,6 @@ export class CreateEvent {
         example: "July 14"
     })
     @IsDate()
+    @Optional()
     endDate: Date
 }
