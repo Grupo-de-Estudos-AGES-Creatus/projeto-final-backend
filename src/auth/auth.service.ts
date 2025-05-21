@@ -13,13 +13,13 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     let user = await this.prisma.user.findUnique({
       where: {
-        email: loginDto.login
+        email: loginDto.email
       }
     })
     if (!user) {
       user = await this.prisma.user.findUnique({
         where: {
-          registration: loginDto.login
+          registration: loginDto.email
         }
       })
     }
