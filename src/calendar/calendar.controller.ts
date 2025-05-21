@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { CalendarService } from './calendar.service';
-import { CreateEvent, UpdateEvent } from './dto/calendar.dto';
+import { CreateEvent } from './dto/calendar.dto';
+import { UpdateEvent } from './dto/update-calendar.dto';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('calendar')

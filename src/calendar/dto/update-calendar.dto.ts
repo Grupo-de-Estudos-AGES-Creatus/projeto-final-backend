@@ -1,10 +1,10 @@
 import { Optional } from "@nestjs/common"
-import { ApiProperty } from "@nestjs/swagger"
+import { ApiPropertyOptional } from "@nestjs/swagger"
 import { IsDate, IsNotEmpty, IsString } from "class-validator"
 
 export class UpdateEvent {
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         description: "Event title",
         example: "International Rock n Roll day"
     })
@@ -13,7 +13,7 @@ export class UpdateEvent {
     @Optional()
     title: string
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         description: "Event description",
         example: "The day that celebrates rock music"
     })
@@ -22,7 +22,7 @@ export class UpdateEvent {
     @Optional()
     description: string
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         description: "When event starts",
         example: "July 13"
     })
@@ -30,7 +30,7 @@ export class UpdateEvent {
     @Optional()
     startDate: Date
     
-    @ApiProperty({
+    @ApiPropertyOptional({
         description: "When event ends",
         example: "July 14"
     })

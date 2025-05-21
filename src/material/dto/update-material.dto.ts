@@ -1,11 +1,11 @@
 import { Optional } from "@nestjs/common"
-import { ApiProperty } from "@nestjs/swagger"
+import { ApiPropertyOptional } from "@nestjs/swagger"
 import { IsNotEmpty, IsString } from "class-validator"
 
 // Filtro para atualizar um material
 export class UpdateMaterial {
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         description: "Update material title",
         example: "Medicine"
     })
@@ -14,7 +14,7 @@ export class UpdateMaterial {
     @IsString()
     title: string
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         description: "Update material description",
         example: "Medicine content"
     })
