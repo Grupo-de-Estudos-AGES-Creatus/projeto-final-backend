@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { verify } from 'crypto';
 import { VerifyUserDto } from './dto/verify-user.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { UpdateUserImgDto } from './dto/img-user.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -43,13 +44,23 @@ export class UserController {
     return result; 
   }
 
+  @Patch(':id')
   @ApiOperation({ summary: 'Update user by id' })
   @ApiResponse({ status: 200, description: 'User updated successfully.' })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @ApiBody({ type: UpdateUserDto })
-  @Patch(':id')
   update(@Param('id', ParseIntPipe ) id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
+  }
+
+
+  @Patch('/img/:id')
+  @ApiOperation({ summary: 'Update user image by id' })
+  @ApiResponse({ status: 200, description: 'User image updated successfully.' })
+  @ApiResponse({ status: 404, description: 'User image not found.' })
+  @ApiBody({ type: UpdateUserImgDto })
+  updateImg(@Param('id', ParseIntPipe ) id: number, @Body()updateUserImgDto : UpdateUserImgDto){
+    return this.userService.updateImg(id, updateUserImgDto);
   }
 
   @Delete(':id')
