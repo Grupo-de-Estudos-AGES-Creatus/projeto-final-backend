@@ -70,6 +70,15 @@ export class UserService {
       data: updateUserDto,
     });
   }
+
+  async updateImg(id: number, imgLink : string)
+  {
+     return await this.prisma.user.update({
+        where: { id },
+        imgPath : imgLink,
+     });
+  }
+  
  //remove um usuario do db
   async remove(id: number) {
     const user = await this.prisma.user.delete({
