@@ -31,4 +31,4 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
     githubLink: string
-}  
+}   
