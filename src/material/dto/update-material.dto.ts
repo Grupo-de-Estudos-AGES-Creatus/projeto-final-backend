@@ -6,6 +6,15 @@ import { IsNotEmpty, IsString } from "class-validator"
 export class UpdateMaterial {
 
     @ApiProperty({
+        description: "Update material title",
+        example: "Medicine"
+    })
+    @Optional()
+    @IsNotEmpty()
+    @IsString()
+    title: string
+
+    @ApiProperty({
         description: "Update material description",
         example: "Medicine content"
     })
@@ -15,12 +24,4 @@ export class UpdateMaterial {
     text: string
 
 
-    @ApiProperty({
-        description: "Update material title",
-        example: "Medicine"
-    })
-    @Optional()
-    @IsNotEmpty()
-    @IsString()
-    title: string
 }
