@@ -1,22 +1,20 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SigninDto } from './dto/signin.dto';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { LoginDto } from './dto/login.dto';
+import { ChangePasswordDto } from './dto/changePassword.dto';
+import { CurrentUser } from './auth.decorators'
 
-@Controller('auth')
+@Controller('login')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // Rota de cadastro (signup)
-  @Post('signup')
-  async signup(@Body() dto: CreateUserDto) {
-    return this.authService.signup(dto);
+  @Post('')
+  async login(@Body() loginDto: LoginDto) {
+    return this.authService.login(loginDto);
   }
 
-  // Rota de login (signin)
-  @HttpCode(HttpStatus.OK) // Retorna 200 ao invés de 201
-  @Post('signin')
-  async signin(@Body() dto: SigninDto) {
-    return this.authService.signin(dto);
+  @Post('changePassword')
+  async changePassword(@Body() changePasswordDto: ChangePasswordDto, @CurrentUser() currentUser: any) {
+    return this.authService.changePassword(changePasswordDto, currentUser);
   }
 }

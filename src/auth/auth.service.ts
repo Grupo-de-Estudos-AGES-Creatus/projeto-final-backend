@@ -1,53 +1,75 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
-import { SigninDto } from './dto/signin.dto';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { LoginDto } from './dto/login.dto';
+import { ChangePasswordDto } from './dto/changePassword.dto';
 import * as bcrypt from 'bcrypt';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly jwtService: JwtService,
-    private readonly userService: UserService,
-  ) {}
+  constructor( private jwtService: JwtService, private prisma: PrismaService ) {}
 
-  // Cadastro de novo usuário
-  async signup(dto: CreateUserDto) {
-    // Criptografa a senha
-    const hashedPassword = await bcrypt.hash(dto.password, 10);
 
-    // Cria o usuário com a senha criptografada
-    const user = await this.userService.create({
-      ...dto,
-      password: hashedPassword,
-    });
+  async login(loginDto: LoginDto) {
+    let user = await this.prisma.user.findUnique({
+      where: {
+        email: loginDto.login
+      }
+    })
+    if (!user) {
+      user = await this.prisma.user.findUnique({
+        where: {
+          registration: loginDto.login
+        }
+      })
+    }
 
-    // Payload do JWT
-    const payload = { email: user.email, sub: user.id, role: user.role };
-    const token = this.jwtService.sign(payload);
+    if (!user) throw new HttpException('Dados inválidos', HttpStatus.FORBIDDEN);
 
-    return { access_token: token };
+    const passwordMatch = await bcrypt.compare(loginDto.password, user.password);
+
+    if (!passwordMatch) throw new HttpException('Dados inválidos', HttpStatus.FORBIDDEN);
+
+    const payload = { userId: user.id, firstAcess: user.firstAcess, role: user.role };
+    const token = await this.jwtService.signAsync(payload);
+    
+    return {
+      accessToken: token,
+      firstAcess: user.firstAcess,
+      role: user.role
+    }
   }
 
-  // Login de usuário existente
-  async signin(dto: SigninDto) {
-    const user = await this.userService.findByEmail(dto.email);
+  async changePassword(changePasswordDto: ChangePasswordDto, currentUser: any) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: currentUser.userId
+      }
+    })
 
-    if (!user) {
-      throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
+    if (!user) throw new HttpException("Usuário não encontrado, tente novamente", HttpStatus.BAD_REQUEST)
+    if (!user.firstAcess) throw new HttpException("A senha já foi trocada", HttpStatus.FORBIDDEN);
+
+    const saltOrRounds = 10;
+    const hash = await bcrypt.hash(changePasswordDto.password, saltOrRounds);
+
+    const updateUser = await this.prisma.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        password: hash,
+        firstAcess: false
+      }
+    })
+    
+    const payload = { userId: user.id, firstAcess: user.firstAcess, role: user.role };
+    const token = await this.jwtService.signAsync(payload);
+    return {
+      accessToken: token,
+      firstAcess: updateUser.firstAcess,
+      role: user.role
     }
-
-    const passwordMatch = await bcrypt.compare(dto.password, user.password);
-
-    if (!passwordMatch) {
-      throw new HttpException('Senha incorreta', HttpStatus.FORBIDDEN);
-    }
-    // ✅ Adicionando o log de sucesso
-    console.log(`Usuário logado com sucesso: ${user.email}`);
-    const payload = { email: user.email, sub: user.id, role: user.role };
-    const token = this.jwtService.sign(payload);
-
-    return { access_token: token };
+    
   }
 }

@@ -51,17 +51,8 @@ export class UserService {
     // Retorna os usuários
     return users;
   }
-
-  // Cria um novo usuário (a senha já deve vir criptografada do AuthService)
-  async create(createUserDto: CreateUserDto) {
-    return await this.prisma.user.create({
-      data: {
-        ...createUserDto,
-      },
-    });
-  }
   
-  /* // Cria um usuário 
+  // Cria um usuário 
   async create(createUserDto: CreateUserDto) {
     // Criptografa a senha
     const password = createUserDto.password;
@@ -76,7 +67,7 @@ export class UserService {
         ...createUserDto,
       },
     });
-  } */
+  } 
 
   // Atualiza um usuário
   async update(id: number, updateUserDto: UpdateUserDto) {
