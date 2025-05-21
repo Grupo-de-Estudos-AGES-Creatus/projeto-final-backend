@@ -1,13 +1,12 @@
-import { Controller} from '@nestjs/common';
+import { Controller, Get, Param, Post, UploadedFile, UseInterceptors,} from '@nestjs/common';
 import { AppService } from './app.service';
-import {
-  Post,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { dirname, extname } from 'path';
+import { createReadStream } from 'fs';
+import { fileURLToPath } from 'url';
+import path = require("path");
+
 
 @Controller()
 export class AppController {
@@ -22,11 +21,10 @@ export class AppController {
           const params = req.params.id
           const nameWoExt = "README"
           const fileName = `${nameWoExt}-${params}${fileExt}`;
-          callback(null, fileName);
-          
+
           const allowedExtensions = ['.md'];
           if (!allowedExtensions.some(ext => fileName.endsWith(ext))) {
-              return callback(new Error('Extensão de arquivo não permitida.'), fileName);
+              return callback(new Error('Extensão de arquivo não permitida.'), fileName); 
           }
           callback(null, fileName);
         },
@@ -45,4 +43,15 @@ export class AppController {
         console.log(file);
         return file;
       }
+
+      @Get('readme/:id')
+      public async getFile(@Param('id') id: string){
+        
+        const filePath = path.join(__dirname, `./uploads/README-${id}`)
+        const fileStream = createReadStream(filePath);
+        return fileStream;
+      }
+      
+      
+    
 }
