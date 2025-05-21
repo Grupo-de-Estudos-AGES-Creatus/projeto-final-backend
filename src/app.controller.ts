@@ -47,8 +47,9 @@ export class AppController {
       @Get('readme/:id')
       public async getFile(@Param('id') id: string){
         
-        const filePath = path.join(__dirname, `./uploads/README-${id}`)
+        const filePath = path.join(__dirname, `./../../uploads/README-${id}.md`)
         const fileStream = createReadStream(filePath);
+        console.log("Arquivo devolvido com sucesso");
         return fileStream;
       }
       
