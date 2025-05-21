@@ -16,17 +16,3 @@ export class CreateMaterial {
     @IsString()
     title: string
 }
-
-// Filtro para atualizar um material
-export class UpdateMaterial {
-
-    @Optional()
-    @IsNotEmpty()
-    @IsString()
-    text: string
-
-    @Optional()
-    @IsNotEmpty()
-    @IsString()
-    title: string
-}
