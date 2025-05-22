@@ -9,7 +9,6 @@ import { PrismaService } from 'prisma/prisma.service';
 export class AuthService {
   constructor( private jwtService: JwtService, private prisma: PrismaService ) {}
 
-
   async login(loginDto: LoginDto) {
     let user = await this.prisma.user.findUnique({
       where: {

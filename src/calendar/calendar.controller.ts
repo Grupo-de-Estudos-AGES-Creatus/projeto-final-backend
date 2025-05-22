@@ -2,6 +2,8 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from 
 import { CalendarService } from './calendar.service';
 import { CreateCalendarEventDto } from './dto/create-calendarEvent.dto';
 import { UpdateCalendarEventDto } from './dto/update-calendarEvent.dto'
+import { Roles } from 'src/auth/roles/roles.decorator';
+import { Role } from 'src/auth/roles/roles.enum';
 
 @Controller('calendar')
 export class CalendarController {
@@ -20,18 +22,21 @@ export class CalendarController {
     }
     
     // Criar um evento do calendário
+    @Roles(Role.ADMIN)
     @Post()
     async create(@Body() calendarEvent: CreateCalendarEventDto) {
         return this.calendarService.create(calendarEvent);
     }
 
     // Atualizar um evento do calendário
+    @Roles(Role.ADMIN)
     @Patch(':id')
     async update(@Param('id', ParseIntPipe) id: number, @Body() calendarEvent: UpdateCalendarEventDto) {
         return this.calendarService.update(id, calendarEvent);
     }
 
     // Deletar um evento do calendário
+    @Roles(Role.ADMIN)
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number) {
         return this.calendarService.delete(id);

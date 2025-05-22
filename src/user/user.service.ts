@@ -54,6 +54,7 @@ export class UserService {
   
   // Cria um usuário 
   async create(createUserDto: CreateUserDto) {
+    
     // Criptografa a senha
     const password = createUserDto.password;
     const saltOrRounds = 10;

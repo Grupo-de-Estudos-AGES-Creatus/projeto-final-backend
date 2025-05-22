@@ -8,11 +8,24 @@ import { PrismaService } from '../prisma/prisma.service';
 import { RepositoryModule } from './repository/repository.module';
 import { SprintModule } from './sprint/sprint.module';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/roles/roles.guard';
+import { JwtAuthGuard } from './auth/auth.guard';
+
 
 @Module({
   imports: [UserModule, MaterialModule, RepositoryModule, CalendarModule, SprintModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, 
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard
+    }
+  ],
 })
 
 export class AppModule {}
