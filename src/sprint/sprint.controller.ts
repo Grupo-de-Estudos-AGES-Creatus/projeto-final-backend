@@ -1,8 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseInterceptors, UploadedFile, FileTypeValidator, ParseFilePipe, MaxFileSizeValidator, ParseFilePipeBuilder, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UploadedFile, UseInterceptors} from '@nestjs/common';
 import { SprintService } from './sprint.service';
 import { CreateSprintDto } from './dto/create-sprint.dto';
 import { UpdateSprintDto } from './dto/update-sprint.dto';
+import { Roles } from 'src/auth/roles/roles.decorator';
+import { Role } from 'src/auth/roles/roles.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('sprint')
 export class SprintController {
@@ -20,24 +24,60 @@ export class SprintController {
         return await this.sprintService.findOne(id);
     }
 
+    // Pega o arquivo readme de uma sprint pelo id
+    @Get('readme/:id')
+    async getFile(@Param('id') id: string){
+      return this.sprintService.getFile(id)
+    }   
+
     // Cria uma sprint
     @Post()
+    @Roles(Role.ADMIN)
     async create(@Body() createUserDto: CreateSprintDto) {
         return await this.sprintService.create(createUserDto);
     }
 
+    // Verficar para colocar no service
+    @Post('readme/:id')
+    @UseInterceptors(FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, file, callback) => {
+          const fileExt = extname(file.originalname);
+          const params = req.params.id
+          const nameWoExt = "README"
+          const fileName = `${nameWoExt}-${params}${fileExt}`;
+
+          const allowedExtensions = ['.md'];
+          if (!allowedExtensions.some(ext => fileName.endsWith(ext))) {
+              return callback(new Error('Extensão de arquivo não permitida.'), fileName); 
+          }
+          callback(null, fileName);
+        },
+      }),
+        fileFilter: (req, file, callback) => {
+          if (file.mimetype === 'text/markdown') {
+            callback(null, true);
+          } else {
+            callback(new Error('Only markdown files are allowed!'), false);
+          }
+        },
+    }))
+    async uploadFile(@UploadedFile() file: Express.Multer.File){
+        return file;
+    }
+
     // Atualiza uma sprint
     @Patch(':id')
+    @Roles(Role.ADMIN)
     async update(@Param('id', ParseIntPipe) id: number, @Body() updateSprintDto: UpdateSprintDto) {
         return await this.sprintService.update(id, updateSprintDto);
     }
 
     // Deleta uma sprint
     @Delete(':id')
+    @Roles(Role.ADMIN)
     async remove(@Param('id', ParseIntPipe) id: number) {
         return await this.sprintService.remove(id);
     }
-
-    
-
 }

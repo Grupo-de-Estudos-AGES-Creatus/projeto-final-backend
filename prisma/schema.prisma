@@ -13,8 +13,8 @@ model User {
   email         String      @unique
   username      String
   password      String
-  role          String
-  registration  String
+  role          String      // admin ou student
+  registration  String      @unique
   semester      String
   imgPath       String?
   githubLink    String?

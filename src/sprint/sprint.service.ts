@@ -2,6 +2,8 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateSprintDto } from "./dto/create-sprint.dto";
 import { UpdateSprintDto } from "./dto/update-sprint.dto"
 import { PrismaService } from "src/prisma.service";
+import { createReadStream } from "fs";
+import path from "path";
 
 @Injectable()
 export class SprintService {
@@ -26,6 +28,14 @@ export class SprintService {
 
         // Retorna a sprint
         return sprint;
+    }
+
+    // Retorna o arquivo readme
+    async getFile(id: string) {
+        const filePath = path.join(__dirname, `./../../uploads/README-${id}.md`)
+        const fileStream = createReadStream(filePath);
+        console.log("Arquivo devolvido com sucesso");
+        return fileStream;
     }
 
     // Cria uma sprint
