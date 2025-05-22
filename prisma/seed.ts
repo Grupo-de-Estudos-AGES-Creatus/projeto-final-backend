@@ -4,17 +4,6 @@ import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.deleteMany({
-    where: {
-      email: "leo@gmail.com"
-    }
-  })
-  await prisma.user.deleteMany({
-    where: {
-      email: "leo2@gmail.com"
-    }
-  })
-
   const hashedPassword1 = await bcrypt.hash('leo123', 10);
 
   const hashedPassword2 = await bcrypt.hash('leo12', 10);
