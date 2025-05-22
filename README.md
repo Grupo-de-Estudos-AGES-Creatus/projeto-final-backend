@@ -1,15 +1,11 @@
-
-
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Project setup
 
-
-
 ```bash
-$ git clone https://github.com/Grupo-de-Estudos-AGES-Creatus/sprint5-backend.git
+$ git clone https://github.com/Grupo-de-Estudos-AGES-Creatus/projeto-final-backend.git
 
 $ npm install
 ```
@@ -19,7 +15,7 @@ $ npm install
 ```bash
 
 # docker
-$ docker-compose up
+$ docker compose up -d
 
 # db
 $ npx prisma generate
@@ -28,14 +24,13 @@ $ npx prisma generate
 $ npx prisma db push 
 
 # db
-$ npx prisma db seed
+$ npm run seed
 
 # development
 $ npm run start
 
 # watch mode
 É para rodar [http://localhost:3000]
-
 
 ```
 ## License
