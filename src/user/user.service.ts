@@ -151,7 +151,6 @@ export class UserService {
       console.log(`File found at: ${imagePath}, attempting deletion...`);
       fs.unlinkSync(imagePath); // Deletes file
       console.log(`Deleted image: ${imagePath}`);
-      console.log(`Current imagePath: ${user.imgPath}`)
     } else {
       console.log(`Image not found at: ${imagePath}`);
     }
@@ -161,7 +160,6 @@ export class UserService {
       data: { imgPath: null },
     });
     }
-    console.log("imagem deletada?")
   }
 
 
