@@ -1,7 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseInterceptors, UploadedFile, HttpStatus, HttpException, BadRequestException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { PrismaService } from 'src/prisma.service';
+import * as fs from 'fs';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
@@ -9,6 +14,7 @@ import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+  
 
   // Pega todos os usuários
   @Get()
@@ -68,5 +74,29 @@ export class UserController {
   async remove(@Param('id', ParseIntPipe ) id: number) {
     return await this.userService.remove(id);
   }
+
+  
+  @Post('img/:id')
+      @UseInterceptors(FileInterceptor('file', {}))
+      public async updateImage(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number, ) {
+        try {
+          //se já existir uma imagem deleta ela
+          const oldImage = await this.userService.findImage(id);
+          
+          if (oldImage) {
+            await this.userService.deleteImage(id);
+          }
+
+          await this.userService.saveInUploadsImage(file, id)
+          await this.userService.saveImagePath(id, file);
+
+        } catch (error) {
+          console.log(error.message)
+          throw new HttpException('Failed to update image', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+      }
+    
+      
 }
+
 

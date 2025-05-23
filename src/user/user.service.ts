@@ -3,6 +3,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
+import * as fs from 'fs';
+import * as path from 'path';
+import { extname } from 'path';
+
 
 @Injectable()
 export class UserService {
@@ -23,7 +27,7 @@ export class UserService {
     })
 
     // Se não existir retorna um erro
-    if (!user) throw new HttpException("Não existe uma sprint com esse id",  HttpStatus.NOT_FOUND);
+    if (!user) throw new HttpException("Não existe um usuário com esse id",  HttpStatus.NOT_FOUND);
 
     // Retorna o usuário
     return user;
@@ -117,4 +121,81 @@ export class UserService {
     // Retorna uma mensagem
     return "Usuário deletado"
   }
+
+    async findImage(id: number) {
+      const user = await this.prisma.user.findUnique({
+      where: { 
+        id: id
+      },
+    })
+
+      if (!user) {
+        console.log(`Usuário de ID ${id} não encontrado.`);
+        return null;
+      }
+
+      return user.imgPath;
+    }
+
+    async deleteImage(id: number) {
+      const user = await this.prisma.user.findUnique({
+      where: { 
+        id: id 
+      },
+    })
+        if (user?.imgPath) {
+    const imagePath = path.join(process.cwd(), 'uploads', user.imgPath); 
+
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath); // Deleta o arquivo
+      console.log(`Imagem deletada: ${imagePath}`);
+    } else {
+      console.log(`Imagem não encontrada em: ${imagePath}`);
+    }
+
+    await this.prisma.user.update({
+      where: { id: id },
+      data: { imgPath: null },
+    });
+    }
+  }
+
+
+    async saveImagePath(id: number, file: Express.Multer.File) {
+      const fileName = `Photo-${id}${extname(file.originalname)}`;
+
+        return await this.prisma.user.update({
+          where: {id: id},
+      data: {
+          imgPath: fileName
+      },
+    });
+    
+    }
+
+    async saveInUploadsImage(file: Express.Multer.File, id: number) {
+      return new Promise((resolve, reject) => {
+      const fileExt = extname(file.originalname);
+      const allowedExtensions = ['.jpeg', '.jpg', '.png'];
+
+      if (!allowedExtensions.includes(fileExt)) {
+        return reject(new Error('Extensão de arquivo não permitida.'));
+      }
+
+      const destination = './uploads';
+      if (!fs.existsSync(destination)) {
+        fs.mkdirSync(destination, { recursive: true });
+      }
+
+      const fileName = `Photo-${id}${fileExt}`;
+      const filePath = `${destination}/${fileName}`;
+
+      fs.writeFile(filePath, file.buffer, (err) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(filePath);
+      });
+    });
+  };
 }
