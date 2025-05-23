@@ -128,10 +128,9 @@ export class UserService {
         id: id
       },
     })
-    console.log('Stored image path:', user?.imgPath);
 
       if (!user) {
-        console.log(`User with ID ${id} not found.`);
+        console.log(`Usuário de ID ${id} não encontrado.`);
         return null;
       }
 
@@ -145,14 +144,13 @@ export class UserService {
       },
     })
         if (user?.imgPath) {
-    const imagePath = path.join(process.cwd(), 'uploads', user.imgPath); // Adjust path based on storage location
+    const imagePath = path.join(process.cwd(), 'uploads', user.imgPath); 
 
     if (fs.existsSync(imagePath)) {
-      console.log(`File found at: ${imagePath}, attempting deletion...`);
-      fs.unlinkSync(imagePath); // Deletes file
-      console.log(`Deleted image: ${imagePath}`);
+      fs.unlinkSync(imagePath); // Deleta o arquivo
+      console.log(`Imagem deletada: ${imagePath}`);
     } else {
-      console.log(`Image not found at: ${imagePath}`);
+      console.log(`Imagem não encontrada em: ${imagePath}`);
     }
 
     await this.prisma.user.update({

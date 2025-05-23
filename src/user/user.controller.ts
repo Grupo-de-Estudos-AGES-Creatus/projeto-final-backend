@@ -52,22 +52,8 @@ export class UserController {
     return await this.userService.remove(id);
   }
 
-
-
-
-  @Post('img/:id')
-      @UseInterceptors(FileInterceptor('file', {}))
-      public async uploadFile( @UploadedFile() file: Express.Multer.File, @Param('id') id: number){
-          try {
-            const filePath = await this.userService.saveInUploadsImage(file, id);
-            return { message: 'File uploaded successfully', path: filePath };
-          } catch (error) {
-            throw new BadRequestException(error.message);
-          }
-        }
-
   
-  @Post('update/:id')
+  @Post('img/:id')
       @UseInterceptors(FileInterceptor('file', {}))
       public async updateImage(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number, ) {
         try {
