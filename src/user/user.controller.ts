@@ -77,26 +77,22 @@ export class UserController {
 
   
   @Post('img/:id')
-      @UseInterceptors(FileInterceptor('file', {}))
-      public async updateImage(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number, ) {
-        try {
-          //se já existir uma imagem deleta ela
-          const oldImage = await this.userService.findImage(id);
-          
-          if (oldImage) {
-            await this.userService.deleteImage(id);
-          }
-
-          await this.userService.saveInUploadsImage(file, id)
-          await this.userService.saveImagePath(id, file);
-
-        } catch (error) {
-          console.log(error.message)
-          throw new HttpException('Failed to update image', HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-      }
-    
+  @UseInterceptors(FileInterceptor('file', {}))
+  async updateImage(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number, ) {
+    try {
+      //se já existir uma imagem deleta ela
+      const oldImage = await this.userService.findImage(id);
       
+      if (oldImage) {
+        await this.userService.deleteImage(id);
+      }
+      await this.userService.saveInUploadsImage(file, id)
+      await this.userService.saveImagePath(id, file);
+    } catch (error) {
+      console.log(error.message)
+      throw new HttpException('Failed to update image', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }  
 }
 
 

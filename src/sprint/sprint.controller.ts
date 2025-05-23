@@ -4,9 +4,9 @@ import { CreateSprintDto } from './dto/create-sprint.dto';
 import { UpdateSprintDto } from './dto/update-sprint.dto';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { ReadmeCreateOrEdit } from './sprint.interceptor';
 import { Response } from 'express';
+import { Public } from 'src/auth/auth.decorators';
 
 @Controller('sprint')
 export class SprintController {
@@ -26,8 +26,9 @@ export class SprintController {
 
     // Pega o arquivo readme de uma sprint pelo id
     @Get('readme/:id')
-    async getFile(@Param('id') id: string){
-      return this.sprintService.getFile(id)
+    async getFile(@Res() res: Response, @Param('id') id: string){
+        const filePath = await this.sprintService.getFile(id)
+        return res.sendFile(filePath);
     }   
 
     // Cria uma sprint
@@ -39,7 +40,7 @@ export class SprintController {
 
     // Verficar para colocar no service
     @Post('readme/:id')
-    @UseInterceptors(ReadmeCreateOrEdit)
+    @UseInterceptors(ReadmeCreateOrEdit())
     async uploadFile(@UploadedFile() file: Express.Multer.File){
       return file;
     }

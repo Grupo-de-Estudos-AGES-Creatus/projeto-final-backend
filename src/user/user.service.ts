@@ -5,8 +5,6 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
 import * as fs from 'fs';
 import * as path from 'path';
-import { extname } from 'path';
-
 
 @Injectable()
 export class UserService {
@@ -122,12 +120,12 @@ export class UserService {
     return "Usuário deletado"
   }
 
-    async findImage(id: number) {
+  async findImage(id: number) {
       const user = await this.prisma.user.findUnique({
-      where: { 
-        id: id
-      },
-    })
+        where: { 
+          id: id
+        },
+      })
 
       if (!user) {
         console.log(`Usuário de ID ${id} não encontrado.`);
@@ -135,47 +133,49 @@ export class UserService {
       }
 
       return user.imgPath;
-    }
+  }
 
-    async deleteImage(id: number) {
-      const user = await this.prisma.user.findUnique({
+  async deleteImage(id: number) {
+    const user = await this.prisma.user.findUnique({
       where: { 
         id: id 
       },
     })
-        if (user?.imgPath) {
-    const imagePath = path.join(process.cwd(), 'uploads', user.imgPath); 
+    
+    if (user?.imgPath) {
+      const imagePath = path.join(process.cwd(), 'uploads', user.imgPath); 
 
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath); // Deleta o arquivo
-      console.log(`Imagem deletada: ${imagePath}`);
-    } else {
-      console.log(`Imagem não encontrada em: ${imagePath}`);
-    }
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath); // Deleta o arquivo
+        console.log(`Imagem deletada: ${imagePath}`);
+      } else {
+        console.log(`Imagem não encontrada em: ${imagePath}`);
+      }
 
-    await this.prisma.user.update({
-      where: { id: id },
-      data: { imgPath: null },
-    });
+      await this.prisma.user.update({
+        where: { id: id },
+        data: { imgPath: null },
+      });
     }
   }
 
 
-    async saveImagePath(id: number, file: Express.Multer.File) {
-      const fileName = `Photo-${id}${extname(file.originalname)}`;
+  async saveImagePath(id: number, file: Express.Multer.File) {
+    const fileName = `Photo-${id}${path.extname(file.originalname)}`;
 
-        return await this.prisma.user.update({
-          where: {id: id},
-      data: {
+    return await this.prisma.user.update({
+      where: {id: id},
+        data: {
           imgPath: fileName
-      },
+        },
     });
     
-    }
+  }
 
-    async saveInUploadsImage(file: Express.Multer.File, id: number) {
-      return new Promise((resolve, reject) => {
-      const fileExt = extname(file.originalname);
+  async saveInUploadsImage(file: Express.Multer.File, id: number) {
+      
+    return new Promise((resolve, reject) => {
+      const fileExt = path.extname(file.originalname);
       const allowedExtensions = ['.jpeg', '.jpg', '.png'];
 
       if (!allowedExtensions.includes(fileExt)) {

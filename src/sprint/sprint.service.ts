@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateSprintDto } from "./dto/create-sprint.dto";
 import { UpdateSprintDto } from "./dto/update-sprint.dto"
 import { PrismaService } from "src/prisma.service";
-import { createReadStream } from "fs";
+import * as fs from 'fs';
 import * as path from "path";
 
 @Injectable()
@@ -33,9 +33,8 @@ export class SprintService {
     // Retorna o arquivo readme
     async getFile(id: string) {
         const filePath = path.join(process.cwd(), `uploads/readme/README-${id}.md`)
-        const fileStream = createReadStream(filePath);
-        console.log("Arquivo devolvido com sucesso");
-        return fileStream;
+        if (!fs.existsSync(filePath)) throw new HttpException('Arquivo readme não existe', HttpStatus.BAD_REQUEST)
+        return filePath;
     }
 
     // Cria uma sprint
