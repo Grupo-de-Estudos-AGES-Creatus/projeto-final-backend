@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseInterceptors, UploadedFile, HttpStatus, HttpException, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseInterceptors, UploadedFile, HttpStatus, HttpException, BadRequestException, Res } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -10,6 +10,7 @@ import { extname } from 'path';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { Response } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -40,6 +41,12 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'Users not found.' })
   async findBySemester(@Param('semester') semester: string) {
     return await this.userService.findBySemester(semester)
+  }
+
+  @Get('image/:id')
+  async getImage(@Res() res: Response, @Param('id', ParseIntPipe) id: number) {
+    const filePath = await this.userService.getImage(id);
+    return res.sendFile(filePath);
   }
 
   // Cria um usuário

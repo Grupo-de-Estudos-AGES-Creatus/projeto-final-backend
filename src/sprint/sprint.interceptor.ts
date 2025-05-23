@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
@@ -10,11 +11,6 @@ export function ReadmeCreateOrEdit() {
             const params = req.params.id
             const nameWoExt = "README"
             const fileName = `${nameWoExt}-${params}${fileExt}`;
-        
-            const allowedExtensions = ['.md'];
-            if (!allowedExtensions.some(ext => fileName.endsWith(ext))) {
-                return callback(new Error('Extensão de arquivo não permitida.'), fileName); 
-            }
             callback(null, fileName);
             },
           }),
@@ -22,7 +18,7 @@ export function ReadmeCreateOrEdit() {
             if (file.mimetype === 'text/markdown') {
                 callback(null, true);
             } else {
-                callback(new Error('Only markdown files are allowed!'), false);
+                callback(new HttpException('Extensão de arquivo não permitida.', HttpStatus.BAD_REQUEST), false);
             }
         }
   });
