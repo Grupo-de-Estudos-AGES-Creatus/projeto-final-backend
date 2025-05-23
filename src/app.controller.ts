@@ -17,7 +17,7 @@ export class AppController {
       storage: diskStorage({
         destination: './uploads',
         filename: (req, file, callback) => {
-          const fileExt = extname(file.originalname);
+          const fileExt = extname(file.originalname);   
           const params = req.params.id
           const nameWoExt = "README"
           const fileName = `${nameWoExt}-${params}${fileExt}`;
@@ -50,7 +50,7 @@ export class AppController {
         const filePath = path.join(__dirname, `./../../uploads/README-${id}.md`)
         const fileStream = createReadStream(filePath);
         console.log("Arquivo devolvido com sucesso");
-        return fileStream;
+        return fileStream.path;
       }
       
       

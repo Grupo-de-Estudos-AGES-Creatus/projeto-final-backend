@@ -14,7 +14,6 @@ async function main() {
         githubLink: "https://link/asd",
         createdAt: new Date(),
         imgPath: '',
-        githubLink: '',
         firstAcess: true,
     }
     const alice = await prisma.user.create({
