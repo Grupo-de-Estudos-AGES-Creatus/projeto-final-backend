@@ -3,4 +3,5 @@ node_modules
 prisma/migrations
 dist
 .package-lock.json
-uploads
+uploads/images/*
+uploads/readme/*
