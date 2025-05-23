@@ -25,5 +25,4 @@ export class UpdateSprintDto{
     @IsNotEmpty()
     @IsString()
     linkGithub: string
-
 } 
