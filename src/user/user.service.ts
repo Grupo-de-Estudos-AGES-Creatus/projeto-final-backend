@@ -120,82 +120,45 @@ export class UserService {
     return "Usuário deletado"
   }
 
-  async findImage(id: number) {
-      const user = await this.prisma.user.findUnique({
-        where: { 
-          id: id
-        },
-      })
-
-      if (!user) {
-        console.log(`Usuário de ID ${id} não encontrado.`);
-        return null;
-      }
-
-      return user.imgPath;
-  }
-
-  async deleteImage(id: number) {
+  async newImage(id: number, file: Express.Multer.File) {
     const user = await this.prisma.user.findUnique({
-      where: { 
-        id: id 
-      },
+      where: {
+        id: id
+      }
     })
-    
-    if (user?.imgPath) {
+
+    if (!user) throw new HttpException('Usuário não existe', HttpStatus.BAD_REQUEST);
+
+    if (user.imgPath) {
       const imagePath = path.join(process.cwd(), 'uploads', user.imgPath); 
 
       if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath); // Deleta o arquivo
-        console.log(`Imagem deletada: ${imagePath}`);
-      } else {
-        console.log(`Imagem não encontrada em: ${imagePath}`);
-      }
-
-      await this.prisma.user.update({
-        where: { id: id },
-        data: { imgPath: null },
-      });
+        fs.unlinkSync(imagePath);
+      } 
     }
-  }
 
+    const fileExt = path.extname(file.originalname);
+    const fileName = `Photo-${id}${fileExt}`;
 
-  async saveImagePath(id: number, file: Express.Multer.File) {
-    const fileName = `Photo-${id}${path.extname(file.originalname)}`;
-
-    return await this.prisma.user.update({
-      where: {id: id},
-        data: {
-          imgPath: fileName
-        },
-    });
-    
-  }
-
-  async saveInUploadsImage(file: Express.Multer.File, id: number) {
-      
-    return new Promise((resolve, reject) => {
-      const fileExt = path.extname(file.originalname);
-      const allowedExtensions = ['.jpeg', '.jpg', '.png'];
-
-      if (!allowedExtensions.includes(fileExt)) {
-        return reject(new Error('Extensão de arquivo não permitida.'));
+    await this.prisma.user.update({
+      where: {
+        id: id
+      },
+      data: {
+        imgPath: fileName
       }
+    })
 
-      const destination = './uploads';
-      if (!fs.existsSync(destination)) {
-        fs.mkdirSync(destination, { recursive: true });
-      }
+    const allowedExtensions = ['.jpeg', '.jpg', '.png'];
 
-      const fileName = `Photo-${id}${fileExt}`;
-      const filePath = `${destination}/${fileName}`;
+    if (!allowedExtensions.includes(fileExt)) throw new HttpException('Extensão de arquivo não permitida.', HttpStatus.BAD_REQUEST);
 
-      fs.writeFile(filePath, file.buffer, (err) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve(filePath);
-      });
-    });
-  };
+    const destination = path.join(process.cwd(), 'uploads');
+    const filePath = `${destination}/${fileName}`;
+    fs.writeFile(filePath, file.buffer, (err) => {
+      if (err) throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+    })
+
+    return filePath;
+  }
 }
