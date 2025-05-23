@@ -1,39 +1,27 @@
 import { IsDate, IsNotEmpty, IsString, IsOptional } from 'class-validator'
 import { ApiPropertyOptional } from "@nestjs/swagger"
+
 // Filtro para editar um evento no calendário
 export class UpdateCalendarEventDto {
 
-
-    @ApiPropertyOptional({
-        description: "Event title",
-        example: "International Rock n Roll day"
-    })
+    @ApiPropertyOptional({ description: "Calendar event title" })
     @IsOptional()
     @IsNotEmpty()
     @IsString()
     title: string
 
-    @ApiPropertyOptional({
-        description: "Event description",
-        example: "The day that celebrates rock music"
-    })
+    @ApiPropertyOptional({ description: "Calendar event description" })
     @IsOptional()
     @IsNotEmpty()
     @IsString()
     description: string
 
-    @ApiPropertyOptional({
-        description: "When event starts",
-        example: "July 13"
-    })
+    @ApiPropertyOptional({ description: "Start date of the calendar event" })
     @IsOptional()
     @IsDate()
     startDate: Date
     
-    @ApiPropertyOptional({
-        description: "When event ends",
-        example: "July 14"
-    })
+    @ApiPropertyOptional({ description: "End date of the calendar event" })
     @IsOptional()
     @IsDate()
     endDate: Date

@@ -30,9 +30,10 @@ export class SprintService {
         return sprint;
     }
 
-    // Retorna o arquivo readme
+    // Retorna o caminho do arquivo readme
     async getFile(id: string) {
         const filePath = path.join(process.cwd(), `uploads/readme/README-${id}.md`)
+        // Se não existir o arquivo retorna um erro
         if (!fs.existsSync(filePath)) throw new HttpException('Arquivo readme não existe', HttpStatus.BAD_REQUEST)
         return filePath;
     }
