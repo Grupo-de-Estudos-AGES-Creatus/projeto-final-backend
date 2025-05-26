@@ -7,7 +7,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { UpdateUserSelfDto } from './dto/update-user-selft.dto';
 import { JwtPayload } from 'src/auth/auth-payload.interface';
-import { error } from 'console';
 
 @Injectable()
 export class UserService {

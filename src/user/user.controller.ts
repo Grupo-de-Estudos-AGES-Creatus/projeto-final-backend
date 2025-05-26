@@ -43,6 +43,9 @@ export class UserController {
 
   // Pega a imagem do usuário
   @Get('image/:id')
+  @ApiOperation({ summary: 'Get image by user id' })
+  @ApiResponse({ status: 200, description: 'Image found.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
   async getImage(@Res() res: Response, @Param('id', ParseIntPipe) id: number) {
     const filePath = await this.userService.getImage(id);
     return res.sendFile(filePath);
@@ -64,6 +67,7 @@ export class UserController {
   @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Update user by id' })
   @ApiResponse({ status: 200, description: 'User updated successfully.' })
+  @ApiResponse({ status: 400, description: "Don't has any information" })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @ApiBody({ type: UpdateUserDto })
   async update(@Param('id', ParseIntPipe ) id: number, @Body() updateUserDto: UpdateUserDto) {
@@ -83,6 +87,10 @@ export class UserController {
 
   // Recebe uma imagem de usuário 
   @Patch('img/:id')
+  @ApiOperation({ summary: 'Update image by user id' })
+  @ApiResponse({ status: 200, description: 'Image updated successfully.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  @ApiResponse({ status: 403, description: "Id provided isn't the one used in the token."})
   @UseInterceptors(FileInterceptor('file', {})) 
   async updateImage(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number, @CurrentUser() currentUser: JwtPayload) {
     return await this.userService.newImage(id, file, currentUser);

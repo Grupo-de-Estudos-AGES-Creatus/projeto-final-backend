@@ -14,22 +14,27 @@ export class CreateUserDto {
     @IsString()
     username: string;
 
+    @ApiProperty({ description: 'Password', example: '@Ages2025' })
     @IsNotEmpty()
     @IsString()
     password: string;
 
+    @ApiProperty({ description: 'Role', example: 'admin' })
     @IsNotEmpty()
     @IsString()
     role: string;
 
+    @ApiProperty({ description: 'Registration', example: '12345678' })
     @IsNotEmpty()
     @IsString()
     registration: string;
 
+    @ApiProperty({ description: 'Semester', example: '2025/1' })
     @IsNotEmpty()
     @IsString()
     semester: string;
 
+    @ApiProperty({ description: 'Github link', example: 'https://github.com/Grupo-de-Estudos-AGES-Creatus' })
     @IsOptional()
     @IsNotEmpty()
     @IsString()
