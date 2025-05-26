@@ -15,7 +15,6 @@ async function bootstrap() {
     .setTitle('Moodle grupo de estudos')
     .setDescription('The API description')
     .setVersion('1.0')
-    .addTag('tag')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
