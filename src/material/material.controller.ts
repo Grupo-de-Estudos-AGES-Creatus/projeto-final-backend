@@ -3,6 +3,8 @@ import { MaterialService } from './material.service';
 import { CreateMaterial } from './dto/create-material.dto';
 import { UpdateMaterial } from './dto/update-material.dto';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles/roles.decorator';
+import { Role } from 'src/auth/roles/roles.enum';
 
 @Controller('material')
 export class MaterialController {
@@ -57,6 +59,7 @@ export class MaterialController {
 
     // Deleta um material
     @Delete(':id')
+    @Roles(Role.ADMIN)
     @ApiOperation({ summary: 'Delete material by id' })
     @ApiResponse({ status: 200, description: 'Material deleted successfully.' })
     @ApiResponse({ status: 404, description: 'Material not found.' })

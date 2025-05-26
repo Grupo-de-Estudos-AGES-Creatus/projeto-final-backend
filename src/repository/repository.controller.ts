@@ -3,6 +3,8 @@ import { RepositoryService } from './repository.service';
 import { CreateRepository } from './dto/create-repository.dto';
 import { UpdateRepository } from './dto/update-repository.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles/roles.decorator';
+import { Role } from 'src/auth/roles/roles.enum';
 
 @Controller('repository')
 export class RepositoryController {
@@ -65,6 +67,7 @@ export class RepositoryController {
 
     // Deleta um repositório
     @Delete(':id')
+    @Roles(Role.ADMIN)
     @ApiOperation({ summary: 'Delete Repository by id' })
     @ApiResponse({ status: 200, description: 'Repository deleted successfully.' })
     @ApiResponse({ status: 404, description: 'Repository not found.' })

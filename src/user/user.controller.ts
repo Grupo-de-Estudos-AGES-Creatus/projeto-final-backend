@@ -39,6 +39,7 @@ export class UserController {
     return await this.userService.findBySemester(semester)
   }
 
+  // Pega a imagem do usuário
   @Get('image/:id')
   async getImage(@Res() res: Response, @Param('id', ParseIntPipe) id: number) {
     const filePath = await this.userService.getImage(id);
@@ -48,7 +49,6 @@ export class UserController {
   // Cria um usuário
   @Post()
   @Roles(Role.ADMIN)
-  @Post()
   @ApiOperation({ summary: 'Create a new user' })
   @ApiResponse({ status: 201, description: 'User created successfully.' })
   @ApiResponse({ status: 400, description: 'Bad request.' })
@@ -59,6 +59,7 @@ export class UserController {
 
   // Atualiza um usuário
   @Patch(':id')
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Update user by id' })
   @ApiResponse({ status: 200, description: 'User updated successfully.' })
   @ApiResponse({ status: 404, description: 'User not found.' })
@@ -78,9 +79,9 @@ export class UserController {
     return await this.userService.remove(id);
   }
 
-  
-  @Post('img/:id')
-  @UseInterceptors(FileInterceptor('file', {}))
+  // Recebe uma imagem de usuário 
+  @Patch('img/:id')
+  @UseInterceptors(FileInterceptor('file', {})) 
   async updateImage(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number, ) {
     return await this.userService.newImage(id, file);
   }  

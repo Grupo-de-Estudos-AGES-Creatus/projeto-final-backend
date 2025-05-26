@@ -4,11 +4,23 @@ Auth
 Calendar
 Material
 Repository
-Até dto do user
-
+User
+App
 
 Swagger:
 
+
 JWT: 
+Calendário
+Material
+Repository
+Sprint
+User
 
 
+Fazer:
+Editar user apenas para o usuário
+Editar material apenas para o usuário
+Editar repository apenas para o usuário
+Editar imagem de usuário apenas para o usuário ou adm
+Editar/criar readme sprint

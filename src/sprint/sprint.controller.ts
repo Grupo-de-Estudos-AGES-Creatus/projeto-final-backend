@@ -40,6 +40,7 @@ export class SprintController {
 
     // Cria o arquivo readme da sprint
     @Post('readme/:id')
+    @Roles(Role.ADMIN)
     @UseInterceptors(ReadmeCreateOrEdit())
     async uploadFile(@UploadedFile() file: Express.Multer.File){
       return file;
