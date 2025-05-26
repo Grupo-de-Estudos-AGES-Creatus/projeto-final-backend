@@ -4,8 +4,8 @@ import { CreateSprintDto } from './dto/create-sprint.dto';
 import { UpdateSprintDto } from './dto/update-sprint.dto';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
-import { ReadmeCreateOrEdit } from './sprint.interceptor';
 import { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('sprint')
 export class SprintController {
@@ -41,9 +41,10 @@ export class SprintController {
     // Cria o arquivo readme da sprint
     @Post('readme/:id')
     @Roles(Role.ADMIN)
-    @UseInterceptors(ReadmeCreateOrEdit())
-    async uploadFile(@UploadedFile() file: Express.Multer.File){
-      return file;
+    @UseInterceptors(FileInterceptor('file', {})) 
+    async uploadFile(@Param('id', ParseIntPipe) id: number, @UploadedFile() file: Express.Multer.File){
+        const filePath = await this.sprintService.newReadme(id, file);
+        return filePath;
     }
 
     // Atualiza uma sprint
@@ -51,6 +52,15 @@ export class SprintController {
     @Roles(Role.ADMIN)
     async update(@Param('id', ParseIntPipe) id: number, @Body() updateSprintDto: UpdateSprintDto) {
         return await this.sprintService.update(id, updateSprintDto);
+    }
+
+    // Atualiza o arquivo readme da sprint
+    @Patch('readme/:id')
+    @Roles(Role.ADMIN)
+    @UseInterceptors(FileInterceptor('file', {})) 
+    async uploadFileEdit(@Param('id', ParseIntPipe) id: number, @UploadedFile() file: Express.Multer.File){
+        const filePath = await this.sprintService.newReadme(id, file);
+        return filePath;
     }
 
     // Deleta uma sprint

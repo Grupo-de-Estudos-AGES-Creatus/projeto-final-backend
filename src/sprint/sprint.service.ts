@@ -95,4 +95,57 @@ export class SprintService {
         // Retorna uma mensagem
         return "Sprint deletada!"
     }
+
+    async newReadme(id: number, file: Express.Multer.File) {
+       // Verifica se a sprint existe
+        const sprint = await this.prisma.sprint.findUnique({
+          where: {
+            id: id
+          }
+        })
+    
+        // Se a sprint não existir retorna um erro
+        if (!sprint) throw new HttpException('Sprint não existe', HttpStatus.BAD_REQUEST);
+    
+        // Extensões válidas e extensão do arquivo   
+        const allowedExtensions = ['.md',];
+        const fileExt = path.extname(file.originalname);
+        
+        // Se o arquivo tiver outras extensões diz que é inválido 
+        if (!allowedExtensions.includes(fileExt)) throw new HttpException('Extensão de arquivo não permitida.', HttpStatus.BAD_REQUEST);
+    
+        // Verifica se já existe um readme salvo
+        if (sprint.descriptionPath) {
+          const readmePath = path.join(process.cwd(), sprint.descriptionPath); 
+    
+          // Verifica se existe no local e se existir deleta
+          if (fs.existsSync(readmePath)) {
+            fs.unlinkSync(readmePath);
+          }
+        }
+    
+        // Configura o nome do arquivo 
+        const fileName = `README-${id}${fileExt}`;
+    
+        // Acha o caminho do arquivo e salva ele
+        const destination = path.join(process.cwd(), 'uploads/readme');
+        const filePath = `${destination}\\${fileName}`;
+
+        // Atualiza na database
+        await this.prisma.sprint.update({
+          where: {
+            id: id
+          },
+          data: {
+            descriptionPath: `uploads/readme/${fileName}`
+          }
+        })
+
+        fs.writeFile(filePath, file.buffer, (err) => {
+          if (err) throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+        })
+    
+        // Retorna o caminho do arquivo
+        return filePath;    
+    }
 }

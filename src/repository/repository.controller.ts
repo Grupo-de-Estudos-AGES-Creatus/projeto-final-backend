@@ -5,6 +5,8 @@ import { UpdateRepository } from './dto/update-repository.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
+import { CurrentUser } from 'src/auth/auth.decorators';
+import { JwtPayload } from 'src/auth/auth-payload.interface';
 
 @Controller('repository')
 export class RepositoryController {
@@ -60,9 +62,10 @@ export class RepositoryController {
     @ApiOperation({ summary: 'Update Repository by id' })
     @ApiResponse({ status: 200, description: 'Repository updated successfully.' })
     @ApiResponse({ status: 404, description: 'Repository not found.' })
+    @ApiResponse({ status: 403, description: "UserId in the repository isn't the one used in the token."})
     @ApiBody({ type: UpdateRepository })
-    async update(@Param('id', ParseIntPipe) id: number, @Body() repository: UpdateRepository) {
-        return await this.repositoryService.update(id, repository);
+    async update(@Param('id', ParseIntPipe) id: number, @Body() repository: UpdateRepository, @CurrentUser() currentUser: JwtPayload) {
+        return await this.repositoryService.update(id, repository, currentUser);
     }
 
     // Deleta um repositório

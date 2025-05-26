@@ -7,11 +7,13 @@ import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { Response } from 'express';
+import { UpdateUserSelfDto } from './dto/update-user-selft.dto';
+import { CurrentUser } from 'src/auth/auth.decorators';
+import { JwtPayload } from 'src/auth/auth-payload.interface';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  
 
   // Pega todos os usuários
   @Get()
@@ -64,10 +66,27 @@ export class UserController {
   @ApiResponse({ status: 200, description: 'User updated successfully.' })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @ApiBody({ type: UpdateUserDto })
-  @Roles(Role.ADMIN)
   async update(@Param('id', ParseIntPipe ) id: number, @Body() updateUserDto: UpdateUserDto) {
     return await this.userService.update(id, updateUserDto);
   }
+
+  // Atualiza o próprio usuário
+  @Patch('self/:id')
+  @ApiOperation({ summary: 'Update self user with id' })
+  @ApiResponse({ status: 200, description: 'User updated successfully.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  @ApiResponse({ status: 403, description: "Id provided isn't the one used in the token."})
+  @ApiBody({ type: UpdateUserSelfDto })
+  async updateSelf(@Param('id', ParseIntPipe ) id: number, @Body() updateUserSelfDto: UpdateUserSelfDto, @CurrentUser() currentUser: JwtPayload) {
+    return await this.userService.updateSelf(id, updateUserSelfDto, currentUser);
+  }
+
+  // Recebe uma imagem de usuário 
+  @Patch('img/:id')
+  @UseInterceptors(FileInterceptor('file', {})) 
+  async updateImage(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number, @CurrentUser() currentUser: JwtPayload) {
+    return await this.userService.newImage(id, file, currentUser);
+  }  
 
   // Deleta um usuário
   @Delete(':id')
@@ -78,13 +97,6 @@ export class UserController {
   async remove(@Param('id', ParseIntPipe ) id: number) {
     return await this.userService.remove(id);
   }
-
-  // Recebe uma imagem de usuário 
-  @Patch('img/:id')
-  @UseInterceptors(FileInterceptor('file', {})) 
-  async updateImage(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number, ) {
-    return await this.userService.newImage(id, file);
-  }  
 }
 
 

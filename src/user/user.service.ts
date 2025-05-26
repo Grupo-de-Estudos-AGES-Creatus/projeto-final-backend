@@ -5,6 +5,9 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
 import * as fs from 'fs';
 import * as path from 'path';
+import { UpdateUserSelfDto } from './dto/update-user-selft.dto';
+import { JwtPayload } from 'src/auth/auth-payload.interface';
+import { error } from 'console';
 
 @Injectable()
 export class UserService {
@@ -120,6 +123,30 @@ export class UserService {
     });
   }
 
+  async updateSelf(id: number, updateUserSelfDto: UpdateUserSelfDto, currentUser: JwtPayload) {
+    // Verifica se o id é igual ao do token
+    if (id != currentUser.userId) throw new HttpException('Id não é igual', HttpStatus.FORBIDDEN);
+
+    // Verifica se existe
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: id
+      }
+    })
+
+    // Se não existir retorna um erro
+    if (!user) throw new HttpException("Não existe um usuário com esse id",  HttpStatus.NOT_FOUND);
+
+    // Atualiza o usuário
+    return await this.prisma.user.update({
+      where: { 
+        id: id
+      },
+      data: updateUserSelfDto,
+    });
+
+  }
+
  // Deleta um usuário
   async remove(id: number) {
     // Verifica se existe
@@ -144,7 +171,11 @@ export class UserService {
   }
 
   // Salva a imagem e 
-  async newImage(id: number, file: Express.Multer.File) {
+  async newImage(id: number, file: Express.Multer.File, currentUser: JwtPayload) {
+    // Verifica se o id é igual ao do token
+    if (id != currentUser.userId && currentUser.role != 'admin') throw new HttpException('Id não é igual', HttpStatus.FORBIDDEN);
+
+    // Verifica se o usuário existe
     const user = await this.prisma.user.findUnique({
       where: {
         id: id
