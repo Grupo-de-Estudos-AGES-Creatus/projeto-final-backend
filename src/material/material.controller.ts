@@ -3,6 +3,10 @@ import { MaterialService } from './material.service';
 import { CreateMaterial } from './dto/create-material.dto';
 import { UpdateMaterial } from './dto/update-material.dto';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles/roles.decorator';
+import { Role } from 'src/auth/roles/roles.enum';
+import { CurrentUser } from 'src/auth/auth.decorators';
+import { JwtPayload } from 'src/auth/auth-payload.interface';
 
 @Controller('material')
 export class MaterialController {
@@ -50,13 +54,15 @@ export class MaterialController {
     @ApiResponse({ status: 200, description: 'Material updated successfully.' })
     @ApiResponse({ status: 400, description: 'Require at leats one information.' })
     @ApiResponse({ status: 404, description: 'Material not found.' })
+    @ApiResponse({ status: 403, description: "UserId in the material isn't the one used in the token."})
     @ApiBody({ type: UpdateMaterial })
-    async update(@Param('id', ParseIntPipe) id: number, @Body() material: UpdateMaterial) {
-        return await this.materialService.update(id, material);
+    async update(@Param('id', ParseIntPipe) id: number, @Body() material: UpdateMaterial, @CurrentUser() currentUser: JwtPayload) {
+        return await this.materialService.update(id, material, currentUser);
     }
 
     // Deleta um material
     @Delete(':id')
+    @Roles(Role.ADMIN)
     @ApiOperation({ summary: 'Delete material by id' })
     @ApiResponse({ status: 200, description: 'Material deleted successfully.' })
     @ApiResponse({ status: 404, description: 'Material not found.' })

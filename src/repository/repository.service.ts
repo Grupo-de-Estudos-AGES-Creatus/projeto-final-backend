@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateRepository } from './dto/create-repository.dto';
 import { UpdateRepository } from './dto/update-repository.dto'
+import { JwtPayload } from 'src/auth/auth-payload.interface';
 
 @Injectable()
 export class RepositoryService {
@@ -77,7 +78,7 @@ export class RepositoryService {
     }
 
     // Atualiza um repositório
-    async update(id: number, project: UpdateRepository) {
+    async update(id: number, project: UpdateRepository, currentUser: JwtPayload) {
         // Verifica se existe
         const find = await this.prisma.repository.findUnique({
             where: {
@@ -87,6 +88,9 @@ export class RepositoryService {
 
         // Se não existir retorna um erro
         if (!find) throw new HttpException("Não existe um repositório com esse id!", HttpStatus.NOT_FOUND)
+
+        // Verifica se o id é igual ao do token
+        if (find.userId != currentUser.userId) throw new HttpException('Id não é igual', HttpStatus.FORBIDDEN);
 
         // Atualiza o repositório
         const update = await this.prisma.repository.update({

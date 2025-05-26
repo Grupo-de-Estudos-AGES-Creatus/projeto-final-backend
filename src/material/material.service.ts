@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateMaterial } from './dto/create-material.dto';
 import { UpdateMaterial } from './dto/update-material.dto';
+import { JwtPayload } from 'src/auth/auth-payload.interface';
 
 @Injectable()
 export class MaterialService {
@@ -58,7 +59,8 @@ export class MaterialService {
     }
 
     // Atualiza um material
-    async update(id: number, material: UpdateMaterial) {
+    async update(id: number, material: UpdateMaterial, currentUser: JwtPayload) {
+
         // Verifica se pelo menos uma informação foi passada, se não for retorna um erro
         if (!material.text && !material.title) throw new HttpException("Precisa conter pelo menos uma informção!", HttpStatus.BAD_REQUEST); 
         
@@ -71,6 +73,9 @@ export class MaterialService {
 
         // Se não existir retorna um erro
         if (!find) throw new HttpException("Não existe um material com esse id!", HttpStatus.NOT_FOUND)
+
+        // Verifica se o id é igual ao do token
+        if (find.userId != currentUser.userId) throw new HttpException('Id não é igual', HttpStatus.FORBIDDEN);
 
         // Atualiza o material
         const update = await this.prisma.material.update({
