@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { ChangePasswordDto } from './dto/changePassword.dto';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from './../prisma.service'
+import { PrismaService } from './../prisma.service';
 
 @Injectable()
 export class AuthService {
@@ -87,6 +87,5 @@ export class AuthService {
       firstAcess: updateUser.firstAcess,
       role: user.role
     }
-    
   }
 }

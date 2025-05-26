@@ -47,6 +47,24 @@ export class UserService {
     return users;
   }
 
+  async getImage(id: number) {
+    const user = await this.prisma.user.findUnique({
+        where: {
+            id: id
+        }
+    })
+    if (!user) throw new HttpException('Usuário inválido', HttpStatus.BAD_REQUEST)
+
+    const [base, finalArquivo] = user.imgPath.split('.')
+    let filePath = path.join(process.cwd(), `uploads/images/Photo-${id}.${finalArquivo}`)
+
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(process.cwd(), `uploads/fixo/avatar.png`);
+    }
+
+    return filePath;
+  }
+
   // Cria um usuário 
   async create(createUserDto: CreateUserDto) {
     // Criptografa a senha
@@ -153,7 +171,7 @@ export class UserService {
 
     if (!allowedExtensions.includes(fileExt)) throw new HttpException('Extensão de arquivo não permitida.', HttpStatus.BAD_REQUEST);
 
-    const destination = path.join(process.cwd(), 'uploads/images');
+    const destination = path.join(process.cwd(), 'uploads/image');
     const filePath = `${destination}\\${fileName}`;
     fs.writeFile(filePath, file.buffer, (err) => {
       if (err) throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);

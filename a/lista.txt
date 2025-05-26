@@ -1,0 +1,14 @@
+Conferindo e comentando:
+Prisma
+Auth
+Calendar
+Material
+Repository
+Até dto do user
+
+
+Swagger:
+
+JWT: 
+
+

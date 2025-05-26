@@ -6,7 +6,6 @@ import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
 import { ReadmeCreateOrEdit } from './sprint.interceptor';
 import { Response } from 'express';
-import { Public } from 'src/auth/auth.decorators';
 
 @Controller('sprint')
 export class SprintController {
@@ -27,7 +26,8 @@ export class SprintController {
     // Pega o arquivo readme de uma sprint pelo id
     @Get('readme/:id')
     async getFile(@Res() res: Response, @Param('id') id: string){
-        const filePath = await this.sprintService.getFile(id)
+        const filePath = await this.sprintService.getFile(id);
+        // Envia o arquivo readme
         return res.sendFile(filePath);
     }   
 
@@ -38,7 +38,7 @@ export class SprintController {
         return await this.sprintService.create(createUserDto);
     }
 
-    // Verficar para colocar no service
+    // Cria o arquivo readme da sprint
     @Post('readme/:id')
     @UseInterceptors(ReadmeCreateOrEdit())
     async uploadFile(@UploadedFile() file: Express.Multer.File){

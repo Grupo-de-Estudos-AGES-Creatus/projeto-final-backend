@@ -48,6 +48,7 @@ export class MaterialController {
     @Patch(':id')
     @ApiOperation({ summary: 'Update material by id' })
     @ApiResponse({ status: 200, description: 'Material updated successfully.' })
+    @ApiResponse({ status: 400, description: 'Require at leats one information.' })
     @ApiResponse({ status: 404, description: 'Material not found.' })
     @ApiBody({ type: UpdateMaterial })
     async update(@Param('id', ParseIntPipe) id: number, @Body() material: UpdateMaterial) {

@@ -4,19 +4,13 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 // Filtro para criar um usuário
 export class CreateUserDto {
 
-     @ApiProperty({
-    description: 'user email',
-    example: 'usuario@email.com',
-    })
+    @ApiProperty({ description: 'User email',example: 'user@email.com' })
     @IsNotEmpty()
     @IsString()
     email: string;
 
     
-    @ApiProperty({
-    description: 'username',
-    example: 'usuario@email.com',
-    })
+    @ApiProperty({ description: 'Username', example: 'Name Lastname' })
     @IsNotEmpty()
     @IsString()
     username: string;

@@ -4,35 +4,21 @@ import { ApiProperty } from "@nestjs/swagger";
 // Filtro para criar um evento no calendário
 export class CreateCalendarEventDto {
 
-
-    @ApiProperty({
-            description: "Event title",
-            example: "International Rock n Roll day"
-    })
+    @ApiProperty({ description: "Calendar event title", example: "Sprint 1 end date" })
     @IsNotEmpty()
     @IsString()
     title: string
 
-
-    @ApiProperty({
-        description: "Event description",
-        example: "The day that celebrates rock music"
-    })
+    @ApiProperty({ description: "Calendar event description", example: "End date to submit your project!" })
     @IsNotEmpty()
     @IsString()
     description: string
 
-    @ApiProperty({
-        description: "When event starts",
-        example: "July 13"
-    })
+    @ApiProperty({ description: "Start date of the calendar event", example: new Date() })
     @IsDate()
     startDate: Date
     
-    @ApiProperty({
-        description: "When event ends",
-        example: "July 14"
-    })
+    @ApiProperty({ description: "End date of the calendar event", example: new Date() })
     @IsDate()
     endDate: Date
 }
