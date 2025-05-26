@@ -153,8 +153,8 @@ export class UserService {
 
     if (!allowedExtensions.includes(fileExt)) throw new HttpException('Extensão de arquivo não permitida.', HttpStatus.BAD_REQUEST);
 
-    const destination = path.join(process.cwd(), 'uploads');
-    const filePath = `${destination}/${fileName}`;
+    const destination = path.join(process.cwd(), 'uploads/images');
+    const filePath = `${destination}\\${fileName}`;
     fs.writeFile(filePath, file.buffer, (err) => {
       if (err) throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
     })

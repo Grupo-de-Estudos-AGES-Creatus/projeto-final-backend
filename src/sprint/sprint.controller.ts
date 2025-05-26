@@ -42,7 +42,7 @@ export class SprintController {
     @Post('readme/:id')
     @UseInterceptors(ReadmeCreateOrEdit())
     async uploadFile(@UploadedFile() file: Express.Multer.File){
-      return file;
+        return file;
     }
 
     // Atualiza uma sprint

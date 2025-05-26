@@ -33,6 +33,8 @@ export class SprintService {
     // Retorna o arquivo readme
     async getFile(id: string) {
         const filePath = path.join(process.cwd(), `uploads/readme/README-${id}.md`)
+        console.log(filePath)
+        console.log(fs.existsSync(filePath))
         if (!fs.existsSync(filePath)) throw new HttpException('Arquivo readme não existe', HttpStatus.BAD_REQUEST)
         return filePath;
     }
