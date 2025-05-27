@@ -95,7 +95,7 @@ export class UserService {
     if (!updateUserDto.email && !updateUserDto.githubLink && !updateUserDto.password && !updateUserDto.registration && !updateUserDto.role && !updateUserDto.semester && !updateUserDto.username) throw new HttpException("Precisa conter pelo menos uma informação!", HttpStatus.BAD_REQUEST) 
     
     // Verifica se existe
-    const user = await this.prisma.sprint.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: {
         id: id
       }

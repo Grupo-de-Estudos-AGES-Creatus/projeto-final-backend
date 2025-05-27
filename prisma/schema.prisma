@@ -14,8 +14,8 @@ model User {
   username      String
   password      String
   role          String      // admin ou student
-  registration  String      @unique
-  semester      String
+  registration  String      @unique // Matrícula da PUC
+  semester      String      // semestre da AGES, ex: 2025/1
   imgPath       String?
   githubLink    String?
   firstAcess    Boolean     @default(true)
