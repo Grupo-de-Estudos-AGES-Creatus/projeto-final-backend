@@ -29,7 +29,7 @@ O projeto foi desenvolvido para haver calendário, login, sprints, usuários e u
 - **Backend:**
     - NestJS
     - Node.js
-    - Bibliotecas [Bibliotecas](bibliotecas)
+    - [Bibliotecas](bibliotecas)
 - **Banco de Dados:**
     - Prisma com PostgreSQL
 - **Documentação da API:**
