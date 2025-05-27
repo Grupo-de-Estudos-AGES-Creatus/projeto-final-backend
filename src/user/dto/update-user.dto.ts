@@ -34,7 +34,7 @@ export class UpdateUserDto {
     @IsString()
     role: string;
 
-    @ApiProperty({ description: 'Semester', example: '2025/1' })
+    @ApiProperty({ description: 'Semester', example: '2025-1' })
     @IsOptional()
     @IsNotEmpty()
     @IsString()

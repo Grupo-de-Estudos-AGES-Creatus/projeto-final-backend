@@ -29,7 +29,7 @@ export class CreateUserDto {
     @IsString()
     registration: string;
 
-    @ApiProperty({ description: 'Semester', example: '2025/1' })
+    @ApiProperty({ description: 'Semester', example: '2025-1' })
     @IsNotEmpty()
     @IsString()
     semester: string;

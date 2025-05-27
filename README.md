@@ -14,8 +14,7 @@ O backend foi desenvolvido utilizando NestJS, utilizando TypeScritp, com o intui
 - [Documentação](documentação)
 - [Database](#database)
 - [Autenticação](#autenticação)
-- [Desenvolvimento](#desenvolvimento)
-- [Contribuição](#contribuição)
+- [Contribuição](#contribuição---backend)
 ## Visão Geral
 O projeto foi desenvolvido para haver calendário, login, sprints, usuários e uma área de administrador.
 
