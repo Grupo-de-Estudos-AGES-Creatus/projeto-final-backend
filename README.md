@@ -1,99 +1,104 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Backend do Moodle da AGES
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+O backend foi desenvolvido utilizando NestJS, utilizando TypeScritp, com o intuito de fornecer gerenciar os processos do Moodle.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Sumário
 
-## Description
+- [Visão Geral](#visão-geral)
+- [Tecnologias](#tecnologias)
+- [Pacotes](#pacotes)
+- [Iniciando](#começando)
+  - [Pré-requisitos](#pré-requisitos)
+  - [Instalação](#instalação)
+  - [Rodando o Backend](#rodando-o-backend)
+- [Documentação](documentação)
+- [Database](#database)
+- [Autenticação](#autenticação)
+- [Contribuição](#contribuição---backend)
+## Visão Geral
+O projeto foi desenvolvido para haver calendário, login, sprints, usuários e uma área de administrador.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- O calendário serve para colocar datas importantes.
+- O login tem uma rota de autenticar(fazer login) e uma opção para redefinir a senha no primeiro acesso.
+- As sprints são separada por semestre do grupoo de estudo, tendo um título e uma breve descrição. A descrição principal da tarefa é dada por um arquivo readme.md para facilitar a formatação e existe um espaço para compartilhar informações(Material).
+- Os usuário são compostos por nome(username), email, senha(password), matrícula(registration), cargo(role), semestre da ages(semester), link do github(githubLink) e imagem(imgPath).
 
-## Project setup
 
+## Tecnologias
+
+- **Backend:**
+    - NestJS
+    - Node.js
+    - [Bibliotecas](bibliotecas)
+- **Banco de Dados:**
+    - Prisma com PostgreSQL
+- **Documentação da API:**
+    - [Documentação](#documentação)
+## Bibliotecas
+
+Durante o desenvolvimento do projeto foi utilizado algumas bibliotecas npm, aqui está alista para o que servem e quais são os nomes:
+- Arquivos: multer;
+- Authenticação: @nestjs/jwt, @nestjs/passport, passport-jwt;
+- Bases do NestJs: @nestjs/common, @nestjs/config, @nestjs/core, @nestjs/platform-express, @nestjs/mapped-types, express, reflect-metadata, rxjs;
+- Criptografia: bcrypt;
+- Database: @prisma/client, @prisma/extension-accelerate;
+- Documentação: @nestjs/swagger;
+- Verificação de dados: class-transformer, class-validator;
+## Iniciando
+
+### Pré-requisitos
+- Ter o Docker instalado
+- Ter o PostgreSQL
+
+### Instalação
+- Criar um arquivo .env e copiar o que está em .env.example;
+
+- Copiar o repositório
 ```bash
-$ npm install
+$ git clone https://github.com/Grupo-de-Estudos-AGES-Creatus/projeto-final-backend.git
+```
+- Iniciar a database
+``` bash
+$ docker compose up -d
 ```
 
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+- Iniciar a database
+``` bash
+$ npm i --force
 ```
 
-## Run tests
+- Criar a database no prisma
+``` bash
+$ npx prisma generate
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ npx prisma migrate dev
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### Rodando o Backend
+Inciar o backend
 ```bash
-$ npm install -g mau
-$ mau deploy
+$ npm start
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
-## Resources
+## Documentação da API
 
-Check out a few resources that may come in handy when working with NestJS:
+A API é gerenciada pelo swagger, isso possibilita ser atualizada automaticamente cada vez que iniciar o programa. Para acessar ela, rode o backend e acesse pelo navegador com o url: https://localhost:3000/api.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## Database
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+A database pode ser acessado o arquivo schema.prisma(/prisma/schema.prisma).
+## Autenticação
 
-## License
+A autenticação é feita utilizando tokens JWT, possui um sistema de cargos(roles) para diferenciar adiministradores de estudantes e um sistema para verificar se é a própria pessoa realizando a ação.
+## Contribuição - Backend
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- [Aline Ibaldo Gonçalves](https://github.com/alineibaldo)
+- [Eduardo Spies Acauan](https://github.com/eduardoacauan)
+- [Fernando Spies Acauan](https://github.com/fernandoacauan)
+- [Henrique Pereira da Silva Collatto](https://github.com/HenriqueCollatto)
+- [Henrique Vitor Mairesse](https://github.com/henriquemairesse)
+- [Lucas Lourenço Jacchetti](https://github.com/Lucas-Jacchetti)

@@ -1,4 +1,18 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateMaterialDto } from './create-material.dto';
+import { IsNotEmpty, IsOptional, IsString } from "class-validator"
+import { ApiPropertyOptional } from "@nestjs/swagger"
 
-export class UpdateMaterialDto extends PartialType(CreateMaterialDto) {}
+// Filtro para atualizar um material
+export class UpdateMaterial {
+
+    @ApiPropertyOptional({ description: "Update material title", example: "NestJS documentation" })
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    title: string
+
+    @ApiPropertyOptional({ description: "Update material description", example: "https://docs.nestjs.com/" })
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    text: string
+} 
