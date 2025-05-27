@@ -95,5 +95,5 @@ A autenticação é feita utilizando tokens JWT, possui um sistema de cargos(rol
 - [Eduardo Spies Acauan](https://github.com/eduardoacauan)
 - [Fernando Spies Acauan](https://github.com/fernandoacauan)
 - [Henrique Pereira da Silva Collatto](https://github.com/HenriqueCollatto)
-- [Henrique Vitor Mairess](https://github.com/henriquemairesse)
+- [Henrique Vitor Mairesse](https://github.com/henriquemairesse)
 - [Lucas Lourenço Jacchetti](https://github.com/Lucas-Jacchetti)
