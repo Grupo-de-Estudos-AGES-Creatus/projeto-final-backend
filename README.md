@@ -62,6 +62,11 @@ $ git clone https://github.com/Grupo-de-Estudos-AGES-Creatus/projeto-final-backe
 $ docker compose up -d
 ```
 
+- Iniciar a database
+``` bash
+$ npm i --force
+```
+
 - Criar a database no prisma
 ``` bash
 $ npx prisma generate
