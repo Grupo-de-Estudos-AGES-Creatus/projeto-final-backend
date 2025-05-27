@@ -62,7 +62,7 @@ $ git clone https://github.com/Grupo-de-Estudos-AGES-Creatus/projeto-final-backe
 $ docker compose up -d
 ```
 
-- Iniciar a database
+- Instalar as bibliotecas npm
 ``` bash
 $ npm i --force
 ```
