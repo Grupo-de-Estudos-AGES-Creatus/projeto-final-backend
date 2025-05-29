@@ -30,6 +30,22 @@ export class SprintService {
         return sprint;
     }
 
+    // Retorna uma sprint pelo id
+    async findBySemester(semester: string) {
+        // Verifica se existe
+        const sprint = await this.prisma.sprint.findMany({
+            where: { 
+                semester: semester
+            },
+        });
+
+        // Se não existir retorna um erro
+        if (!sprint) throw new HttpException("Não existe uma sprint com esse semestre",  HttpStatus.NOT_FOUND)
+
+        // Retorna a sprint
+        return sprint;
+    }
+
     // Retorna o caminho do arquivo readme
     async getFile(id: string) {
         const filePath = path.join(process.cwd(), `uploads/readme/README-${id}.md`)
