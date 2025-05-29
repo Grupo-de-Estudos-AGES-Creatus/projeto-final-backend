@@ -29,6 +29,15 @@ export class SprintController {
         return await this.sprintService.findOne(id);
     }
 
+    // Pega uma sprint pelo semestre
+    @Get('/semester/:semester')
+    @ApiOperation({ summary: 'Get sprint by semester' })
+    @ApiResponse({ status: 200, description: 'Sprint found' })
+    @ApiResponse({ status: 403, description: 'Sprint not found' })
+    async findOneBySemester(@Param() semester: string) {
+        return await this.sprintService.findBySemester(semester);
+    }
+
     // Pega o arquivo readme de uma sprint pelo id
     @Get('readme/:id')
     @ApiOperation({ summary: 'Get readme by sprint id' })

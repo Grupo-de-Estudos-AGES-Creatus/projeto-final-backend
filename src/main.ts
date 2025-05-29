@@ -7,6 +7,13 @@ async function bootstrap() {
   // Cria o backend
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: 'http://localhost:5173', // A URL do seu frontend
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
+    allowedHeaders: 'Content-Type, Accept, Authorization', // Cabeçalhos permitidos
+    credentials: true, // Se você usa cookies ou headers de autorização
+  });
+
   // Define para os pipes serem usado em todas rotas 
   app.useGlobalPipes(new ValidationPipe())
 
