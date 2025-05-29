@@ -1,6 +1,6 @@
 # Backend do Moodle da AGES
 
-O backend foi desenvolvido utilizando NestJS, utilizando TypeScritp, com o intuito de fornecer gerenciar os processos do Moodle.
+O backend foi desenvolvido utilizando NestJS, utilizando TypeScript, com o intuito de fornecer gerenciar os processos do Moodle.
 
 ## Sumário
 
