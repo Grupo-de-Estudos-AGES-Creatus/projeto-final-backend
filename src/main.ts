@@ -15,7 +15,7 @@ async function bootstrap() {
   });
 
   // Define para os pipes serem usado em todas rotas 
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe());
 
   // Configura o swagger para a documentação
   const config = new DocumentBuilder()
